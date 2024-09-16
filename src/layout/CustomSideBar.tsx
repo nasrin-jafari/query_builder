@@ -24,9 +24,10 @@ const drawerWidth = 240;
 
 interface SideBarProps {
   content: React.ReactNode;
+  filteredTabs: ItemsTab[];
 }
 
-const SideBar: React.FC<SideBarProps> = () => {
+const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
   const { isLightMode } = useThemeContext();
   const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
@@ -210,7 +211,7 @@ const SideBar: React.FC<SideBarProps> = () => {
 
         <List sx={{ marginTop: '55px' }}>
           <Divider />
-          {TABS.map((tab) => {
+          {filteredTabs?.map((tab) => {
             const IconComponent = tab.icon ? tab.icon : null;
             return (
               <Fragment key={tab.value}>

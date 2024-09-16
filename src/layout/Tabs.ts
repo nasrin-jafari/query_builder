@@ -35,6 +35,18 @@ export const TABS: ItemsTab[] = [
         value: 'events',
         label: 'رخدادها',
         path: '/activity/events',
+        routes: [
+          {
+            value: 'events',
+            label: 'رخدادها',
+            path: '/activity/events/overview',
+          },
+          {
+            value: 'events',
+            label: 'رخدادها',
+            path: '/activity/events/inspect',
+          },
+        ],
       },
       {
         value: 'quarantined',
