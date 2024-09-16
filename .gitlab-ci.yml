@@ -20,13 +20,13 @@ build_development:
   tags:
     - frontendts
   script:
-    - docker build -t "edrfrontend:$TAG_TEST" .
+    - docker build -t "edrfrontendts:$TAG_TEST" .
     - if [ $? -eq 0 ]; then
       echo "Docker image built with tag:$TAG_TEST for test environment";
-      docker tag edrfrontend:$TAG_TEST $CI_REGISTRY_IMAGE:$TAG_TEST;
+      docker tag edrfrontendts:$TAG_TEST $CI_REGISTRY_IMAGE:$TAG_TEST;
       docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY;
       docker push $CI_REGISTRY_IMAGE:$TAG_TEST;
-      docker rmi edrfrontend:$TAG_TEST || true
+      docker rmi edrfrontendts:$TAG_TEST || true
       echo "Last Test Image Removed";
       else
       echo "Build failed. Exiting the pipeline.";
@@ -41,11 +41,11 @@ deploy_development:
   tags:
     - frontendts
   script:
-    - if docker ps -a --format '{{.Names}}' | grep -q '^edr-frontend$'; then
-      docker stop edr-frontend;
-      docker rm edr-frontend;
+    - if docker ps -a --format '{{.Names}}' | grep -q '^edr-frontend-ts$'; then
+      docker stop edr-frontend-ts;
+      docker rm edr-frontend-ts;
       else
-      echo "edr-frontend container does not exist";
+      echo "edr-frontend-ts container does not exist";
       fi
     - docker compose up -d
     - >
@@ -83,15 +83,15 @@ build_production:
   script:
     - rm .env.local
     - mv .env_prod .env.local
-    - docker build -t "edrfrontend:$TAG_PROD" .
+    - docker build -t "edrfrontendts:$TAG_PROD" .
     - if [ $? -eq 0 ]; then
       echo "Docker image built with tag:$TAG_PROD for production environment";
-      docker tag edrfrontend:$TAG_PROD $CI_REGISTRY_IMAGE:$TAG_PROD;
-      docker tag edrfrontend:$TAG_PROD $CI_REGISTRY_IMAGE_PRODUCTION:latest;
+      docker tag edrfrontendts:$TAG_PROD $CI_REGISTRY_IMAGE:$TAG_PROD;
+      docker tag edrfrontendts:$TAG_PROD $CI_REGISTRY_IMAGE_PRODUCTION:latest;
       docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY;
       docker push $CI_REGISTRY_IMAGE:$TAG_PROD;
       docker push $CI_REGISTRY_IMAGE_PRODUCTION:latest;
-      docker rmi edrfrontend:$TAG_PROD || true
+      docker rmi edrfrontendts:$TAG_PROD || true
       docker rmi $CI_REGISTRY_IMAGE:$TAG_PROD || true
       docker rmi $CI_REGISTRY_IMAGE_PRODUCTION:latest || true
       echo "Last Prod Images Removed";
@@ -112,7 +112,7 @@ deploy_production:
       git config --global user.email "root"
       git config --global user.name "root"
       git clone http://$CI_JOB_TOKEN@$REPO_URL edr-production
-      cd edr-production/edr-frontend
+      cd edr-production/edr-frontend-ts
 
       # Check if the image already exists on the host
       if docker images "$CI_REGISTRY_IMAGE:$TAG_PROD" | grep -q "$TAG_PROD"; then
