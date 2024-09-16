@@ -1,0 +1,12 @@
+version: '3'
+services:
+  app:
+    image: "172.16.50.33:8443/edrfrontend:${CI_PIPELINE_ID}-t"
+    container_name: edr-frontend
+    restart: always
+    ports:
+      - "3002:80"    
+networks:
+  edr:
+    external: true
+
