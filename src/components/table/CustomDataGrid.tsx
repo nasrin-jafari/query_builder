@@ -14,7 +14,7 @@ import {
   MenuItem,
   Pagination,
   Popover,
-  Stack,
+  Stack, Switch,
   Table,
   TableBody,
   TableCell,
@@ -76,6 +76,7 @@ interface ReusableDataGridProps {
     actionType: string;
   }[]; // New prop to specify action buttons for selected rows
   onAction?: (actionType: string, selectedRows: any[]) => void; // New prop to handle actions
+  handleSwitch? : (fieldValue :boolean ,rowId : number)=> void
 }
 
 interface ButtonType {
@@ -105,7 +106,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   selectableRows = false, // Default to false if not provided
   itemSelectRowParam = '',
   selectedRowsButtons = [], // Default to empty array if not provided
-  onAction,
+  onAction, handleSwitch
 }) => {
   const [collapsedRows, setCollapsedRows] = useState<Record<number, boolean>>({});
   const [selectedRows, setSelectedRows] = useState<number[]>([]); // State to manage selected rows
@@ -259,7 +260,11 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   //     }
   //   }
   // };
-
+  const handleSwitchChange = (fieldValue : boolean , rowId : number)=>{
+   if(handleSwitch){
+     handleSwitch(fieldValue , rowId)
+   }
+  }
   return (
     <>
       {handleForm || handleAdd ? (
@@ -409,7 +414,16 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                             ) : (
                               '-'
                             );
+                          const renderSwitchHandlerContent =(fieldValue : boolean)=> {
+                            return (
+                              <Switch
+                                checked={fieldValue}
+                                onChange={()=> handleSwitchChange(fieldValue,row.id)}
+                                inputProps={{ 'aria-label': 'controlled' }}
+                              />
 
+                            )
+                          }
                           const renderStatusContent = (value: any) => {
                             const getColor = (value: string) => {
                               const stringValue = String(value); // تبدیل مقدار به رشته
@@ -478,6 +492,9 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               break;
                             case column.field?.includes('score'):
                               content = renderScoreContent(fieldValue);
+                              break;
+                            case column.field?.includes('enabled'):
+                              content = renderSwitchHandlerContent(fieldValue);
                               break;
                             case ['status', 'infected'].some((key) => column.field?.includes(key)):
                               content = renderStatusContent(fieldValue);
@@ -594,14 +611,6 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
             </TableBody>
           </Table>
         </TableContainer>
-        {selectedRowValues.length > 0 && (
-          <div>
-            <Button variant="contained" onClick={() => console.log(selectedRowValues)}>
-              Show Selected Values
-            </Button>
-          </div>
-        )}
-
         {pageTotal <= 10 ? null : (
           <Stack spacing={2} sx={{ mt: 2, '& ul': { justifyContent: 'center' } }}>
             <Pagination

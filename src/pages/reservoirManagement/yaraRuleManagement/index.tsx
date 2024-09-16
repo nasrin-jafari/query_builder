@@ -3,6 +3,7 @@ import { CustomDataGrid } from '@/components';
 import PageBox from '@/components/common/PageBox';
 import { yara } from '@/constants/tableHeaders';
 import UseApi from '@/hooks/UseApi';
+import React, { useEffect, useState } from 'react';
 
 interface YaraData {
   content: string;
@@ -21,6 +22,11 @@ const YaraRuleManagement: React.FC = () => {
   const { data, total, loading, handleApiRequest } = UseApi<ApiResponse>(
     '/background-engine/yara/get/'
   );
+  const [dataInit, setDataInit] = useState(data?.Data);
+  useEffect(()=>{
+    setDataInit(data?.Data);
+  },[data])
+
   const fields = [
     {
       label: 'فایل قانون',
@@ -108,6 +114,16 @@ const YaraRuleManagement: React.FC = () => {
       console.log(`Error: ${error}`);
     }
   };
+  const handleSwitch = async(fieldValue : boolean , rowId : number)=>{
+    const response = await axiosMethod.post(
+      `/background-engine/yara/status/${fieldValue == true ? 'disable' : 'enable'}/${rowId}/`,
+    );
+    if (response) {
+     const res =  await axiosMethod.get('/background-engine/yara/get/')
+      setDataInit(res.data.data?.Data);
+    }
+  }
+
 
   return (
     <PageBox
@@ -119,10 +135,11 @@ const YaraRuleManagement: React.FC = () => {
         pageTotal={total}
         loading={loading}
         columns={yara}
-        rows={data?.Data || []}
+        rows={dataInit || []}
         fields={fields}
         editForm={fields}
         handleForm={handleForm}
+        handleSwitch={handleSwitch}
         notExtra
         buttons={[
           {
