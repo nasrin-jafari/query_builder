@@ -14,7 +14,8 @@ import {
   MenuItem,
   Pagination,
   Popover,
-  Stack, Switch,
+  Stack,
+  Switch,
   Table,
   TableBody,
   TableCell,
@@ -76,7 +77,7 @@ interface ReusableDataGridProps {
     actionType: string;
   }[]; // New prop to specify action buttons for selected rows
   onAction?: (actionType: string, selectedRows: any[]) => void; // New prop to handle actions
-  handleSwitch? : (fieldValue :boolean ,rowId : number)=> void
+  handleSwitch?: (fieldValue: boolean, rowId: number) => void;
 }
 
 interface ButtonType {
@@ -106,7 +107,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   selectableRows = false, // Default to false if not provided
   itemSelectRowParam = '',
   selectedRowsButtons = [], // Default to empty array if not provided
-  onAction, handleSwitch
+  onAction,
+  handleSwitch,
 }) => {
   const [collapsedRows, setCollapsedRows] = useState<Record<number, boolean>>({});
   const [selectedRows, setSelectedRows] = useState<number[]>([]); // State to manage selected rows
@@ -260,11 +262,11 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   //     }
   //   }
   // };
-  const handleSwitchChange = (fieldValue : boolean , rowId : number)=>{
-   if(handleSwitch){
-     handleSwitch(fieldValue , rowId)
-   }
-  }
+  const handleSwitchChange = (fieldValue: boolean, rowId: number) => {
+    if (handleSwitch) {
+      handleSwitch(fieldValue, rowId);
+    }
+  };
   return (
     <>
       {handleForm || handleAdd ? (
@@ -345,7 +347,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
           ) : null}
 
           <Table>
-            <TableHead>
+            <TableHead sx={{ '&  th': { fontWeight: 'bold', fontSize: 16 } }}>
               <TableRow>
                 {selectableRows && (
                   <TableCell align="center" sx={{ width: 50 }}>
@@ -356,7 +358,11 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                   ردیف
                 </TableCell>
                 {headerColumns?.map((column) => (
-                  <TableCell key={column.field} align="center" sx={{ fontWeight: 'bold' }}>
+                  <TableCell
+                    key={column.field}
+                    align="center"
+                    sx={{ fontWeight: 'bold', fontSize: 16 }}
+                  >
                     {column.headerName}
                   </TableCell>
                 ))}
@@ -372,7 +378,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
             <TableBody
               sx={{
                 '& td': {
-                  borderBottom: loading ? 'none' : '1px solid rgba(81, 81, 81, 1)',
+                  borderBottom: loading ? 'none' : '1px solid rgba(81, 81, 81,0.51)',
                 },
               }}
             >
@@ -414,16 +420,15 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                             ) : (
                               '-'
                             );
-                          const renderSwitchHandlerContent =(fieldValue : boolean)=> {
+                          const renderSwitchHandlerContent = (fieldValue: boolean) => {
                             return (
                               <Switch
                                 checked={fieldValue}
-                                onChange={()=> handleSwitchChange(fieldValue,row.id)}
+                                onChange={() => handleSwitchChange(fieldValue, row.id)}
                                 inputProps={{ 'aria-label': 'controlled' }}
                               />
-
-                            )
-                          }
+                            );
+                          };
                           const renderStatusContent = (value: any) => {
                             const getColor = (value: string) => {
                               const stringValue = String(value); // تبدیل مقدار به رشته
@@ -514,6 +519,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               align="center"
                               sx={{
                                 width: '250px',
+                                fontSize: 16,
                               }}
                             >
                               <CopyValue
@@ -565,7 +571,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     handleButtonClick(button, row);
                                     handleClose(rowIndex);
                                   }}
-                                  sx={{ fontSize: '14px', direction: 'ltr' }}
+                                  sx={{ fontSize: '16px', direction: 'ltr' }}
                                 >
                                   {button.label}
                                 </MenuItem>
@@ -596,6 +602,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                   justifySelf: 'flex-start',
                                   fontFamily: 'vazir',
                                   padding: '25px',
+                                  fontSize: 16,
                                 }}
                               >
                                 {JSON.stringify(row.extra_information, null, 2)}

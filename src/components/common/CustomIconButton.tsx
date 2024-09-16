@@ -1,4 +1,4 @@
-import { IconButton, Popover, Typography } from '@mui/material';
+import { IconButton, Popover, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { IconType } from 'react-icons';
 import { AiOutlineDelete } from 'react-icons/ai';
@@ -20,6 +20,7 @@ const CustomIconButton: React.FC<ReusableIconButtonProps> = ({
   type,
   onClick,
 }) => {
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -39,13 +40,14 @@ const CustomIconButton: React.FC<ReusableIconButtonProps> = ({
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
         onClick={onClick}
+        color="error"
       >
         {(() => {
           switch (type) {
             case 'delete':
-              return <AiOutlineDelete />;
+              return <AiOutlineDelete color={theme.palette.error.main} />;
             case 'edit':
-              return <CiEdit />;
+              return <CiEdit color={theme.palette.info.main} />;
             case 'add':
               return <FaPlus />;
             case 'download':
