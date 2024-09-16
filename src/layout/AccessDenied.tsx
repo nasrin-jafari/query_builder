@@ -13,10 +13,6 @@ interface FlattenedPermissions {
   [key: string]: any;
 }
 
-interface Token {
-  permissions?: Record<string, any>;
-}
-
 const flattenRoutes = (routes: Route[]): Route[] => {
   const flatRoutes: Route[] = [];
 
