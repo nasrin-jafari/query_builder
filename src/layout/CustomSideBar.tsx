@@ -18,7 +18,7 @@ import { Fragment, useState } from 'react';
 import { CiMenuBurger } from 'react-icons/ci';
 import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
 import CustomAppBar from './CustomAppBar';
-import { ItemsTab, TABS } from './Tabs';
+import { ItemsTab } from './Tabs';
 
 const drawerWidth = 240;
 
