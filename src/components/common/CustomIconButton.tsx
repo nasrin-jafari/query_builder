@@ -17,7 +17,7 @@ interface ReusableIconButtonProps {
 const CustomIconButton: React.FC<ReusableIconButtonProps> = ({
   icon: Icon,
   label,
-  type,
+  type = 'default',
   onClick,
 }) => {
   const theme = useTheme();
@@ -32,6 +32,31 @@ const CustomIconButton: React.FC<ReusableIconButtonProps> = ({
   };
 
   const open = Boolean(anchorEl);
+
+  // Determine colors based on type
+  const getColor = () => {
+    switch (type) {
+      case 'delete':
+        return {
+          default: 'red',
+          hover: theme.palette.error.main,
+        };
+      case 'edit':
+        return {
+          default: 'green',
+          hover: theme.palette.info.main,
+        };
+
+      default:
+        return {
+          default: theme.palette.text.primary,
+          hover: theme.palette.primary.main,
+        };
+    }
+  };
+
+  const { default: _, hover: hoverColor } = getColor();
+
   return (
     <>
       <IconButton
@@ -40,14 +65,18 @@ const CustomIconButton: React.FC<ReusableIconButtonProps> = ({
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
         onClick={onClick}
-        color="error"
+        sx={{
+          '&:hover': {
+            color: hoverColor, // Change color on hover based on type
+          },
+        }}
       >
         {(() => {
           switch (type) {
             case 'delete':
-              return <AiOutlineDelete color={theme.palette.error.main} />;
+              return <AiOutlineDelete />;
             case 'edit':
-              return <CiEdit color={theme.palette.info.main} />;
+              return <CiEdit />;
             case 'add':
               return <FaPlus />;
             case 'download':
