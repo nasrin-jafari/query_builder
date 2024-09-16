@@ -1,7 +1,7 @@
 variables:
   TAG_TEST: "${CI_PIPELINE_ID}-t"
   TAG_PROD: "${CI_PIPELINE_ID}-p"
-  INCLUDE_PRODUCTION: "true"
+  INCLUDE_PRODUCTION: "false"
   INCLUDE_DEVELOPMENT: "true"
 
 stages:
@@ -18,7 +18,7 @@ build_development:
     - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_DEVELOPMENT == "true"'
       when: always
   tags:
-    - edr-frontend
+    - frontendts
   script:
     - docker build -t "edrfrontend:$TAG_TEST" .
     - if [ $? -eq 0 ]; then
@@ -39,7 +39,7 @@ deploy_development:
     - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_DEVELOPMENT == "true"'
       when: always
   tags:
-    - edr-frontend
+    - frontendts
   script:
     - if docker ps -a --format '{{.Names}}' | grep -q '^edr-frontend$'; then
       docker stop edr-frontend;
@@ -61,7 +61,7 @@ test_development:
     - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_DEVELOPMENT == "true"'
       when: always
   tags:
-    - edr-frontend
+    - frontendts
   script: |
     sleep 30  # Give the application some time to start
     status_code=$(curl -s -o /dev/null -w "%{http_code}" http://$URL)
@@ -79,7 +79,7 @@ build_production:
     - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_PRODUCTION == "true"'
       when: always
   tags:
-    - edr-frontend
+    - frontendts
   script:
     - rm .env.local
     - mv .env_prod .env.local
@@ -106,7 +106,7 @@ deploy_production:
     - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_PRODUCTION == "true"'
       when: always
   tags:
-    - edr-frontend
+    - frontendts
   script:
     - |
       git config --global user.email "root"
@@ -138,6 +138,6 @@ test_production:
     - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_PRODUCTION == "true"'
       when: always
   tags:
-    - edr-frontend
+    - frontendts
   script:
     - echo "Soon!";
