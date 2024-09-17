@@ -20,6 +20,7 @@ import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
 import CustomAppBar from './CustomAppBar';
 import { ItemsTab } from './Tabs';
 import CustomTooltip from '@/components/common/CustomToolTip';
+import { FaHome } from 'react-icons/fa';
 
 interface SideBarProps {
   content: React.ReactNode;
@@ -199,6 +200,27 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
 
         <List sx={{ marginTop: '55px' }}>
           <Divider />
+          <ListItem
+            sx={{
+              cursor: 'pointer',
+              '&:hover': {
+                color: theme.palette.primary.main,
+              },
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                fontSize: 24,
+                '&:hover': {
+                  color: theme.palette.primary.main,
+                },
+              }}
+            >
+              <Link href={'/'} passHref>
+                <FaHome />
+              </Link>
+            </ListItemIcon>
+          </ListItem>
           {filteredTabs?.map((tab: any) => {
             const IconComponent = tab.icon ? tab.icon : null;
             return (
