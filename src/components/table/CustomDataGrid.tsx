@@ -14,7 +14,8 @@ import {
   MenuItem,
   Pagination,
   Popover,
-  Stack, Switch,
+  Stack,
+  Switch,
   Table,
   TableBody,
   TableCell,
@@ -76,7 +77,7 @@ interface ReusableDataGridProps {
     actionType: string;
   }[]; // New prop to specify action buttons for selected rows
   onAction?: (actionType: string, selectedRows: any[]) => void; // New prop to handle actions
-  handleSwitch? : (fieldValue :boolean ,rowId : number)=> void
+  handleSwitch?: (fieldValue: boolean, rowId: number) => void;
 }
 
 interface ButtonType {
@@ -106,7 +107,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   selectableRows = false, // Default to false if not provided
   itemSelectRowParam = '',
   selectedRowsButtons = [], // Default to empty array if not provided
-  onAction, handleSwitch
+  onAction,
+  handleSwitch,
 }) => {
   const [collapsedRows, setCollapsedRows] = useState<Record<number, boolean>>({});
   const [selectedRows, setSelectedRows] = useState<number[]>([]); // State to manage selected rows
@@ -260,11 +262,11 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   //     }
   //   }
   // };
-  const handleSwitchChange = (fieldValue : boolean , rowId : number)=>{
-   if(handleSwitch){
-     handleSwitch(fieldValue , rowId)
-   }
-  }
+  const handleSwitchChange = (fieldValue: boolean, rowId: number) => {
+    if (handleSwitch) {
+      handleSwitch(fieldValue, rowId);
+    }
+  };
   return (
     <>
       {handleForm || handleAdd ? (
@@ -405,8 +407,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     value >= 8
                                       ? theme.palette.error.main
                                       : value >= 6
-                                      ? theme.palette.primary.main
-                                      : theme.palette.warning.main,
+                                        ? theme.palette.primary.main
+                                        : theme.palette.warning.main,
                                 }}
                               >
                                 {value}
@@ -414,16 +416,15 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                             ) : (
                               '-'
                             );
-                          const renderSwitchHandlerContent =(fieldValue : boolean)=> {
+                          const renderSwitchHandlerContent = (fieldValue: boolean) => {
                             return (
                               <Switch
                                 checked={fieldValue}
-                                onChange={()=> handleSwitchChange(fieldValue,row.id)}
+                                onChange={() => handleSwitchChange(fieldValue, row.id)}
                                 inputProps={{ 'aria-label': 'controlled' }}
                               />
-
-                            )
-                          }
+                            );
+                          };
                           const renderStatusContent = (value: any) => {
                             const getColor = (value: string) => {
                               const stringValue = String(value); // تبدیل مقدار به رشته
@@ -630,8 +631,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               dialogState.type === 'delete'
                 ? 'آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟'
                 : dialogState.type === 'edit'
-                ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
-                : 'افزودن آیتم جدید'
+                  ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
+                  : 'افزودن آیتم جدید'
             }
             content={
               dialogState.type === 'delete' ? (
@@ -643,8 +644,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     dialogState.type === 'edit'
                       ? editForm || []
                       : handleAdd
-                      ? handleAdd?.fields
-                      : fields || []
+                        ? handleAdd?.fields
+                        : fields || []
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}
