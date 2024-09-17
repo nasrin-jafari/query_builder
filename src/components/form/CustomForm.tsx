@@ -11,6 +11,7 @@ import {
   CustomCodeMirror,
   CustomTextarea,
 } from './';
+import { UseAceessBtn } from '@/hooks/UseAceessBtn';
 
 export interface FormData {
   [key: string]: any;
@@ -35,6 +36,7 @@ export interface Field extends SelectField, SwitchField {
 }
 
 interface FormProps {
+  allowAccess?: boolean;
   fields?: Field[];
   onSubmit: SubmitHandler<FormData>;
   validationSchema?: yup.ObjectSchema<any> | yup.Lazy<any>;
@@ -45,6 +47,7 @@ interface FormProps {
 }
 
 const CustomForm: React.FC<FormProps> = ({
+  allowAccess,
   fields = [],
   validationSchema,
   onSubmit,
@@ -61,6 +64,16 @@ const CustomForm: React.FC<FormProps> = ({
     textAlign: 'left',
     fontSize: '14px',
   }));
+  const { showBtnCreate, showBtnUpdate } = UseAceessBtn();
+
+  const keywordsCreate = ['افزودن', 'ایجاد', 'ثبت'];
+  const keywordsUpdate = ['اعمال', 'ویرایش'];
+
+  const shouldRenderForm =
+    allowAccess ||
+    keywordsCreate.some((keyword) => txtButton.includes(keyword)) ||
+    (keywordsUpdate.some((keyword) => txtButton.includes(keyword)) &&
+      (showBtnCreate || showBtnUpdate));
 
   const [selectedTab, setSelectedTab] = useState(0);
   const tabs = fields
@@ -122,57 +135,61 @@ const CustomForm: React.FC<FormProps> = ({
   };
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(handleFormSubmit)} autoComplete="off">
-        {tabs.length > 0 && (
-          <Tabs value={selectedTab} onChange={handleTabChange}>
-            {tabs.map((tab, index) => (
-              <Tab key={index} label={tab} />
-            ))}
-          </Tabs>
-        )}
-        {tabs.length > 0 ? (
-          tabs.map((tab, tabIndex) => (
-            <Box key={tabIndex} hidden={selectedTab !== tabIndex}>
+    <>
+      {shouldRenderForm ? (
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(handleFormSubmit)} autoComplete="off">
+            {tabs.length > 0 && (
+              <Tabs value={selectedTab} onChange={handleTabChange}>
+                {tabs.map((tab, index) => (
+                  <Tab key={index} label={tab} />
+                ))}
+              </Tabs>
+            )}
+            {tabs.length > 0 ? (
+              tabs.map((tab, tabIndex) => (
+                <Box key={tabIndex} hidden={selectedTab !== tabIndex}>
+                  <Grid container spacing={2}>
+                    {fields
+                      .filter((field) => field.tab === tab)
+                      .map((field, index) => (
+                        <Grid item xs={field.col || 12} key={index}>
+                          <StyledInputLabel shrink sx={{ mt: 2, fontSize: 18 }}>
+                            {field.label}
+                          </StyledInputLabel>
+                          {renderField(field, methods.control)}
+                        </Grid>
+                      ))}
+                  </Grid>
+                </Box>
+              ))
+            ) : (
               <Grid container spacing={2}>
-                {fields
-                  .filter((field) => field.tab === tab)
-                  .map((field, index) => (
-                    <Grid item xs={field.col || 12} key={index}>
-                      <StyledInputLabel shrink sx={{ mt: 2, fontSize: 18 }}>
-                        {field.label}
-                      </StyledInputLabel>
-                      {renderField(field, methods.control)}
-                    </Grid>
-                  ))}
+                {fields.map((field, index) => (
+                  <Grid item xs={field.col || 12} key={index}>
+                    <StyledInputLabel shrink sx={{ mt: 2, fontSize: 18 }}>
+                      {field.label}
+                    </StyledInputLabel>
+                    {renderField(field, methods.control)}
+                  </Grid>
+                ))}
               </Grid>
-            </Box>
-          ))
-        ) : (
-          <Grid container spacing={2}>
-            {fields.map((field, index) => (
-              <Grid item xs={field.col || 12} key={index}>
-                <StyledInputLabel shrink sx={{ mt: 2, fontSize: 18 }}>
-                  {field.label}
-                </StyledInputLabel>
-                {renderField(field, methods.control)}
-              </Grid>
-            ))}
-          </Grid>
-        )}
+            )}
 
-        {children && <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>{children}</Box>}
+            {children && <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>{children}</Box>}
 
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          style={{ marginTop: '1rem', width: widthButton }}
-        >
-          {txtButton}
-        </Button>
-      </form>
-    </FormProvider>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              style={{ marginTop: '1rem', width: widthButton }}
+            >
+              {txtButton}
+            </Button>
+          </form>
+        </FormProvider>
+      ) : null}
+    </>
   );
 };
 

@@ -35,6 +35,7 @@ import CopyValue from '../common/CopyValue';
 import { Field } from '../form/CustomForm';
 import TableRowSkeleton from './TableSkeleton';
 import CardBox from '@/layout/CardBox';
+import { UseAceessBtn } from '@/hooks/UseAceessBtn';
 
 interface RowData {
   [key: string]: any;
@@ -113,6 +114,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   const [collapsedRows, setCollapsedRows] = useState<Record<number, boolean>>({});
   const [selectedRows, setSelectedRows] = useState<number[]>([]); // State to manage selected rows
   const [selectedRowValues, setSelectedRowValues] = useState<any[]>([]);
+  const { showBtnUpdate, showBtnDelete, showBtnCreate } = UseAceessBtn();
 
   const headerColumns = columns?.filter((header) => header?.isHeader);
   const router = useRouter();
@@ -269,7 +271,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   };
   return (
     <>
-      {handleForm || handleAdd ? (
+      {(handleForm || handleAdd) && showBtnCreate ? (
         <Box sx={{ textAlign: 'right' }}>
           <Button
             variant="contained"
@@ -536,19 +538,30 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                             </TableCell>
                           );
                         })}
+
                         {buttons && (
                           <TableCell align="center">
-                            {buttons?.map((button, index) =>
-                              button.type !== 'extra' ? (
-                                <CustomIconButton
-                                  key={index}
-                                  icon={button.icon && button.icon.type}
-                                  label={button.label}
-                                  type={button.type}
-                                  onClick={() => handleButtonClick(button, row)}
-                                />
-                              ) : null
-                            )}
+                            {buttons?.map((button, index) => {
+                              const showButton = (_: string, condition: boolean) =>
+                                condition ? (
+                                  <CustomIconButton
+                                    key={index}
+                                    icon={button.icon && button.icon.type}
+                                    label={button.label}
+                                    type={button.type}
+                                    onClick={() => handleButtonClick(button, row)}
+                                  />
+                                ) : null;
+
+                              switch (button.type) {
+                                case 'delete':
+                                  return showButton('delete', showBtnDelete ?? false);
+                                case 'edit':
+                                  return showButton('edit', showBtnUpdate ?? false);
+                                default:
+                                  return null;
+                              }
+                            })}
                             {extraButtons && extraButtons.length > 0 && (
                               <IconButton onClick={(event) => handleMoreClick(event, rowIndex)}>
                                 <IoIosMore />
@@ -655,6 +668,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}
+                  txtButton={dialogState.type === 'edit' ? 'ویرایش' : 'افزودن'}
                 />
               )
             }
