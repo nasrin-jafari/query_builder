@@ -183,15 +183,15 @@ const ExceptionList = () => {
     pid: number;
   }
 
-  const handleEdit = async (formData: RowData, _: RowData) => {
-    const baseUrl = `/filters/exclusion/update/${formData.pid}/`;
+  const handleEdit = async (row: RowData, fullData: RowData) => {
+    const baseUrl = `/filters/exclusion/update/${fullData.pid}/`;
 
     try {
       const res = await handleApiRequest(baseUrl, 'patch', {
-        type: formData.type,
-        value: formData.value,
-        priority: formData.priority,
-        note: formData.note,
+        type: fullData.type,
+        value: row.value,
+        priority: row.priority,
+        note: row.note,
       });
       if (res) {
         handleApiRequest('/filters/exclusion/', 'get');

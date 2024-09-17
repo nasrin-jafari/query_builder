@@ -1,4 +1,7 @@
 import { FetchTimer, ProfileMenu, ThemeToggleButton } from '@/components';
+import UseApi from '@/hooks/UseApi';
+import { LicenseData } from '@/sections/settings/licence';
+import { ConvertRemainingDays } from '@/utils/ConvertRemainingDays';
 import { Box, IconButton, AppBar as MuiAppBar, Toolbar, Typography } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import Image from 'next/image';
@@ -31,7 +34,7 @@ interface CustomAppBarProps {
 
 const CustomAppBar: React.FC<CustomAppBarProps> = ({ open, handleDrawerOpen }) => {
   const theme = useTheme();
-
+  const { data } = UseApi<LicenseData[]>('/licence/info/');
   return (
     <AppBar
       position="fixed"
@@ -67,8 +70,11 @@ const CustomAppBar: React.FC<CustomAppBarProps> = ({ open, handleDrawerOpen }) =
           />
           <Link href="/settings/licence">
             <Typography fontWeight={'bold'} fontSize={14}>
-              وضعیت لایسنس <span style={{ color: theme.palette.primary.main }}> 325 روز</span> باقی
-              مانده
+              وضعیت لایسنس :{' '}
+              <span style={{ color: theme.palette.primary.main }}>
+                {data && ConvertRemainingDays(data[0]?.days_to_expire)}
+              </span>{' '}
+              باقی مانده
             </Typography>
             <Typography color="primary.main" fontWeight={'bold'} fontSize={10}></Typography>
             <Typography fontWeight={'bold'} fontSize={10}></Typography>

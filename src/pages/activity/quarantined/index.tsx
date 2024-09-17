@@ -51,7 +51,7 @@ const ActivityQuarantined = () => {
 
         renderBottomText: true,
       },
-      title: 'تاپ ها',
+      title: 'پر مخاطره ترین ها',
       gridProps: { xs: 6, xl: 3 },
       skeletonHeight: 400,
       withCard: true,

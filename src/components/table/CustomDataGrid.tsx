@@ -35,6 +35,7 @@ import CopyValue from '../common/CopyValue';
 import { Field } from '../form/CustomForm';
 import TableRowSkeleton from './TableSkeleton';
 import CardBox from '@/layout/CardBox';
+import { UseAceessBtn } from '@/hooks/UseAceessBtn';
 
 interface RowData {
   [key: string]: any;
@@ -113,6 +114,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   const [collapsedRows, setCollapsedRows] = useState<Record<number, boolean>>({});
   const [selectedRows, setSelectedRows] = useState<number[]>([]); // State to manage selected rows
   const [selectedRowValues, setSelectedRowValues] = useState<any[]>([]);
+  const { showBtnUpdate, showBtnDelete, showBtnCreate } = UseAceessBtn();
 
   const headerColumns = columns?.filter((header) => header?.isHeader);
   const router = useRouter();
@@ -269,7 +271,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   };
   return (
     <>
-      {handleForm || handleAdd ? (
+      {(handleForm || handleAdd) && showBtnCreate ? (
         <Box sx={{ textAlign: 'right' }}>
           <Button
             variant="contained"
@@ -347,7 +349,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
           ) : null}
 
           <Table>
-            <TableHead>
+            <TableHead sx={{ '&  th': { fontWeight: 'bold', fontSize: 16 } }}>
               <TableRow>
                 {selectableRows && (
                   <TableCell align="center" sx={{ width: 50 }}>
@@ -358,7 +360,11 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                   ردیف
                 </TableCell>
                 {headerColumns?.map((column) => (
-                  <TableCell key={column.field} align="center" sx={{ fontWeight: 'bold' }}>
+                  <TableCell
+                    key={column.field}
+                    align="center"
+                    sx={{ fontWeight: 'bold', fontSize: 16 }}
+                  >
                     {column.headerName}
                   </TableCell>
                 ))}
@@ -374,7 +380,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
             <TableBody
               sx={{
                 '& td': {
-                  borderBottom: loading ? 'none' : '1px solid rgba(81, 81, 81, 1)',
+                  borderBottom: loading ? 'none' : '1px solid rgba(81, 81, 81,0.51)',
                 },
               }}
             >
@@ -474,7 +480,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                       whiteSpace: 'nowrap',
                                       overflow: 'hidden',
                                       textOverflow: 'ellipsis',
-                                      fontSize: '14px',
+                                      fontSize: '16px',
                                     }}
                                   >
                                     {value}
@@ -515,6 +521,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               align="center"
                               sx={{
                                 width: '250px',
+                                fontSize: 16,
                               }}
                             >
                               <CopyValue
@@ -531,19 +538,32 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                             </TableCell>
                           );
                         })}
+
                         {buttons && (
                           <TableCell align="center">
-                            {buttons?.map((button, index) =>
-                              button.type !== 'extra' ? (
-                                <CustomIconButton
-                                  key={index}
-                                  icon={button.icon && button.icon.type}
-                                  label={button.label}
-                                  type={button.type}
-                                  onClick={() => handleButtonClick(button, row)}
-                                />
-                              ) : null
-                            )}
+                            {buttons?.map((button, index) => {
+                              const showButton = (_: string, condition: boolean) =>
+                                condition ? (
+                                  <CustomIconButton
+                                    key={index}
+                                    icon={button.icon && button.icon.type}
+                                    label={button.label}
+                                    type={button.type}
+                                    onClick={() => handleButtonClick(button, row)}
+                                  />
+                                ) : null;
+
+                              switch (button.type) {
+                                case 'delete':
+                                  return showButton('delete', showBtnDelete ?? false);
+                                case 'edit':
+                                  return showButton('edit', showBtnUpdate ?? false);
+                                case 'allowAccess':
+                                  return showButton('allowAccess', true);
+                                default:
+                                  return null;
+                              }
+                            })}
                             {extraButtons && extraButtons.length > 0 && (
                               <IconButton onClick={(event) => handleMoreClick(event, rowIndex)}>
                                 <IoIosMore />
@@ -566,7 +586,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     handleButtonClick(button, row);
                                     handleClose(rowIndex);
                                   }}
-                                  sx={{ fontSize: '14px', direction: 'ltr' }}
+                                  sx={{ fontSize: '16px', direction: 'ltr' }}
                                 >
                                   {button.label}
                                 </MenuItem>
@@ -597,6 +617,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                   justifySelf: 'flex-start',
                                   fontFamily: 'vazir',
                                   padding: '25px',
+                                  fontSize: 16,
                                 }}
                               >
                                 {JSON.stringify(row.extra_information, null, 2)}
@@ -649,6 +670,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}
+                  txtButton={dialogState.type === 'edit' ? 'ویرایش' : 'افزودن'}
                 />
               )
             }

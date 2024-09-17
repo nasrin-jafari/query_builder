@@ -187,6 +187,7 @@ const Login = () => {
 
           <Container maxWidth="sm">
             <CustomForm
+              allowAccess
               fields={isForgotPassword ? forgotPasswordFields : loginFields}
               onSubmit={isForgotPassword ? onSubmitForgotPassword : onSubmitLogin}
               txtButton={isForgotPassword ? ' بازیابی رمز عبور' : 'ورود'}

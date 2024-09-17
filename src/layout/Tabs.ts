@@ -96,11 +96,11 @@ export const TABS: ItemsTab[] = [
           },
         ],
       },
-      {
-        value: 'receiveAgent',
-        label: 'دریافت عامل',
-        path: '/hosts/receiveAgent',
-      },
+      // {
+      //   value: 'receiveAgent',
+      //   label: 'دریافت عامل',
+      //   path: '/hosts/receiveAgent',
+      // },
       {
         value: 'blackList',
         label: 'لیست سیاه',
@@ -213,7 +213,7 @@ export const TABS: ItemsTab[] = [
       {
         value: 'manageUsers',
         label: 'ایجاد و مدیریت کاربران',
-        path: '/userManagement',
+        path: '/userManagement/manageUsers',
       },
       {
         value: 'accessManagement',
