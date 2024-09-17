@@ -12,6 +12,7 @@ interface ResourceStatusProps {
 }
 
 const OpratingSystemClient: FC<ResourceStatusProps> = ({ data, isLoading }) => {
+  console.log(data);
   return (
     <>
       <Grid item md={4} xs={12}>

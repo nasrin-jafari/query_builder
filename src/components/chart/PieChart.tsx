@@ -32,7 +32,7 @@ const PieChart: FC<PieChartProps> = ({
   }));
 
   const legendData =
-    startIndex !== undefined
+    startIndex !== undefined && startIndex > 0
       ? data.slice(startIndex, startIndex + 4).map((item) => ({
           ...item,
           name: item.fa ? item.fa : item.en,
