@@ -1,4 +1,3 @@
-// ThemeContext.tsx
 import React, { createContext, useContext, useState, useMemo, useEffect, ReactNode } from 'react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import Cookies from 'js-cookie';
@@ -20,6 +19,17 @@ export const ThemeProviderComponent = ({ children }: { children: ReactNode }) =>
     if (savedThemeMode) {
       setIsLightMode(savedThemeMode === 'light');
     }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key.toLowerCase() === 'q') {
+        toggleTheme();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   const toggleTheme = () => {

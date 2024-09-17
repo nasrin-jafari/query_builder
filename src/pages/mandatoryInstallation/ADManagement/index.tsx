@@ -56,11 +56,11 @@ const MandatoryInstallation = () => {
         buttons={[
           {
             label: 'نصب',
-            type: 'simple',
+            type: 'allowAccess',
             icon: <MdOutlineInstallDesktop />,
             onClick: (_, row) => {
               router.push({
-                pathname: '/mandatoryInstallation/ADManagement/ADInstaller/[ADInstaller]',
+                pathname: '/mandatoryInstallation/ADManagement/ADInstaller/',
                 query: {
                   ADInstaller: row.domain_url,
                 },

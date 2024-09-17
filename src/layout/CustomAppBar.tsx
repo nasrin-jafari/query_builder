@@ -35,7 +35,6 @@ interface CustomAppBarProps {
 const CustomAppBar: React.FC<CustomAppBarProps> = ({ open, handleDrawerOpen }) => {
   const theme = useTheme();
   const { data } = UseApi<LicenseData[]>('/licence/info/');
-  console.log(data);
   return (
     <AppBar
       position="fixed"

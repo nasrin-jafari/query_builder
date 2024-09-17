@@ -1,6 +1,6 @@
 import { Box, Paper, Tab, Tabs } from '@mui/material';
 import { useTheme, Theme } from '@mui/material/styles';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
