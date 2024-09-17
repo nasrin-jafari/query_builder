@@ -1,7 +1,7 @@
 import { FetchTimer, ProfileMenu, ThemeToggleButton } from '@/components';
 import UseApi from '@/hooks/UseApi';
 import { LicenseData } from '@/sections/settings/licence';
-import { ConvertRemainingDays } from '@/utils/convertRemainingDays';
+import { ConvertRemainingDays } from '@/utils/ConvertRemainingDays';
 import { Box, IconButton, AppBar as MuiAppBar, Toolbar, Typography } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import Image from 'next/image';
