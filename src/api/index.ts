@@ -59,10 +59,10 @@ axiosMethod.interceptors.response.use(
       }
     } else if (error.request) {
       // The request was made but no response was received
-      toast.error('Network error: Your error message here');
+      toast.error('خطای سرور');
     } else {
       // Something happened in setting up the request that triggered an error
-      toast.error('Error: Your error message here');
+      toast.error('خطای سرور');
     }
 
     return Promise.reject(error);

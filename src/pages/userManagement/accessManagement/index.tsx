@@ -54,7 +54,7 @@ const AccessManagement = () => {
         buttons={[
           {
             label: 'مدیریت سطح دسترسی',
-            type: '',
+            type: 'edit',
             onClick: (_, row) => {
               router.push({
                 pathname: '/userManagement/accessManagement/accessLevelManagement',
