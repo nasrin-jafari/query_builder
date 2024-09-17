@@ -1,4 +1,4 @@
-import { IconButton, Popover, Typography } from '@mui/material';
+import { IconButton, Popover, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { IconType } from 'react-icons';
 import { AiOutlineDelete } from 'react-icons/ai';
@@ -17,9 +17,10 @@ interface ReusableIconButtonProps {
 const CustomIconButton: React.FC<ReusableIconButtonProps> = ({
   icon: Icon,
   label,
-  type,
+  type = 'default',
   onClick,
 }) => {
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -31,6 +32,31 @@ const CustomIconButton: React.FC<ReusableIconButtonProps> = ({
   };
 
   const open = Boolean(anchorEl);
+
+  // Determine colors based on type
+  const getColor = () => {
+    switch (type) {
+      case 'delete':
+        return {
+          default: 'red',
+          hover: theme.palette.error.main,
+        };
+      case 'edit':
+        return {
+          default: 'green',
+          hover: theme.palette.info.main,
+        };
+
+      default:
+        return {
+          default: theme.palette.text.primary,
+          hover: theme.palette.primary.main,
+        };
+    }
+  };
+
+  const { default: _, hover: hoverColor } = getColor();
+
   return (
     <>
       <IconButton
@@ -39,6 +65,11 @@ const CustomIconButton: React.FC<ReusableIconButtonProps> = ({
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
         onClick={onClick}
+        sx={{
+          '&:hover': {
+            color: hoverColor, // Change color on hover based on type
+          },
+        }}
       >
         {(() => {
           switch (type) {

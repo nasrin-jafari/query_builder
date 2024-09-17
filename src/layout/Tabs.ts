@@ -213,7 +213,7 @@ export const TABS: ItemsTab[] = [
       {
         value: 'manageUsers',
         label: 'ایجاد و مدیریت کاربران',
-        path: '/userManagement',
+        path: '/userManagement/manageUsers',
       },
       {
         value: 'accessManagement',
