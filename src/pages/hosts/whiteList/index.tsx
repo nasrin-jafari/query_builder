@@ -183,12 +183,12 @@ const WhiteList = () => {
     pid: number;
   }
 
-  const handleEdit = async (formData: RowData, _: RowData) => {
-    const baseUrl = `/filters/white_list/update/${formData.pid}/`;
+  const handleEdit = async (formData: RowData, fullData: RowData) => {
+    const baseUrl = `/filters/white_list/update/${fullData.pid}/`;
 
     try {
       const res = await handleApiRequest(baseUrl, 'patch', {
-        type: formData.type,
+        type: fullData.type,
         value: formData.value,
         priority: formData.priority,
         note: formData.note,

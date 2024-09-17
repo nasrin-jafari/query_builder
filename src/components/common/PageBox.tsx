@@ -19,11 +19,11 @@ interface PageBoxProps {
 }
 
 const PageBox: React.FC<PageBoxProps> = ({
-                                           searchQuery,
-                                           title,
-                                           description = 'توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا',
-                                           children,
-                                         }) => {
+  searchQuery,
+  title,
+  description = 'توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا',
+  children,
+}) => {
   const theme = useTheme();
   const [open, setOpen] = useState<boolean>(false);
 
@@ -53,7 +53,6 @@ const PageBox: React.FC<PageBoxProps> = ({
   };
   const fields = isFieldArray(outPutFields) ? outPutFields : [];
 
-
   return (
     <Box>
       <Box sx={{ mt: 5, mb: 3 }}>
@@ -64,16 +63,20 @@ const PageBox: React.FC<PageBoxProps> = ({
               {description}
             </Typography>
           </Box>
-          {
-            fields?.length > 0 && (<Button
+          {fields?.length > 0 && (
+            <Button
               onClick={handleClicked}
               variant="contained"
-              style={{ color: '#fff', background: 'transparent', border: '1px solid grey' }}
+              style={{
+                color: theme.palette.grey[900],
+                background: 'transparent',
+                border: '1px solid grey',
+              }}
               endIcon={<FaFilter style={{ color: theme.palette.primary.main, fontSize: '18px' }} />}
             >
               جستجو پیشرفته
-            </Button>)
-          }
+            </Button>
+          )}
         </Box>
       </Box>
 
@@ -82,8 +85,7 @@ const PageBox: React.FC<PageBoxProps> = ({
         <ConfirmationDialog
           open={open}
           title="جستجوی پیشرفته"
-          content={<SearchQueryBuilder fields={fields} setOpen={setOpen}
-          />}
+          content={<SearchQueryBuilder fields={fields} setOpen={setOpen} />}
           onClose={onCloseHandle}
           maxWidth={'lg'}
         />

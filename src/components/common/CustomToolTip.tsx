@@ -5,9 +5,10 @@ import Tooltip, { tooltipClasses, TooltipProps } from '@mui/material/Tooltip';
 interface CustomTooltipProps {
   children: ReactElement;
   title: ReactElement | string;
+  align?: 'left';
 }
 
-const CustomTooltip: React.FC<CustomTooltipProps> = ({ children, title }) => {
+const CustomTooltip: React.FC<CustomTooltipProps> = ({ children, title, align }) => {
   const CustomizeTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip
       {...props}
@@ -16,7 +17,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ children, title }) => {
         modifiers: [
           {
             name: 'offset',
-            options: { offset: [0, -10] },
+            options: { offset: align === 'left' ? [-45, -45] : [0, -10] },
           },
         ],
       }}

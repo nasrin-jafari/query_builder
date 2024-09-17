@@ -32,7 +32,6 @@ interface RowData {
 const BlackList = () => {
   const [optionValue, setOptionValue] = useState<string | number>('');
   const [newData, setNewData] = useState<BlackListData[]>([]);
-
   const { data, total, loading, handleApiRequest } =
     useApi<handleApiRequestResponse>('/filters/black_list/');
 
@@ -183,15 +182,15 @@ const BlackList = () => {
     },
   ];
 
-  const handleEdit = async (formData: RowData, _: RowData) => {
-    const baseUrl = `/filters/black_list/update/${formData.pid}/`;
+  const handleEdit = async (row: RowData, fullData: RowData) => {
+    const baseUrl = `/filters/black_list/update/${fullData?.pid}/`;
 
     try {
       const res = await handleApiRequest(baseUrl, 'patch', {
-        type: formData.type,
-        value: formData.value,
-        priority: formData.priority,
-        note: formData.note,
+        type: fullData.type,
+        value: row.value,
+        priority: row.priority,
+        note: row.note,
       });
       if (res) {
         handleApiRequest('/filters/black_list/', 'get');
