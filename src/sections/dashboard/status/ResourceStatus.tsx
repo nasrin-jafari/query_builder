@@ -34,15 +34,7 @@ const ServerStatusCard: FC<ServerStatusCardProps> = ({ titleCard, Icon, title, d
           {titleCard}
         </Typography>
         <Icon size={38} color={theme.palette.primary.main} />
-        <Typography
-          sx={{
-            fontSize: 12,
-            color: theme.palette.grey[700],
-            fontWeight: 'bold',
-          }}
-        >
-          {title}
-        </Typography>
+
         <Typography
           sx={{
             fontSize: 11,
@@ -51,6 +43,15 @@ const ServerStatusCard: FC<ServerStatusCardProps> = ({ titleCard, Icon, title, d
           }}
         >
           {description}
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: 12,
+            color: theme.palette.grey[700],
+            fontWeight: 'bold',
+          }}
+        >
+          {title}
         </Typography>
       </CardBox>
     </Grid>
@@ -61,13 +62,13 @@ const ResourceStatus: FC<ResourceStatusProps> = ({ data }) => {
   return (
     <Grid item md={5} xs={12}>
       <CardBox minHeight={'270px'}>
-        <Divider sx={{fontSize :"17px"}}>وضعیت منابع سرور</Divider>
+        <Divider sx={{ fontSize: '17px' }}>وضعیت منابع سرور</Divider>
         <Grid container spacing={2} sx={{ mt: 2, textAlign: 'center' }}>
           <ServerStatusCard
             titleCard="Memory"
             Icon={FaMemory}
-            title={`استفاده: ${data?.memory_usage_total}`}
-            description={`کل:${data?.memory_usage_used}`}
+            description={`کل:${data?.memory_usage_total}`}
+            title={`استفاده: ${data?.memory_usage_used}`}
           />
           <ServerStatusCard
             titleCard="Load Average"
@@ -77,8 +78,8 @@ const ResourceStatus: FC<ResourceStatusProps> = ({ data }) => {
           <ServerStatusCard
             titleCard="Disk Space"
             Icon={BsDeviceHddFill}
-            title={`استفاده: ${data?.disk_space_total}`}
-            description={`کل:${data?.disk_space_used}`}
+            description={`کل:${data?.disk_space_total}`}
+            title={`استفاده: ${data?.disk_space_used}`}
           />{' '}
           <ServerStatusCard titleCard="Uptime" Icon={AiFillClockCircle} title={`${data?.uptime}`} />
         </Grid>

@@ -558,6 +558,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                   return showButton('delete', showBtnDelete ?? false);
                                 case 'edit':
                                   return showButton('edit', showBtnUpdate ?? false);
+                                case 'allowAccess':
+                                  return showButton('allowAccess', true);
                                 default:
                                   return null;
                               }

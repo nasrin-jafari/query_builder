@@ -96,11 +96,11 @@ export const TABS: ItemsTab[] = [
           },
         ],
       },
-      {
-        value: 'receiveAgent',
-        label: 'دریافت عامل',
-        path: '/hosts/receiveAgent',
-      },
+      // {
+      //   value: 'receiveAgent',
+      //   label: 'دریافت عامل',
+      //   path: '/hosts/receiveAgent',
+      // },
       {
         value: 'blackList',
         label: 'لیست سیاه',

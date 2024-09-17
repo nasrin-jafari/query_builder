@@ -31,7 +31,7 @@ const ReviewAndExplore: React.FC = () => {
   const theme = useTheme();
 
   const { data } = UseApi<ApiResponse>('/dashboard/review_overview/');
-  const { data: topAgentData } = UseApi<ChartDataItem[]>('/ranking/agents_all_logs/4/');
+  const { data: topAgentData } = UseApi<ChartDataItem[]>('/ranking/agents_all_logs/5/');
 
   return (
     <PageBox title="نمای کلی و بررسی" description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا">

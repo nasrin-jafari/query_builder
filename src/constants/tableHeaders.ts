@@ -1130,7 +1130,7 @@ const headers: Headers = {
     // { field: 'id', headerName: 'شناسه', dataType: 'number', isHeader: false },
     { field: 'name', headerName: 'نام', dataType: 'text', isHeader: true },
     { field: 'md5', headerName: 'هش MD5', dataType: 'text', isHeader: true },
-    { field: 'created', headerName: 'تاریخ ایجاد', dataType: 'date', isHeader: true },
+    { field: 'created_time', headerName: 'تاریخ ایجاد', dataType: 'date', isHeader: true },
     { field: 'enabled', headerName: 'وضعیت', dataType: 'checkbox', isHeader: true },
     { field: 'content', headerName: 'محتوا', dataType: 'text', isHeader: false },
   ],
