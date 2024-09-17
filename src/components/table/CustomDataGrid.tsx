@@ -480,7 +480,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                       whiteSpace: 'nowrap',
                                       overflow: 'hidden',
                                       textOverflow: 'ellipsis',
-                                      fontSize: '14px',
+                                      fontSize: '16px',
                                     }}
                                   >
                                     {value}
