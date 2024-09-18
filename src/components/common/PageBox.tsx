@@ -159,7 +159,7 @@ const PageBox: React.FC<PageBoxProps> = ({
               },
             }}
           >
-            <SearchQueryBuilder fields={fields} />
+            <SearchQueryBuilder fields={fields} setOpen={setOpen} />
           </Box>
         </Box>
       </Box>
