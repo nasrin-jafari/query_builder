@@ -127,26 +127,31 @@ const SearchRule: React.FC<SearchRuleProps> = ({
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <FieldSelector
-          control={control}
-          name={`${name}.field`}
-          fieldOptions={fieldOptions}
-          onFieldChange={onFieldChange}
-          disableDelete={disableDelete}
-        />
-        {currentFieldData?.selectOptions && (
-          <SubFieldSelector
-            control={control}
-            name={`${name}.subField`}
-            subFieldOptions={subFieldOptions}
-          />
+        {!isSearch && (
+          <>
+            <FieldSelector
+              control={control}
+              name={`${name}.field`}
+              fieldOptions={fieldOptions}
+              onFieldChange={onFieldChange}
+              disableDelete={disableDelete}
+            />
+            {currentFieldData?.selectOptions && (
+              <SubFieldSelector
+                control={control}
+                name={`${name}.subField`}
+                subFieldOptions={subFieldOptions}
+              />
+            )}
+            <OperatorSelector
+              control={control}
+              name={`${name}.operator`}
+              operatorOptions={operatorOptions}
+              onOperatorChange={onOperatorChange}
+            />
+          </>
         )}
-        <OperatorSelector
-          control={control}
-          name={`${name}.operator`}
-          operatorOptions={operatorOptions}
-          onOperatorChange={onOperatorChange}
-        />
+
         <Controller
           name={`${name}.value`}
           control={control}

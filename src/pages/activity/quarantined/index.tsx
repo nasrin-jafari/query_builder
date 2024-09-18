@@ -3,7 +3,7 @@ import PictorialBar from '@/components/chart/PictorialBar';
 import PieChart from '@/components/chart/PieChart';
 import RadarChart from '@/components/chart/RadarChart';
 import PageBox from '@/components/common/PageBox';
-import { quarantined_files } from '@/constants/tableHeaders';
+import { fieldsQueries, quarantined_files } from '@/constants/tableHeaders';
 import useApi from '@/hooks/UseApi';
 import PanelComponent from '@/layout/PanelComponent';
 import { useRouter } from 'next/router';
@@ -74,7 +74,11 @@ const ActivityQuarantined = () => {
   ];
 
   return (
-    <PageBox title="قرنطینه شده‌ها" description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا">
+    <PageBox
+      searchQuery={fieldsQueries}
+      title="قرنطینه شده‌ها"
+      description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
+    >
       <PanelComponent loading={loading} components={components} />
     </PageBox>
   );
