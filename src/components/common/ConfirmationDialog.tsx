@@ -22,9 +22,9 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   title,
   content,
   onConfirm,
-onClose,
-type,
-maxWidth,
+  onClose,
+  type,
+  maxWidth,
 }) => {
   const theme = useTheme();
 

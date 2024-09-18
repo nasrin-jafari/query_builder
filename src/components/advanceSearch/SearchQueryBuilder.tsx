@@ -40,10 +40,10 @@ function updateTitlesToLabels(fieldsWithoutId: Field[]): Field[] {
 const useFieldOptions = (fields: Field[], advancedSearch: boolean | undefined): Field[] => {
   const fieldDefault: Field[] = advancedSearch
     ? [
-      { label: 'parent', value: 'parent', dataType: 'text' },
-      { label: 'target', value: 'target', dataType: 'text' },
-      { label: 'time', value: 'time', dataType: 'date' },
-    ]
+        { label: 'parent', value: 'parent', dataType: 'text' },
+        { label: 'target', value: 'target', dataType: 'text' },
+        { label: 'time', value: 'time', dataType: 'date' },
+      ]
     : [];
   return [...fieldDefault, ...fields];
 };
@@ -59,7 +59,7 @@ const convertValuesToAppropriateType = (rules: Rule[], fieldOptions: Field[]): R
 
     const fieldOption = fieldOptions.find((option) => option.value === rule.field);
     const subFieldOption = fieldOption?.selectOptions?.find(
-      (option) => option.value === rule.subField,
+      (option) => option.value === rule.subField
     );
 
     if (fieldOption || subFieldOption) {
@@ -105,11 +105,11 @@ const filterEmptySubFieldRules = (rules: Rule[]): Rule[] => {
 };
 
 const SearchQueryBuilder: React.FC<SearchQueryBuilderProps> = ({
-                                                                 fields,
-                                                                 advancedSearch,
-                                                                 firstRule,
-                                                                 setOpen,
-                                                               }) => {
+  fields,
+  advancedSearch,
+  firstRule,
+  setOpen,
+}) => {
   const fieldsWithoutId = fields.filter((item) => item.value !== 'id');
   const isSearch = fieldsWithoutId.length === 1;
   const formatField = updateTitlesToLabels(fieldsWithoutId);
@@ -123,7 +123,7 @@ const SearchQueryBuilder: React.FC<SearchQueryBuilderProps> = ({
       const fieldOption = fieldOptions.find((option) => option.value === field);
 
       const subFieldOption = (fieldOption as Field)?.selectOptions?.find(
-        (option: Field) => option.value === subField,
+        (option: Field) => option.value === subField
       );
 
       if (
@@ -186,7 +186,7 @@ const SearchQueryBuilder: React.FC<SearchQueryBuilderProps> = ({
   const firstRules: Rule[] = fieldOptions
     .slice(
       advancedSearch ? 3 : 0,
-      firstRule ? firstRule + (advancedSearch ? 3 : 0) : advancedSearch ? 4 : 3,
+      firstRule ? firstRule + (advancedSearch ? 3 : 0) : advancedSearch ? 4 : 3
     )
     .map((option) => ({
       type: 'rule',
@@ -230,22 +230,20 @@ const SearchQueryBuilder: React.FC<SearchQueryBuilderProps> = ({
         ...filteredData,
         rules: convertValuesToAppropriateType(filteredData.rules, fieldOptions),
       };
-      console.log(convertedData);
       const output = JSON.stringify(convertedData);
-      // console.log(JSON.stringify(convertedData, null, 2));
       router.push(
         {
           pathname: router.pathname,
           query: { ...router.query, filters: output },
         },
         undefined,
-        { shallow: true },
+        { shallow: true }
       );
       if (setOpen) {
         setOpen(false);
       }
     },
-    [router, fieldOptions],
+    [router, fieldOptions]
   );
   const resetForm = useCallback(() => {
     methods.reset(defaultValues);
@@ -255,7 +253,7 @@ const SearchQueryBuilder: React.FC<SearchQueryBuilderProps> = ({
         query: {},
       },
       undefined,
-      { shallow: true },
+      { shallow: true }
     );
   }, [methods, router, defaultValues]);
 
