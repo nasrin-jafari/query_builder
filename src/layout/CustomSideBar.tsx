@@ -16,11 +16,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import { CiMenuBurger } from 'react-icons/ci';
+import { FaHome } from 'react-icons/fa';
 import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
 import CustomAppBar from './CustomAppBar';
 import { ItemsTab } from './Tabs';
-import CustomTooltip from '@/components/common/CustomToolTip';
-import { FaHome } from 'react-icons/fa';
 
 interface SideBarProps {
   content: React.ReactNode;
@@ -228,6 +227,9 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
                 {tab.routes ? (
                   <ListItem
                     onClick={() => handleTabClick(tab.value)}
+                    onMouseEnter={() => {
+                      if (!open) setOpen(true);
+                    }}
                     sx={{
                       cursor: 'pointer',
                       color:
@@ -240,19 +242,15 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
                     }}
                   >
                     {IconComponent && (
-                      <CustomTooltip title={tab.label} align="left">
-                        <ListItemIcon
-                          sx={{
-                            fontSize: 24,
-                            color:
-                              openTab === tab.value || isTabActive(tab)
-                                ? 'primary.main'
-                                : 'inherit',
-                          }}
-                        >
-                          <IconComponent />
-                        </ListItemIcon>
-                      </CustomTooltip>
+                      <ListItemIcon
+                        sx={{
+                          fontSize: 24,
+                          color:
+                            openTab === tab.value || isTabActive(tab) ? 'primary.main' : 'inherit',
+                        }}
+                      >
+                        <IconComponent />
+                      </ListItemIcon>
                     )}
 
                     <ListItemText primary={tab.label} />
@@ -274,19 +272,17 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
                       }}
                     >
                       {IconComponent && (
-                        <CustomTooltip title={tab.label} align="left">
-                          <ListItemIcon
-                            sx={{
-                              fontSize: 24,
-                              color:
-                                openTab === tab.value || isTabActive(tab)
-                                  ? 'primary.main'
-                                  : 'inherit',
-                            }}
-                          >
-                            <IconComponent />
-                          </ListItemIcon>
-                        </CustomTooltip>
+                        <ListItemIcon
+                          sx={{
+                            fontSize: 24,
+                            color:
+                              openTab === tab.value || isTabActive(tab)
+                                ? 'primary.main'
+                                : 'inherit',
+                          }}
+                        >
+                          <IconComponent />
+                        </ListItemIcon>
                       )}
 
                       <ListItemText primary={tab.label} />
