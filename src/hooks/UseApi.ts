@@ -30,8 +30,12 @@ const UseApi = <T>(url: string, initialParams: Record<string, any> = {}): ApiReq
     params: Record<string, any> = {},
     headers: Record<string, string> = {}
   ): Promise<T | boolean> => {
-    setLoading(true);
+    // Only set loading if there is no existing data
+    if (!data) {
+      setLoading(true);
+    }
     setError(null);
+
     try {
       const response = await axiosMethod({
         method,
@@ -54,7 +58,10 @@ const UseApi = <T>(url: string, initialParams: Record<string, any> = {}): ApiReq
       console.log(err);
       return false;
     } finally {
-      setLoading(false);
+      // Only set loading to false if there's no existing data
+      if (!data) {
+        setLoading(false);
+      }
     }
   };
 

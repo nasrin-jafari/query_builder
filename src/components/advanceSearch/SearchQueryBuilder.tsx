@@ -23,7 +23,7 @@ export interface Rule {
   value: string | number | boolean;
   rules?: Rule[];
   subField?: string;
-  dataType?: 'text' | 'date' | 'number' | 'checkbox'; // Add this line
+  dataType?: 'text' | 'date' | 'number' | 'checkbox';
 }
 
 interface SearchQueryBuilderProps {
@@ -97,7 +97,7 @@ const filterEmptySubFieldRules = (rules: Rule[]): Rule[] => {
         rules: filterEmptySubFieldRules(rule.rules),
       };
     } else if (rule.subField === '') {
-      const { subField, ...rest } = rule; // Remove subField key
+      const { subField, ...rest } = rule;
       return rest;
     }
     return rule;
@@ -247,10 +247,11 @@ const SearchQueryBuilder: React.FC<SearchQueryBuilderProps> = ({
   );
   const resetForm = useCallback(() => {
     methods.reset(defaultValues);
+    const { filters, ...rest } = router.query;
     router.push(
       {
         pathname: router.pathname,
-        query: {},
+        query: { ...rest },
       },
       undefined,
       { shallow: true }
@@ -263,11 +264,9 @@ const SearchQueryBuilder: React.FC<SearchQueryBuilderProps> = ({
         <form
           onSubmit={methods.handleSubmit(exportQuery)}
           style={{
-            // border: '1px solid #585f67',
             borderRadius: '8px',
-            // margin: '30px 0',
             display: isSearch ? 'flex' : '',
-            position: 'relative',
+            justifyContent: isSearch ? 'space-between' : '',
           }}
         >
           <SearchGroup
@@ -288,27 +287,31 @@ const SearchQueryBuilder: React.FC<SearchQueryBuilderProps> = ({
               paddingLeft: 2,
               padding: '10px  0 16px 16px',
               ...(isSearch && {
-                position: 'absolute',
-                right: '0',
-                top: '40px',
-                paddingRight: '20px',
+                marginRight: 2,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                mt: '20px',
               }),
             }}
           >
             <Button
               type="submit"
               variant="contained"
-              size={!isSearch ? 'medium' : 'small'}
-              sx={{ marginRight: '10px' }}
+              size="large"
+              sx={{ marginRight: '5px' }}
               style={{ color: '#fff' }}
             >
               جستجو
             </Button>
-            {!isSearch && (
+
+            {router.query.filters && (
               <Button
-                size="small"
-                onClick={resetForm}
+                type="button"
                 variant="contained"
+                onClick={resetForm}
+                sx={{ ml: 2 }}
+                size="large"
                 style={{ color: '#fff' }}
               >
                 ریست

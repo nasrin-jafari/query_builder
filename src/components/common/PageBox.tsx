@@ -2,6 +2,7 @@ import SearchQueryBuilder, { Field } from '@/components/advanceSearch/SearchQuer
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import React, { ReactNode, useRef, useState } from 'react';
 import { FaFilter, FaTimes } from 'react-icons/fa';
+import { IoSearch } from 'react-icons/io5';
 
 export interface Fields {
   selectOptions?: Fields[];
@@ -67,7 +68,7 @@ const PageBox: React.FC<PageBoxProps> = ({
     return Array.isArray(data) && data.every((item) => 'label' in item && 'value' in item);
   };
   const fields = isFieldArray(outPutFields) ? outPutFields : [];
-
+  const isSearch = fields.length == 1;
   return (
     <Box sx={{ position: 'relative' }}>
       <Box sx={{ mt: 5, mb: 3 }}>
@@ -87,9 +88,27 @@ const PageBox: React.FC<PageBoxProps> = ({
                 background: 'transparent',
                 border: '1px solid grey',
               }}
-              endIcon={<FaFilter style={{ color: theme.palette.primary.main, fontSize: '18px' }} />}
+              endIcon={
+                isSearch ? (
+                  <IoSearch
+                    style={{
+                      color: theme.palette.primary.main,
+                      fontSize: '20px',
+                      marginRight: '20px',
+                    }}
+                  />
+                ) : (
+                  <FaFilter
+                    style={{
+                      color: theme.palette.primary.main,
+                      fontSize: '18px',
+                      marginRight: '12px',
+                    }}
+                  />
+                )
+              }
             >
-              جستجو پیشرفته
+              {isSearch ? 'جستجو' : ' جستجو پیشرفته'}
             </Button>
           )}
         </Box>
@@ -119,7 +138,7 @@ const PageBox: React.FC<PageBoxProps> = ({
             borderRadius: '20px',
             padding: '40px',
             boxShadow: 4,
-            width: '70%',
+            width: isSearch ? '50% ' : '70%',
             position: 'relative',
           }}
         >
@@ -142,7 +161,7 @@ const PageBox: React.FC<PageBoxProps> = ({
           <Box
             sx={{
               position: 'relative',
-              height: '500px',
+              height: isSearch ? '200px' : '500px',
               maxHeight: '650px',
               overflowY: 'auto',
               overflowX: 'hidden',
@@ -159,11 +178,10 @@ const PageBox: React.FC<PageBoxProps> = ({
               },
             }}
           >
-            <SearchQueryBuilder fields={fields} />
+            <SearchQueryBuilder fields={fields} setOpen={setOpen} />
           </Box>
         </Box>
       </Box>
-
       <Box>{children}</Box>
     </Box>
   );
