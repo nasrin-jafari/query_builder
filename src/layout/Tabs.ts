@@ -83,6 +83,11 @@ export const TABS: ItemsTab[] = [
             path: '/hosts/hostManagement/identified',
           },
           {
+            value: 'hostManagement/analysis',
+            label: 'بررسی میزبان',
+            path: '/hosts/hostManagement/analysis',
+          },
+          {
             value: 'hostManagement/logs',
             label: 'مدیریت رخدادها',
             path: '/hosts/hostManagement/logs',
