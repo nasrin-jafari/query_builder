@@ -60,7 +60,7 @@ const HostManagement = () => {
             type: 'extra',
             onClick: (_, data) => {
               router.push({
-                pathname: '/hosts/hostManagement/logId',
+                pathname: '/hosts/hostManagement/logs',
                 query: {
                   name: data?.computer_name,
                   logId: data?.extra_information?.agent_id,
@@ -72,9 +72,14 @@ const HostManagement = () => {
             label: 'شناسایی ها',
             type: 'extra',
             onClick: (_, data) => {
-              router.push(
-                `/hosts/hostManagement/${data.extra_information.agent_id}/alerts_quarantined_files/`
-              );
+              router.push({
+                pathname: `/hosts/hostManagement/logs/detailsLog/`,
+                query: {
+                  logId: data?.extra_information?.agent_id,
+                  key: 'quarantined_files',
+                  logs: 'alerts',
+                },
+              });
             },
           },
         ]}

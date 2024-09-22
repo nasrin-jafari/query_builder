@@ -1,5 +1,6 @@
 import SearchQueryBuilder, { Field } from '@/components/advanceSearch/SearchQueryBuilder';
 import { Box, Button, Typography, useTheme } from '@mui/material';
+import Head from 'next/head';
 import React, { ReactNode, useRef, useState } from 'react';
 import { FaFilter, FaTimes } from 'react-icons/fa';
 import { IoSearch } from 'react-icons/io5';
@@ -71,6 +72,9 @@ const PageBox: React.FC<PageBoxProps> = ({
   const isSearch = fields.length == 1;
   return (
     <Box sx={{ position: 'relative' }}>
+      <Head>
+        <title>EDR / {title}</title>
+      </Head>
       <Box sx={{ mt: 5, mb: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Box>

@@ -39,11 +39,18 @@ select:-webkit-autofill:focus {
   direction: rtl;
 }
 
+/*  */
+
+html {
+  scrollbar-width: none;
+  /* For Firefox */
+}
+
 body {
   font-family: 'vazir';
   padding: 0 !important;
   margin: 0 !important;
-  /* overflow: hidden ; */
+  overflow-x: hidden ;
 }
 
 .MuiPickersPopper-paper li {

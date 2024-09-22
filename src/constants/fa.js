@@ -1,6 +1,6 @@
 export const fa = {
   activity: 'فعالیت',
-  hosts: 'مدیریت میزبان',
+  hosts: 'میزبان ها',
   intelligence: 'هوشمندی',
   mandatoryInstallation: 'نصاب اجباری',
   mitre: 'حملات MITRE',
@@ -24,7 +24,7 @@ export const fa = {
   blackList: 'لیست سیاه',
   exceptionList: 'لیست استثنا',
   'hostManagement/alerts': 'مدیریت هشدارها',
-  'hostManagement/detailLogs': 'جزئیات لاگ ها',
+  'hostManagement/detailLogs': 'جزئیات رخداد ها',
   'hostManagement/logs': ' رخدادها',
   hostManagement: 'مدیریت میزبان ها',
   receiveAgent: 'دریافت عامل',

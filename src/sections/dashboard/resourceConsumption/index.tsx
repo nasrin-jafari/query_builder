@@ -25,18 +25,12 @@ interface ResourceConsumptionProps {
 export const UsageItem: FC<UsageItemProps> = ({ title, total, usage }) => {
   return (
     <Grid item md={6} xs={12}>
-      <Box
-        sx={{
-          p: 3,
-        }}
-      >
-        <CardBox>
-          <Typography variant="h6">{title}</Typography>
-          <Box sx={{ width: '100%' }}>
-            <ProgressBar total={total ?? 0} usage={usage ?? 0} />
-          </Box>
-        </CardBox>
-      </Box>
+      <CardBox sx={{ mt: 2 }}>
+        <Typography variant="h6">{title}</Typography>
+        <Box sx={{ width: '100%' }}>
+          <ProgressBar total={total ?? 0} usage={usage ?? 0} />
+        </Box>
+      </CardBox>
     </Grid>
   );
 };

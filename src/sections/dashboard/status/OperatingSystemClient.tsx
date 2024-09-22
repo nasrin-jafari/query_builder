@@ -12,15 +12,29 @@ interface ResourceStatusProps {
 }
 
 const OpratingSystemClient: FC<ResourceStatusProps> = ({ data, isLoading }) => {
+  const redirctUrl: Record<string, string> = {
+    MultiAV: '/intelligence/antivirusResults',
+    AI: '/intelligence/aiResults',
+    Sandbox: '/',
+    Sutter: '/',
+    Siem: '/',
+  };
+
+  const analysis_data = data?.analysis?.map((analysis) => {
+    const redirectTo = analysis.en ? redirctUrl[analysis.en] : '/';
+    return {
+      ...analysis,
+      redirectTo,
+    };
+  });
+
   return (
-    <>
-      <Grid item md={4} xs={12}>
-        <CardBox minHeight={'270px'}>
-          <Divider sx={{ fontSize: '17px' }}>سرویس گیرنده‌های سیستم عامل</Divider>
-          <PieChart data={data?.analysis} isLoading={isLoading} />
-        </CardBox>
-      </Grid>
-    </>
+    <Grid item md={4} xs={12}>
+      <CardBox minHeight={'270px'}>
+        <Divider sx={{ fontSize: '17px' }}>سرویس گیرنده‌های سیستم عامل</Divider>
+        <PieChart data={analysis_data} isLoading={isLoading} />
+      </CardBox>
+    </Grid>
   );
 };
 

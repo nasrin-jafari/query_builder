@@ -84,14 +84,12 @@ const Logs: FC<LogsProps> = ({ data }) => {
           const slicedData = Object.entries(value)
             // .slice(startIndex, startIndex + 4)
             .map(([key, value]) => ({
-              redirectTo: `/hosts/hostManagement/logId/detailsLog`,
-              query: {
-                logId: `${router.query.logId ?? ''}`,
-                name: `${title}_${key}`,
-              },
+              redirectTo: `/hosts/hostManagement/logs/detailsLog/`,
+              query: { ...router.query, logId: router.query.logId, logs: title, key },
               en: key,
               value: value.total,
             }));
+
           return (
             <Grid item key={title} xs={12} md={4}>
               <CardBox>

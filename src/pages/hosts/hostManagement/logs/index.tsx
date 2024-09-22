@@ -9,6 +9,7 @@ import Logs from '@/sections/hosts/hostManagement/logs';
 import { Grid, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { fieldsQueries } from '@/constants/tableHeaders';
 
 interface DataOfTotal {
   en: string;
@@ -85,17 +86,16 @@ const LogsAgent = () => {
     events_chart: data?.events_chart || [],
     quarantined_chart: data?.quarantined_chart || [],
   };
-  const eventDataChart = normalizedData.events?.length > 0 ?
-    normalizedData.events.map((item) => ({
-      ...item,
-      redirectTo: `/hosts/hostManagement/analysis`,
-      query: { ...router.query, eventType: item.en, eventTypeFa: item.fa },
-    })) : [];
+  const eventDataChart =
+    normalizedData.events?.length > 0
+      ? normalizedData.events.map((item) => ({
+          ...item,
+          redirectTo: `/hosts/hostManagement/analysis`,
+          query: { ...router.query, eventType: item.en, eventTypeFa: item.fa },
+        }))
+      : [];
   return (
-    <PageBox
-      title={`مدیریت رخدادهای ${query.name}`}
-      description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
-    >
+    <PageBox title={`مدیریت رخدادهای ${query.name}`} searchQuery={fieldsQueries}>
       <Grid container spacing={2} sx={{ mt: 1 }}>
         <Grid item md={8} xs={12}>
           <CardBox minHeight={'250px'}>
