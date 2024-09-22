@@ -60,8 +60,8 @@ export default function Layout({ children }: { children: ReactNode }) {
         component="main"
         sx={{
           p: 6,
-          pl: 10,
-          pr: 10,
+          pl: 9,
+          pr: 8,
           borderRadius: '12px',
           width: '100%',
           my: 4,
