@@ -1,18 +1,32 @@
 // Layout.tsx
-import { Card } from '@mui/material';
+import { Box, Button, Card, Container, Typography, useTheme } from '@mui/material';
+import { useRouter } from 'next/router';
 import jwt from 'jsonwebtoken';
 import { ReactNode, useEffect, useState } from 'react';
 import SideBar from './CustomSideBar';
 import { ItemsTab, TABS } from './Tabs';
-import AccessDenied from './AccessDenied';
 
 interface Token {
   permissions?: Record<string, any>;
 }
 
+interface Route {
+  path: string;
+  value?: string;
+  routes?: Route[];
+}
+
+interface FlattenedPermissions {
+  [key: string]: any;
+}
+
 export default function Layout({ children }: { children: ReactNode }) {
+  const theme = useTheme();
+  const router = useRouter();
   const [newTabs, setNewTabs] = useState<ItemsTab[]>([]);
   const [permissions, setPermissions] = useState<Record<string, any>>({});
+  const [flatRoutes, setFlatRoutes] = useState<Route[]>([]);
+  const [isAccess, setIsAccess] = useState<Route[]>([]);
 
   useEffect(() => {
     const storedValue = localStorage.getItem('auth_token_typeScript');
@@ -25,6 +39,19 @@ export default function Layout({ children }: { children: ReactNode }) {
       }
     }
   }, []);
+
+  useEffect(() => {
+    const flat = flattenRoutes(TABS);
+    setFlatRoutes(flat);
+  }, []);
+
+  useEffect(() => {
+    const flattenedPerms = flattenPermissions(permissions);
+    const access = flatRoutes.filter((item) => flattenedPerms[item.value!]);
+    setIsAccess(access);
+  }, [flatRoutes, permissions]);
+
+  const tabAccessible = isTabAccessible(isAccess, router);
 
   return (
     <>
@@ -42,14 +69,91 @@ export default function Layout({ children }: { children: ReactNode }) {
           background: 'transparent',
         }}
       >
-        <AccessDenied tabs={TABS} permissions={permissions} />
-        {children}
+        {!tabAccessible ? (
+          <Container
+            component="main"
+            maxWidth="xs"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100vh',
+              textAlign: 'center',
+            }}
+          >
+            <Box
+              sx={{
+                padding: 3,
+                borderRadius: 2,
+                backgroundColor: theme.palette.grey[300],
+                boxShadow: 3,
+                width: '100%',
+              }}
+            >
+              <Typography variant="h4" component="h1" gutterBottom>
+                عدم دسترسی
+              </Typography>
+              <Typography variant="body1" color="textSecondary" paragraph>
+                شما مجوز دسترسی به این صفحه را ندارید
+              </Typography>
+              <Button variant="contained" color="primary" onClick={() => router.back()}>
+                بازگشت
+              </Button>
+            </Box>
+          </Container>
+        ) : (
+          children
+        )}
       </Card>
     </>
   );
 }
 
-// Helper function to filter tabs
+// Helper functions
+const flattenRoutes = (routes: Route[]): Route[] => {
+  const flatRoutes: Route[] = [];
+  const flatten = (route: Route) => {
+    const { routes: childRoutes, ...rest } = route;
+    const newPath = route.path;
+    if (childRoutes) {
+      childRoutes.forEach((childRoute) => flatten(childRoute));
+    }
+    flatRoutes.push({ ...rest, path: newPath });
+  };
+  routes.forEach((route) => flatten(route));
+  return flatRoutes;
+};
+
+const flattenPermissions = (obj: Record<string, any>, parentKey = ''): FlattenedPermissions => {
+  if (obj == null) {
+    return {};
+  }
+  return Object.keys(obj).reduce((acc: FlattenedPermissions, key) => {
+    const currentKey = parentKey ? `${key}` : key;
+    if (Array.isArray(obj[key])) {
+      acc[currentKey] = obj[key];
+    } else {
+      Object.assign(acc, flattenPermissions(obj[key], currentKey));
+    }
+    return acc;
+  }, {});
+};
+
+const isTabAccessible = (access: Route[], router: any): boolean => {
+  if (access.length === 0 && router.pathname === '/') {
+    return true;
+  }
+  return access.some((tab) => {
+    if (router.pathname === '/' || router.pathname === '/aboutUs') {
+      return true;
+    }
+    const match = router.pathname.replace(/\/\[\w+\]/g, '').match(/\/([^\/]+)$/);
+    const endPath = match ? match[1] : null;
+    return tab.path?.includes(endPath ? endPath : '');
+  });
+};
+
 const filterTabs = (tabs: ItemsTab[], filterObject?: Record<string, any>): ItemsTab[] => {
   if (!filterObject) {
     return tabs;

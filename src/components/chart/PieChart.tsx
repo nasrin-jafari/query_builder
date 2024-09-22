@@ -15,7 +15,7 @@ interface PieChartProps {
 
 const PieChart: FC<PieChartProps> = ({
   data = [],
-  startIndex = 0,
+  startIndex,
   renderBottomText = false,
   isLoading,
   colors = [], // Default to an empty array
@@ -32,7 +32,7 @@ const PieChart: FC<PieChartProps> = ({
   }));
 
   const legendData =
-    startIndex !== undefined && startIndex > 0
+    startIndex !== undefined
       ? data.slice(startIndex, startIndex + 4).map((item) => ({
           ...item,
           name: item.fa ? item.fa : item.en,
