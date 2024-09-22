@@ -15,7 +15,10 @@ class MyDocument extends Document {
     const themeMode = (this.props as any).themeMode;
     return (
       <Html lang="fa" data-theme={themeMode}>
-        <Head />
+        <Head>
+          <link rel="icon" href="/images/logo.ico" sizes="any" />
+          <title>سامانه EDR</title>
+        </Head>
         <body>
           <Main />
           <NextScript />
