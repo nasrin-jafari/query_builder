@@ -11,5 +11,5 @@ export type ChartDataItem = {
   add?: number;
   modified?: number;
   delete?: number;
-  query?: { [key: string]: string };
+  query?: { [key: string]: any };
 };
