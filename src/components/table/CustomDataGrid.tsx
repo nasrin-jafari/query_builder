@@ -403,8 +403,10 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                         {headerColumns?.map((column) => {
                           const fieldValue = column.field ? row[column.field] : undefined;
                           let content: React.ReactNode;
+
                           const renderTimeContent = (value: number) =>
                             value ? ConvertDates(value, true) : '-';
+
                           const renderScoreContent = (value: number) =>
                             value !== null && value !== undefined ? (
                               <Typography
@@ -413,8 +415,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     value >= 8
                                       ? theme.palette.error.main
                                       : value >= 6
-                                        ? theme.palette.primary.main
-                                        : theme.palette.warning.main,
+                                      ? theme.palette.primary.main
+                                      : theme.palette.warning.main,
                                 }}
                               >
                                 {value}
@@ -422,6 +424,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                             ) : (
                               '-'
                             );
+
                           const renderSwitchHandlerContent = (fieldValue: boolean) => {
                             return (
                               <Switch
@@ -431,6 +434,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               />
                             );
                           };
+
                           const renderStatusContent = (value: any) => {
                             const getColor = (value: string) => {
                               const stringValue = String(value); // تبدیل مقدار به رشته
@@ -501,12 +505,11 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               content = renderScoreContent(fieldValue);
                               break;
                             case column.field?.includes('enabled'):
-                              content = renderSwitchHandlerContent(fieldValue);
+                              content = renderSwitchHandlerContent(fieldValue); // Do not wrap with CopyValue here
                               break;
                             case ['status', 'infected'].some((key) => column.field?.includes(key)):
                               content = renderStatusContent(fieldValue);
                               break;
-
                             case column.field?.includes('_is_'):
                               content = renderIconContent(fieldValue);
                               break;
@@ -514,6 +517,23 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               content = renderDefaultContent(fieldValue);
                               break;
                           }
+
+                          // Wrap all content in CopyValue except for the switch handler
+                          const displayContent = column.field?.includes('enabled') ? (
+                            content
+                          ) : (
+                            <CopyValue
+                              textCopy={
+                                React.isValidElement(content) &&
+                                content.props &&
+                                'title' in content.props
+                                  ? content.props.title
+                                  : content
+                              }
+                            >
+                              {content}
+                            </CopyValue>
+                          );
 
                           return (
                             <TableCell
@@ -524,17 +544,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                 fontSize: 16,
                               }}
                             >
-                              <CopyValue
-                                textCopy={
-                                  React.isValidElement(content) &&
-                                  content.props &&
-                                  'title' in content.props
-                                    ? content.props.title
-                                    : content
-                                }
-                              >
-                                {content}
-                              </CopyValue>
+                              {displayContent}
                             </TableCell>
                           );
                         })}
@@ -652,8 +662,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               dialogState.type === 'delete'
                 ? 'آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟'
                 : dialogState.type === 'edit'
-                  ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
-                  : 'افزودن آیتم جدید'
+                ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
+                : 'افزودن آیتم جدید'
             }
             content={
               dialogState.type === 'delete' ? (
@@ -665,8 +675,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     dialogState.type === 'edit'
                       ? editForm || []
                       : handleAdd
-                        ? handleAdd?.fields
-                        : fields || []
+                      ? handleAdd?.fields
+                      : fields || []
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}
