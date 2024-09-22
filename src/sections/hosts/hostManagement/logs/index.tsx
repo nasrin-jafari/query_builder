@@ -85,7 +85,7 @@ const Logs: FC<LogsProps> = ({ data }) => {
             // .slice(startIndex, startIndex + 4)
             .map(([key, value]) => ({
               redirectTo: `/hosts/hostManagement/logs/detailsLog/`,
-              query: { logId: router.query.logId, logs: title, key },
+              query: { ...router.query, logId: router.query.logId, logs: title, key },
               en: key,
               value: value.total,
             }));

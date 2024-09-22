@@ -9,6 +9,7 @@ import Logs from '@/sections/hosts/hostManagement/logs';
 import { Grid, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { fieldsQueries } from '@/constants/tableHeaders';
 
 interface DataOfTotal {
   en: string;
@@ -94,10 +95,7 @@ const LogsAgent = () => {
         }))
       : [];
   return (
-    <PageBox
-      title={`مدیریت رخدادهای ${query.name}`}
-      description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
-    >
+    <PageBox title={`مدیریت رخدادهای ${query.name}`} searchQuery={fieldsQueries}>
       <Grid container spacing={2} sx={{ mt: 1 }}>
         <Grid item md={8} xs={12}>
           <CardBox minHeight={'250px'}>

@@ -26,20 +26,23 @@ const DetailsLog: React.FC = () => {
   const { data, total, loading }: UseApiResponse = useApi(`/agents/${logId}/logs/${logs}_${key}/`);
   // Safely access the columns if data and Title.en exist
   const columns = data?.Title?.en ? headers[data.Title.en] : [];
-
   return (
-    <PageBox
-      title={data?.Title?.fa ?? ' '}
-      description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
-      searchQuery={columns}
-    >
-      <CustomDataGrid
-        loading={loading}
-        pageTotal={total}
-        columns={columns}
-        rows={data?.Data ?? []}
-      />
-    </PageBox>
+    <>
+      {columns.length > 0 && (
+        <PageBox
+          title={data?.Title?.fa ?? ' '}
+          description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
+          searchQuery={columns}
+        >
+          <CustomDataGrid
+            loading={loading}
+            pageTotal={total}
+            columns={columns}
+            rows={data?.Data ?? []}
+          />
+        </PageBox>
+      )}
+    </>
   );
 };
 
