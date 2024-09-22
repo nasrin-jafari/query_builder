@@ -1,4 +1,5 @@
 import { dashboard } from '@/api/dashboard';
+import CustomTabs from '@/components/common/CustomTabs';
 import { AppDispatch, RootState } from '@/redux/store';
 import Events from '@/sections/dashboard/events';
 import Mitre from '@/sections/dashboard/mitre';
@@ -20,6 +21,7 @@ export default function Home() {
   const { data, isLoading } = useSelector((state: RootState) => state.dashboard);
   const CustomDivider = styled(Divider)(() => ({
     marginLeft: 0,
+    marginTop: 20,
     paddingLeft: 0,
     '&::before': {
       width: '2%',
@@ -33,38 +35,84 @@ export default function Home() {
     },
   }));
 
+  const tabs = [
+    {
+      label: 'پیش فرض',
+      content: (
+        <>
+          <>
+            <CustomDivider textAlign="left">وضعیت منابع</CustomDivider>
+            <Status data={data} isLoading={isLoading} />
+          </>
+          <>
+            <CustomDivider textAlign="left">وضعیت رویدادها </CustomDivider>
+            <Events data={data} isLoading={isLoading} />
+          </>
+          <>
+            <CustomDivider textAlign="left">تهدیدات MITRE </CustomDivider>
+            <Mitre data={data} isLoading={isLoading} />
+          </>
+          <>
+            <CustomDivider textAlign="left">سرعت سرور </CustomDivider>
+            <SpeedTest data={data?.speed_test} isLoading={isLoading} />
+          </>
+          <>
+            <CustomDivider textAlign="left">منابع مورد استفاده </CustomDivider>
+            <ResourceConsumption data={data?.progress_bars} />
+          </>
+        </>
+      ),
+    },
+    {
+      label: 'وضعیت منابع',
+      content: (
+        <>
+          <CustomDivider textAlign="left">وضعیت منابع</CustomDivider>
+          <Status data={data} isLoading={isLoading} />,
+        </>
+      ),
+    },
+    {
+      label: 'رویداد',
+      content: (
+        <>
+          <CustomDivider textAlign="left">وضعیت رویدادها </CustomDivider>
+          <Events data={data} isLoading={isLoading} />,
+        </>
+      ),
+    },
+    {
+      label: 'MITRE',
+      content: (
+        <>
+          <CustomDivider textAlign="left">تهدیدات MITRE </CustomDivider>
+          <Mitre data={data} isLoading={isLoading} />,
+        </>
+      ),
+    },
+    {
+      label: 'رخدادها',
+      content: (
+        <>
+          <CustomDivider textAlign="left">سرعت سرور </CustomDivider>
+          <SpeedTest data={data?.speed_test} isLoading={isLoading} />,
+        </>
+      ),
+    },
+    {
+      label: 'منابع ',
+      content: (
+        <>
+          <CustomDivider textAlign="left">منابع مورد استفاده </CustomDivider>
+          <ResourceConsumption data={data?.progress_bars} />,
+        </>
+      ),
+    },
+  ];
+
   return (
     <>
-      <Box sx={{ mb: 3 }}>
-        <CustomDivider textAlign="left">وضعیت منابع</CustomDivider>
-        <Grid container spacing={2} sx={{ mt: 1 }}>
-          <Status data={data} isLoading={isLoading} />
-        </Grid>
-      </Box>
-      <Box sx={{ mb: 3 }}>
-        <CustomDivider textAlign="left">وضعیت رویدادها </CustomDivider>
-        <Grid container spacing={2} sx={{ mt: 1 }}>
-          <Events data={data} isLoading={isLoading} />
-        </Grid>
-      </Box>
-      <Box sx={{ mb: 3 }}>
-        <CustomDivider textAlign="left">تهدیدات MITRE </CustomDivider>
-        <Grid container spacing={2} sx={{ mt: 1 }}>
-          <Mitre data={data} isLoading={isLoading} />
-        </Grid>
-      </Box>
-      <Box sx={{ mb: 3 }}>
-        <CustomDivider textAlign="left">سرعت سرور </CustomDivider>
-        <Grid container spacing={2} sx={{ mt: 1 }}>
-          <SpeedTest data={data?.speed_test} isLoading={isLoading} />
-        </Grid>
-      </Box>
-      <Box sx={{ mb: 3 }}>
-        <CustomDivider textAlign="left">منابع مورد استفاده </CustomDivider>
-        <Grid container spacing={2} sx={{ mt: 1 }}>
-          <ResourceConsumption data={data?.progress_bars} />
-        </Grid>
-      </Box>
+      <CustomTabs tabs={tabs} orientation="vertical" />
     </>
   );
 }

@@ -41,7 +41,7 @@ const useStyles = (theme: Theme) => ({
   },
   innerBoxVertical: {
     flexGrow: 1,
-    bgcolor: theme.palette.grey[600],
+    bgcolor: theme.palette.grey[300],
     height: 'auto',
     position: 'fixed',
     right: 0,
@@ -106,7 +106,12 @@ const CustomTabs: React.FC<CustomTabsProps> = ({
             orientation={orientation === 'vertical' ? 'vertical' : 'horizontal'}
           >
             {tabs.map((tab, index) => (
-              <Tab key={index} label={tab.label} {...a11yProps(index)} />
+              <Tab
+                key={index}
+                label={tab.label}
+                {...a11yProps(index)}
+                sx={{ fontWeight: 'bold' }}
+              />
             ))}
           </Tabs>
         </Paper>

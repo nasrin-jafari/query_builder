@@ -14,7 +14,7 @@ interface SpeedTestProps {
 
 const SpeedTest: FC<SpeedTestProps> = ({ data, isLoading }) => {
   return (
-    <>
+    <Grid container spacing={2} sx={{ mt: 1 }}>
       <Grid item md={4} xs={12}>
         <CardBox>
           <Typography variant="h5"> </Typography>
@@ -33,7 +33,7 @@ const SpeedTest: FC<SpeedTestProps> = ({ data, isLoading }) => {
           <GaugeChart data={data?.ping} name={'پینگ'} isLoading={isLoading} />
         </CardBox>
       </Grid>
-    </>
+    </Grid>
   );
 };
 
