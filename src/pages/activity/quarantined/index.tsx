@@ -39,6 +39,7 @@ const ActivityQuarantined = () => {
     {
       component: PieChart,
       props: {
+        height: '100%',
         data: events?.top_agents?.map((item) => ({
           ...item,
           redirectTo: '/activity/quarantined/inspect',
@@ -48,7 +49,6 @@ const ActivityQuarantined = () => {
             agent_id: item.redirectTo.replace(/^\/+/, ''),
           },
         })),
-
         renderBottomText: true,
       },
       title: 'پر مخاطره ترین ها',

@@ -52,6 +52,7 @@ const ActivityEvents = () => {
     {
       component: PieChart,
       props: {
+        height: '100%',
         data: events?.top_events?.map((log) => ({
           ...log,
           redirectTo: '/activity/events/inspect/',
