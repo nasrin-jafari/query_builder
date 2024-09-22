@@ -25,7 +25,7 @@ const InspectEvents = () => {
   );
 
   return (
-    <PageBox title={`${title} `}>
+    <PageBox title={`${title} `} searchQuery={inspect_events}>
       <CustomDataGrid
         pageTotal={total}
         loading={loading}

@@ -3,7 +3,7 @@ import PictorialBar from '@/components/chart/PictorialBar';
 import PieChart from '@/components/chart/PieChart';
 import RadarChart from '@/components/chart/RadarChart';
 import PageBox from '@/components/common/PageBox';
-import { all_events } from '@/constants/tableHeaders';
+import { all_events, fieldsQueries } from '@/constants/tableHeaders';
 import useApi from '@/hooks/UseApi';
 import PanelComponent from '@/layout/PanelComponent';
 import { useRouter } from 'next/router';
@@ -87,7 +87,7 @@ const ActivityEvents = () => {
   ];
 
   return (
-    <PageBox title="رخدادها" description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا">
+    <PageBox title="رخدادها" searchQuery={fieldsQueries}>
       <PanelComponent loading={loading} components={components} />
     </PageBox>
   );

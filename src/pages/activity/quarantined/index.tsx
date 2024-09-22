@@ -74,11 +74,7 @@ const ActivityQuarantined = () => {
   ];
 
   return (
-    <PageBox
-      searchQuery={fieldsQueries}
-      title="قرنطینه شده‌ها"
-      description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
-    >
+    <PageBox searchQuery={fieldsQueries} title="قرنطینه شده‌ها">
       <PanelComponent loading={loading} components={components} />
     </PageBox>
   );

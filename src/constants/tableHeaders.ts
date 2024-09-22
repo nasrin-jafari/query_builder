@@ -1000,7 +1000,10 @@ const headers: Headers = {
       dataType: 'text',
       isHeader: true,
     },
-    { field: 'file_path', headerName: 'مسیر فایل', dataType: 'text', isHeader: false },
+
+    { field: 'registry_name', headerName: 'نام رجیستری', dataType: 'text', isHeader: false },
+    { field: 'registry_path', headerName: 'آدرس رجیستری', dataType: 'text', isHeader: false },
+
     {
       field: 'tick_time',
       headerName: 'زمان پردازنده',
@@ -1014,12 +1017,7 @@ const headers: Headers = {
       dataType: 'text',
       isHeader: false,
     },
-    {
-      field: 'file_volume_type',
-      headerName: 'نوع منبع فایل',
-      dataType: 'text',
-      isHeader: false,
-    },
+
     {
       field: 'parent_pid',
       headerName: 'شناسه فرآیند والد',
@@ -1035,12 +1033,6 @@ const headers: Headers = {
     },
     { field: 'driver_type', headerName: 'نوع درایور', dataType: 'text', isHeader: false },
     {
-      field: 'file_volume_device',
-      headerName: 'دستگاه منبع فایل',
-      dataType: 'text',
-      isHeader: false,
-    },
-    {
       field: 'target_image_filepath',
       headerName: 'مسیر فایل هدف',
       dataType: 'text',
@@ -1050,12 +1042,6 @@ const headers: Headers = {
       field: 'process_is_evaluated',
       headerName: 'وضعیت ارزیابی پردازه',
       dataType: 'checkbox',
-      isHeader: false,
-    },
-    {
-      field: 'file_volume_guid',
-      headerName: 'شناسه منبع فایل',
-      dataType: 'text',
       isHeader: false,
     },
   ],
