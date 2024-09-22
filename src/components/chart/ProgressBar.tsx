@@ -3,7 +3,6 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import Typography from '@mui/material/Typography';
 import { styled, useTheme } from '@mui/material/styles';
 import { FC } from 'react';
-// import NoData from '../noData';
 
 interface ProgressBarProps {
   total: number;
@@ -12,30 +11,22 @@ interface ProgressBarProps {
 
 const ProgressBar: FC<ProgressBarProps> = ({ usage, total }) => {
   const theme = useTheme();
-  //   const isLight = theme.palette.mode === 'light';
-  // Calculate the usage percentage
   const percentage = (usage / total) * 100;
 
-  // Determine the bar color based on the percentage
   const getBarColor = (percentage: number) => {
     if (percentage <= 25) {
-      // greenColor
       return theme.palette.success.main;
     } else if (percentage <= 50) {
-      // yellowColor
       return theme.palette.warning.main;
     } else if (percentage <= 75) {
-      // orangeColor
       return theme.palette.primary.main;
     } else {
-      // redColor
       return theme.palette.error.main;
     }
   };
 
   const barColor = getBarColor(percentage);
 
-  // Styled component for the progress bar
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 30,
     borderRadius: 5,
@@ -45,32 +36,29 @@ const ProgressBar: FC<ProgressBarProps> = ({ usage, total }) => {
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 5,
       backgroundColor: barColor,
-      transformOrigin: 'left !important',
+      transformOrigin: 'right !important', // Changed to right
     },
   }));
-  //   const availableData = !usage || !total;
-  //   if (availableData) {
-  //     return <NoData type="progress" />;
-  //   }
+
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 1.5 }}>
       <Typography variant="body2" color="text.secondary">
-        {usage}G
+        {total}G
       </Typography>
       <Box sx={{ flexGrow: 1, marginX: 1 }}>
         <BorderLinearProgress
           variant="determinate"
           value={percentage}
           sx={{
-            direction: 'ltr',
+            direction: 'rtl', // Changed direction to rtl
             '& .MuiLinearProgress-bar': {
-              transformOrigin: 'left !important',
+              transformOrigin: 'right !important', // Changed to right
             },
           }}
         />
       </Box>
       <Typography variant="body2" color="text.secondary">
-        {total}G
+        {usage}G
       </Typography>
     </Box>
   );
