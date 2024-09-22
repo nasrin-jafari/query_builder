@@ -3,6 +3,7 @@ import OpratingSystemClient from './OperatingSystemClient';
 import ResourceStatus from './ResourceStatus';
 import SystemConnectionStatus from './SystemConnectionStatus';
 import { ChartDataItem } from '@/components/chart/type';
+import { Grid } from '@mui/material';
 
 interface StatusProps {
   data: {
@@ -25,11 +26,11 @@ interface StatusProps {
 
 const Status: FC<StatusProps> = ({ data, isLoading }) => {
   return (
-    <>
+    <Grid container spacing={2} sx={{ mt: 1 }}>
       <ResourceStatus data={data?.server_status} />
       <OpratingSystemClient data={data?.third_party_services} isLoading={isLoading} />
       <SystemConnectionStatus data={data?.third_party_services} />
-    </>
+    </Grid>
   );
 };
 
