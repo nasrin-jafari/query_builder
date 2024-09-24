@@ -2,6 +2,8 @@ import axiosMethod from '@/api';
 import { ConfirmationDialog, CustomForm, CustomIconButton } from '@/components';
 import CustomTooltip from '@/components/common/CustomToolTip';
 import { ConvertDates } from '@/utils/ConvertDates';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'; // Importing alternative icons
+
 import {
   Box,
   Button,
@@ -13,6 +15,7 @@ import {
   IconButton,
   MenuItem,
   Pagination,
+  PaginationItem,
   Popover,
   Stack,
   Switch,
@@ -688,6 +691,12 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               shape="rounded"
               color="primary"
               onChange={handleChangePagination}
+              renderItem={(item) => (
+                <PaginationItem
+                  {...item}
+                  components={{ previous: IoIosArrowForward, next: IoIosArrowBack }}
+                />
+              )}
             />
           </Stack>
         )}
