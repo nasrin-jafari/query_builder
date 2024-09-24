@@ -3,7 +3,7 @@ import PageBox from '@/components/common/PageBox';
 import UseApi from '@/hooks/UseApi';
 import { ad_computers } from '@/constants/tableHeaders';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface MandatoryInstallationData {
   id: string;
@@ -32,7 +32,6 @@ const ADInstaller = () => {
   const [open, setOpen] = useState(false);
 
   const { ADInstaller } = router.query;
-  const [_, setFormateData] = useState<MandatoryInstallationData[]>([]);
   const [selectedRows, setSelectedRows] = useState<ListData | null>(null);
 
   const { data, total, loading, handleApiRequest } = UseApi<HandleApiRequestResponse>(
@@ -56,26 +55,13 @@ const ADInstaller = () => {
     },
   ];
 
-  const formatedData = (): void => {
-    try {
-      const formated =
-        data?.Data?.map((agent: MandatoryInstallationData) => ({
-          id: agent.name, // Ensure the id is included
-          name: agent.name,
-          status: agent.status,
-          domain_url: agent.domain_url,
-          date_timestamp: agent.date_timestamp,
-        })) ?? [];
-
-      setFormateData(formated);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    formatedData();
-  }, [data]);
+  // const formatedData = data?.Data?.map((agent: MandatoryInstallationData) => ({
+  //     id: agent.name, // Ensure the id is included
+  //     name: agent.name,
+  //     status: agent.status,
+  //     domain_url: agent.domain_url,
+  //     date_timestamp: agent.date_timestamp,
+  //   })) ?? [];
 
   const handleClickSelectedItem = async (actionType: string, selectedRows: SelectedRow[]) => {
     setOpen(true);
@@ -101,7 +87,6 @@ const ADInstaller = () => {
         loading={loading}
         columns={ad_computers}
         rows={data?.Data || []}
-        // rows={formateData || []}
         notExtra
         selectedRowsButtons={[
           {

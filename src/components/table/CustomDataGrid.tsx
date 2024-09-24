@@ -36,6 +36,8 @@ import { Field } from '../form/CustomForm';
 import TableRowSkeleton from './TableSkeleton';
 import CardBox from '@/layout/CardBox';
 import { UseAceessBtn } from '@/hooks/UseAceessBtn';
+import { FaUser } from 'react-icons/fa';
+import { RiComputerLine } from 'react-icons/ri';
 
 interface RowData {
   [key: string]: any;
@@ -415,8 +417,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     value >= 8
                                       ? theme.palette.error.main
                                       : value >= 6
-                                      ? theme.palette.primary.main
-                                      : theme.palette.warning.main,
+                                        ? theme.palette.primary.main
+                                        : theme.palette.warning.main,
                                 }}
                               >
                                 {value}
@@ -559,7 +561,9 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     icon={button.icon && button.icon.type}
                                     label={button.label}
                                     type={button.type}
-                                    onClick={() => handleButtonClick(button, row)}
+                                    onClick={() => {
+                                      handleButtonClick(button, row);
+                                    }}
                                   />
                                 ) : null;
 
@@ -570,6 +574,39 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                   return showButton('edit', showBtnUpdate ?? false);
                                 case 'allowAccess':
                                   return showButton('allowAccess', true);
+                                case 'content_type':
+                                  const componentMap: {
+                                    [key in RowData['content_type']]: JSX.Element;
+                                  } = {
+                                    OU: (
+                                      <CustomIconButton
+                                        key={index}
+                                        icon={button.icon && button.icon.type}
+                                        label={button.label}
+                                        type={button.type}
+                                        onClick={() => handleButtonClick(button, row)}
+                                      />
+                                    ),
+                                    Computer: (
+                                      <RiComputerLine
+                                        key={index}
+                                        style={{
+                                          fontSize: '19px',
+                                        }}
+                                      />
+                                    ),
+                                    User: (
+                                      <FaUser
+                                        key={index}
+                                        style={{
+                                          fontSize: '16px',
+                                        }}
+                                      />
+                                    ),
+                                  };
+
+                                  return componentMap[row.component_type] || null;
+
                                 default:
                                   return null;
                               }
@@ -662,8 +699,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               dialogState.type === 'delete'
                 ? 'آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟'
                 : dialogState.type === 'edit'
-                ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
-                : 'افزودن آیتم جدید'
+                  ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
+                  : 'افزودن آیتم جدید'
             }
             content={
               dialogState.type === 'delete' ? (
@@ -675,8 +712,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     dialogState.type === 'edit'
                       ? editForm || []
                       : handleAdd
-                      ? handleAdd?.fields
-                      : fields || []
+                        ? handleAdd?.fields
+                        : fields || []
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}

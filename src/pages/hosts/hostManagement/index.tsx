@@ -3,7 +3,6 @@ import PageBox from '@/components/common/PageBox';
 import { agents } from '@/constants/tableHeaders';
 import useApi from '@/hooks/UseApi';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
 interface FormattedAgent {
   computer_name: string;
@@ -21,27 +20,14 @@ interface AgentsResponse {
 
 const HostManagement = () => {
   const { data, total, loading } = useApi<AgentsResponse>('/agents/');
-  const [newData, setNewData] = useState<FormattedAgent[]>([]);
   const router = useRouter();
 
-  const formatedData = (): void => {
-    try {
-      const formated =
-        data?.Data?.map((agent: FormattedAgent) => ({
-          ...agent,
-          status: agent.status ? 'فعال' : 'غیرفعال',
-          license_status: agent.license_status ? 'فعال' : 'غیرفعال',
-        })) ?? []; // Ensure formated is always an array
-
-      setNewData(formated);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    formatedData();
-  }, [data]);
+  const formatedData =
+    data?.Data?.map((agent: FormattedAgent) => ({
+      ...agent,
+      status: agent.status ? 'فعال' : 'غیرفعال',
+      license_status: agent.license_status ? 'فعال' : 'غیرفعال',
+    })) ?? [];
 
   return (
     <PageBox
@@ -53,7 +39,7 @@ const HostManagement = () => {
         pageTotal={total}
         loading={loading}
         columns={agents}
-        rows={newData}
+        rows={formatedData}
         buttons={[
           {
             label: ' رخداد ها',
