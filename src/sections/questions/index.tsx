@@ -13,8 +13,9 @@ const Question = () => {
   const theme = useTheme();
   const token = localStorage.getItem('auth_token_typeScript') || '';
   const tokenDecode = jwt.decode(token) as JwtPayload;
-  const { data: question, handleApiRequest } = UseApi<QuestionData>('/user/security_questions/get/');
-
+  const { data: question, handleApiRequest } = UseApi<QuestionData>(
+    '/user/security_questions/get/'
+  );
   const onSubmit = async (formData: FormData) => {
     const formDataToSave = {
       username: tokenDecode?.username,
@@ -69,14 +70,19 @@ const Question = () => {
           backgroundRepeat: 'no-repeat',
         }}
       >
-        <CustomForm fields={fields} onSubmit={onSubmit} validationSchema={validationSchema}>
+        <CustomForm
+          allowAccess
+          fields={fields}
+          onSubmit={onSubmit}
+          validationSchema={validationSchema}
+        >
           <Typography
             variant="body2"
             color="textSecondary"
             sx={{ mt: 4, color: theme.palette.error.main, fontSize: '12px', direction: 'ltr' }}
           >
-            * لطفاً با دقت به سوالات امنیتی پاسخ دهید. در صورت فراموشی رمز عبور، از شما خواسته
-            خواهد شد به این سوالات پاسخ دهید تا بتوانید حساب خود را بازیابی کنید.
+            * لطفاً با دقت به سوالات امنیتی پاسخ دهید. در صورت فراموشی رمز عبور، از شما خواسته خواهد
+            شد به این سوالات پاسخ دهید تا بتوانید حساب خود را بازیابی کنید.
           </Typography>
         </CustomForm>
       </Container>

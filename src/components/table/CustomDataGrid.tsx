@@ -704,7 +704,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
             }
             content={
               dialogState.type === 'delete' ? (
-                'حذف این مورد قابل بازگشت نیست.'
+                <Typography textAlign="center">حذف این مورد قابل بازگشت نیست</Typography>
               ) : (
                 <CustomForm
                   data={dialogState.type === 'edit' ? selectedRow : {}}

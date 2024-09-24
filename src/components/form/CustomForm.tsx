@@ -65,15 +65,13 @@ const CustomForm: React.FC<FormProps> = ({
     fontSize: '14px',
   }));
   const { showBtnCreate, showBtnUpdate } = UseAceessBtn();
-
   const keywordsCreate = ['افزودن', 'ایجاد', 'ثبت'];
   const keywordsUpdate = ['اعمال', 'ویرایش'];
 
   const shouldRenderForm =
     allowAccess ||
-    keywordsCreate.some((keyword) => txtButton.includes(keyword)) ||
-    (keywordsUpdate.some((keyword) => txtButton.includes(keyword)) &&
-      (showBtnCreate || showBtnUpdate));
+    (showBtnCreate && keywordsCreate.some((keyword) => txtButton.includes(keyword))) ||
+    (showBtnUpdate && keywordsUpdate.some((keyword) => txtButton.includes(keyword)));
 
   const [selectedTab, setSelectedTab] = useState(0);
   const tabs = fields
@@ -133,7 +131,6 @@ const CustomForm: React.FC<FormProps> = ({
       methods.setValue(name, '');
     });
   };
-
   return (
     <>
       {shouldRenderForm ? (
