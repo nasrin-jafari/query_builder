@@ -36,7 +36,10 @@ const Items = ({ title, data }: ItemsProps) => {
 
 const ReviewItems = ({ data, topAgent }: ReviewItemsProps) => {
   const router = useRouter();
-
+  const alerts_data = data.alerts?.map((item) => ({
+    ...item,
+    redirectTo: '/reviewAndExplore',
+  }));
   return (
     <Grid container spacing={4}>
       <Items
@@ -52,7 +55,7 @@ const ReviewItems = ({ data, topAgent }: ReviewItemsProps) => {
           },
         }))}
       />
-      <Items title={'هشدار های تولید شده'} data={data.alerts} />
+      <Items title={'هشدار های تولید شده'} data={alerts_data} />
       <Items
         title={'فعال ترین ایجنت ها'}
         data={topAgent?.map((item) => ({
