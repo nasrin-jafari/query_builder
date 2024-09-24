@@ -61,8 +61,6 @@ export const fa = {
   searchSigma: 'جستجو بر اساس سیگما',
   searchYara: 'جستجو بر اساس یارا',
   managementOfServices: 'مدیریت سرویس ها',
-  siem: 'سیم',
-  sutter: 'ساتر',
   aiResults: 'نتایج هوش مصنوعی',
   usersActivity: 'فعالیت کاربران',
 };
