@@ -3,6 +3,7 @@ import { ChartDataItem } from '@/components/chart/type';
 import CardBox from '@/layout/CardBox';
 import { Divider, Grid } from '@mui/material';
 import { FC } from 'react';
+import { useRouter } from 'next/router';
 
 interface EventStatusProps {
   data: ChartDataItem[];
@@ -10,11 +11,22 @@ interface EventStatusProps {
 }
 
 const EventStatus: FC<EventStatusProps> = ({ data, isLoading }) => {
+  const router = useRouter();
+  const events_status_data = data?.map((item) => ({
+    ...item,
+    redirectTo: '/activity/events/inspect/',
+    query: {
+      ...router.query,
+      event_type: item.en,
+      agent_id: 'all_logs',
+      title: 'لاگ های ' + item.fa,
+    },
+  }));
   return (
     <Grid item md={4} xs={12}>
       <CardBox minHeight={'270px'}>
         <Divider sx={{ fontSize: '17px' }}>نمایش وضعیت رویداد</Divider>
-        <PieChart data={data} isLoading={isLoading} />
+        <PieChart data={events_status_data} isLoading={isLoading} />
       </CardBox>
     </Grid>
   );
