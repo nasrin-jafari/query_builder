@@ -7,7 +7,7 @@ const ButtonOverrides = {
       textTransform: 'none',
       padding: '8px 16px',
       boxShadow: 'none',
-      color: theme.palette.grey[500],
+      color: '#fff',
     },
 
     contained: {
