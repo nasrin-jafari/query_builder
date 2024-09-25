@@ -148,10 +148,9 @@ const PieChart: FC<PieChartProps> = ({
   useEffect(() => {
     initializeChart();
   }, [data, theme.palette.grey, colors]);
-
   return (
     <div style={{ width: '100%', height: renderBottomText ? '340px' : '181px', direction: 'rtl' }}>
-      {data.length === 0 ? (
+      {!data || data?.length === 0 ? (
         <NoData type="pie" isLoading={isLoading} />
       ) : (
         <div
