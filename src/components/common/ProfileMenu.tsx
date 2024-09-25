@@ -10,7 +10,13 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import React, { useState } from 'react';
-
+import jwt, { JwtPayload } from 'jsonwebtoken';
+interface DecodedToken extends JwtPayload {
+  exp_date?: number;
+  username: string;
+  permissions: { [key: string]: any };
+  role: string;
+}
 const ProfileMenu: React.FC = () => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -29,8 +35,18 @@ const ProfileMenu: React.FC = () => {
     window.location.replace('/');
     localStorage.removeItem('auth_token_typeScript');
   };
+  function capitalizeFirstLetter(str: string) {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
-  const usernameInitial = 'A';
+  const token = localStorage.getItem('auth_token_typeScript');
+  const decoded = token
+    ? (jwt.decode(token) as DecodedToken)
+    : { username: 'Unknown', role: 'Unknown' };
+  const usernameInitial = decoded.username[0].toUpperCase();
+  const username = capitalizeFirstLetter(decoded.username);
+  const role = capitalizeFirstLetter(decoded.role);
 
   return (
     <Box sx={{ position: 'relative', zIndex: '2000' }}>
@@ -111,7 +127,7 @@ const ProfileMenu: React.FC = () => {
                 color: theme.palette.grey[50],
               }}
             >
-              Admin
+              {username}
             </Typography>
             <Typography
               sx={{
@@ -120,7 +136,7 @@ const ProfileMenu: React.FC = () => {
                 borderRadius: '6px',
               }}
             >
-              Admin
+              {role}
             </Typography>
           </Box>
           <Avatar
