@@ -197,7 +197,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
           </IconButton>
         </DrawerHeader>
 
-        <List sx={{ marginTop: '55px', border: '1px solid red' }}>
+        <List sx={{ marginTop: '55px' }}>
           <Divider />
           <ListItem
             sx={{
