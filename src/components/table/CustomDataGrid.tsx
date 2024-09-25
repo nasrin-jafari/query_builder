@@ -410,10 +410,12 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                           let content: React.ReactNode;
 
                           const renderTimeContent = (value: number) =>
-                            value ? ConvertDates(value, true) : '-';
+                            value === null || value === undefined ? '-' : ConvertDates(value, true);
 
                           const renderScoreContent = (value: number) =>
-                            value !== null && value !== undefined ? (
+                            value === null || value === undefined ? (
+                              '-'
+                            ) : (
                               <Typography
                                 sx={{
                                   color:
@@ -426,8 +428,6 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               >
                                 {value}
                               </Typography>
-                            ) : (
-                              '-'
                             );
 
                           const renderSwitchHandlerContent = (fieldValue: boolean) => {
@@ -449,10 +449,12 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               if (stringValue === 'غیرفعال' || stringValue.includes('Malware')) {
                                 return theme.palette.error.main;
                               }
-                              return theme.palette.text.primary; // مقدار پیش‌فرض در صورت نداشتن شرایط
+                              return theme.palette.text.primary;
                             };
 
-                            return value ? (
+                            return value === null || value === undefined ? (
+                              '-'
+                            ) : (
                               <Typography
                                 sx={{
                                   fontSize: '14px',
@@ -461,13 +463,13 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               >
                                 {value}
                               </Typography>
-                            ) : (
-                              '-'
                             );
                           };
 
-                          const renderIconContent = (value: boolean) =>
-                            value !== null && value !== undefined ? (
+                          const renderIconContent = (value: boolean | null | undefined) =>
+                            value === null || value === undefined ? (
+                              '-'
+                            ) : (
                               <Typography>
                                 {value ? (
                                   <TiTick color={theme.palette.success.main} size={24} />
@@ -475,31 +477,27 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                   <IoMdClose color={theme.palette.error.main} size={24} />
                                 )}
                               </Typography>
-                            ) : (
-                              '-'
                             );
 
                           const renderDefaultContent = (value: any) =>
-                            value ? (
-                              value.length > 30 ? (
-                                <CustomTooltip title={value}>
-                                  <Typography
-                                    sx={{
-                                      width: '250px',
-                                      whiteSpace: 'nowrap',
-                                      overflow: 'hidden',
-                                      textOverflow: 'ellipsis',
-                                      fontSize: '16px',
-                                    }}
-                                  >
-                                    {value}
-                                  </Typography>
-                                </CustomTooltip>
-                              ) : (
-                                value
-                              )
-                            ) : (
+                            value === null || value === undefined ? (
                               '-'
+                            ) : value.length > 30 ? (
+                              <CustomTooltip title={value}>
+                                <Typography
+                                  sx={{
+                                    width: '250px',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    fontSize: '16px',
+                                  }}
+                                >
+                                  {value}
+                                </Typography>
+                              </CustomTooltip>
+                            ) : (
+                              value
                             );
 
                           switch (true) {
@@ -510,7 +508,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               content = renderScoreContent(fieldValue);
                               break;
                             case column.field?.includes('enabled'):
-                              content = renderSwitchHandlerContent(fieldValue); // Do not wrap with CopyValue here
+                              content = renderSwitchHandlerContent(fieldValue);
                               break;
                             case ['status', 'infected'].some((key) => column.field?.includes(key)):
                               content = renderStatusContent(fieldValue);
