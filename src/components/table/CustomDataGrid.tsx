@@ -244,8 +244,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
 
   const handleActionClick = (actionType: string) => {
     if (onAction) {
-      const selectedData = selectedRows.map((index) => rows[index]);
-      onAction(actionType, selectedData);
+      onAction(actionType, selectedRowValues);
     }
   };
 
@@ -508,8 +507,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     value >= 8
                                       ? theme.palette.error.main
                                       : value >= 6
-                                        ? theme.palette.primary.main
-                                        : theme.palette.warning.main,
+                                      ? theme.palette.primary.main
+                                      : theme.palette.warning.main,
                                 }}
                               >
                                 {value}
@@ -792,8 +791,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               dialogState.type === 'delete'
                 ? 'آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟'
                 : dialogState.type === 'edit'
-                  ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
-                  : 'افزودن آیتم جدید'
+                ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
+                : 'افزودن آیتم جدید'
             }
             content={
               dialogState.type === 'delete' ? (
@@ -805,8 +804,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     dialogState.type === 'edit'
                       ? editForm || []
                       : handleAdd
-                        ? handleAdd?.fields
-                        : fields || []
+                      ? handleAdd?.fields
+                      : fields || []
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}
