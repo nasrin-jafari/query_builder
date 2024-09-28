@@ -105,6 +105,7 @@ const ADInstaller = () => {
         title={'افزودن آیتم جدید'}
         content={
           <CustomForm
+            allowAccess
             data={[]}
             fields={fields}
             onSubmit={async (formData) => {
