@@ -90,6 +90,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
   const [openTab, setOpenTab] = useState<string | null>(null);
   const router = useRouter();
   const currentPath = router.pathname;
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -123,7 +124,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
         component="div"
         disablePadding
         key={route.value}
-        sx={{ background: 'transparent', padding: 0 }} // Make background transparent
+        sx={{ background: 'transparent', padding: 0 }}
       >
         <Link href={route.path} passHref>
           <ListItem
@@ -139,17 +140,6 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
                     ? theme.palette.primary.main
                     : theme.palette.primary.main,
               },
-              // '@keyframes slideInFromLeft': {
-              //   '0%': {
-              //     transform: 'translateX(-100%)',
-              //     opacity: 0,
-              //   },
-              //   '100%': {
-              //     transform: 'translateX(0)',
-              //     opacity: 1,
-              //   },
-              // },
-              // animation: 'slideInFromLeft 0.2s ease-out',
             }}
           >
             <ListItemText
@@ -172,13 +162,13 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
       sx={{
         display: 'flex',
         width: '100%',
-        position: 'relative', // Ensure relative positioning for children
+        position: 'relative',
       }}
     >
       <CssBaseline />
       <CustomAppBar open={open} handleDrawerOpen={handleDrawerOpen} />
 
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} onMouseLeave={handleDrawerClose}>
         <DrawerHeader
           sx={{
             display: open ? 'flex' : 'none',
@@ -302,7 +292,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
         </List>
       </Drawer>
 
-      {open && ( // Check if drawer is open
+      {open && (
         <Box
           sx={{
             position: 'fixed',
@@ -310,7 +300,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backgroundColor: 'transparent',
             zIndex: 999,
           }}
           onClick={handleDrawerClose}

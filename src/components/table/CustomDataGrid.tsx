@@ -2,8 +2,14 @@ import axiosMethod from '@/api';
 import { ConfirmationDialog, CustomForm, CustomIconButton } from '@/components';
 import CustomTooltip from '@/components/common/CustomToolTip';
 import { ConvertDates } from '@/utils/ConvertDates';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'; // Importing alternative icons
-
+import {
+  IoIosArrowBack,
+  IoIosArrowDown,
+  IoIosArrowForward,
+  IoIosArrowUp,
+  IoIosMore,
+  IoMdClose,
+} from 'react-icons/io'; // Importing alternative icons
 import {
   Box,
   Button,
@@ -30,7 +36,6 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
-import { IoIosArrowDown, IoIosArrowUp, IoIosMore, IoMdClose } from 'react-icons/io';
 import { TbExternalLink } from 'react-icons/tb';
 import { TiTick } from 'react-icons/ti';
 import * as yup from 'yup';
@@ -41,6 +46,8 @@ import CardBox from '@/layout/CardBox';
 import { UseAceessBtn } from '@/hooks/UseAceessBtn';
 import { FaUser } from 'react-icons/fa';
 import { RiComputerLine } from 'react-icons/ri';
+import { PiDownloadSimpleFill } from 'react-icons/pi';
+import { BiSortDown, BiSortUp } from 'react-icons/bi';
 
 interface RowData {
   [key: string]: any;
@@ -120,8 +127,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   const [selectedRows, setSelectedRows] = useState<number[]>([]); // State to manage selected rows
   const [selectedRowValues, setSelectedRowValues] = useState<any[]>([]);
   const { showBtnUpdate, showBtnDelete, showBtnCreate } = UseAceessBtn();
-
   const headerColumns = columns?.filter((header) => header?.isHeader);
+
   const router = useRouter();
   const theme = useTheme();
   const [dialogState, setDialogState] = useState<{
@@ -237,8 +244,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
 
   const handleActionClick = (actionType: string) => {
     if (onAction) {
-      const selectedData = selectedRows.map((index) => rows[index]);
-      onAction(actionType, selectedData);
+      onAction(actionType, selectedRowValues);
     }
   };
 
@@ -274,19 +280,29 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
       handleSwitch(fieldValue, rowId);
     }
   };
+  const handleSort = (sortKey: string) => {
+    const currentPath = router.pathname;
+    const currentQuery = router.query;
+
+    let updatedQuery = { ...currentQuery };
+
+    if (updatedQuery.sort == sortKey) {
+      delete updatedQuery.sort;
+    } else {
+      updatedQuery.sort = sortKey;
+    }
+
+    router.push(
+      {
+        pathname: currentPath,
+        query: updatedQuery,
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
   return (
     <>
-      {(handleForm || handleAdd) && showBtnCreate ? (
-        <Box sx={{ textAlign: 'right' }}>
-          <Button
-            variant="contained"
-            onClick={() => setDialogState({ open: true, type: 'add' })}
-            sx={{ width: '10%' }}
-          >
-            افزودن
-          </Button>
-        </Box>
-      ) : null}
       {selectedRowValues.length > 0 && (
         <Box sx={{ mb: 2 }}>
           <Card
@@ -343,18 +359,65 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
 
       <CardBox sx={{ mt: linkOverview ? 0 : 2 }}>
         <TableContainer sx={{ pb: pageTotal <= 10 ? '14px' : 2 }}>
-          {linkOverview ? (
-            <Box sx={{ direction: 'rtl' }}>
-              <CustomTooltip title="نمایش همه">
-                <IconButton onClick={() => router.push(linkOverview)}>
-                  <TbExternalLink />
-                </IconButton>
-              </CustomTooltip>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box>
+              <Button
+                variant="contained"
+                style={{
+                  color: theme.palette.grey[900],
+                  background: 'transparent',
+                  border: '1px solid grey',
+                  marginBottom: '16px',
+                }}
+                endIcon={
+                  <PiDownloadSimpleFill
+                    style={{
+                      color: theme.palette.primary.main,
+                      fontSize: '20px',
+                      marginRight: '10px',
+                    }}
+                  />
+                }
+              >
+                دانلود خروجی اکسل
+              </Button>
             </Box>
-          ) : null}
+            {linkOverview ? (
+              <Box sx={{ direction: 'rtl' }}>
+                <CustomTooltip title="نمایش همه">
+                  <IconButton onClick={() => router.push(linkOverview)}>
+                    <TbExternalLink />
+                  </IconButton>
+                </CustomTooltip>
+              </Box>
+            ) : null}
+            {(handleForm || handleAdd) && showBtnCreate ? (
+              <Box sx={{ textAlign: 'right' }}>
+                <Button
+                  variant="contained"
+                  onClick={() => setDialogState({ open: true, type: 'add' })}
+                  sx={{ width: '10%' }}
+                >
+                  افزودن
+                </Button>
+              </Box>
+            ) : null}
+          </Box>
 
           <Table>
-            <TableHead sx={{ '&  th': { fontWeight: 'bold', fontSize: 16 } }}>
+            <TableHead
+              sx={{
+                '&  th': { fontWeight: 'bold', fontSize: 16 },
+                background: theme.palette.grey[300],
+              }}
+            >
               <TableRow>
                 {selectableRows && (
                   <TableCell align="center" sx={{ width: 50 }}>
@@ -370,7 +433,29 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     align="center"
                     sx={{ fontWeight: 'bold', fontSize: 16 }}
                   >
-                    {column.headerName}
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Typography> {column.headerName}</Typography>
+                      {column.dataType === 'date' || column.dataType === 'number' ? (
+                        router.query.sort !== column.field ? (
+                          <BiSortUp
+                            size="20px"
+                            style={{
+                              marginRight: '10px',
+                              cursor: 'pointer',
+                            }}
+                            onClick={() => handleSort(column.field ? column.field : '')}
+                          />
+                        ) : (
+                          <BiSortDown
+                            onClick={() => handleSort(column.field ? column.field : '')}
+                            size="20px"
+                            style={{ color: '#e57b2d', marginRight: '10px', cursor: 'pointer' }}
+                          />
+                        )
+                      ) : (
+                        ''
+                      )}
+                    </Box>
                   </TableCell>
                 ))}
                 {buttons && (
@@ -422,8 +507,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     value >= 8
                                       ? theme.palette.error.main
                                       : value >= 6
-                                        ? theme.palette.primary.main
-                                        : theme.palette.warning.main,
+                                      ? theme.palette.primary.main
+                                      : theme.palette.warning.main,
                                 }}
                               >
                                 {value}
@@ -706,8 +791,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               dialogState.type === 'delete'
                 ? 'آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟'
                 : dialogState.type === 'edit'
-                  ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
-                  : 'افزودن آیتم جدید'
+                ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
+                : 'افزودن آیتم جدید'
             }
             content={
               dialogState.type === 'delete' ? (
@@ -719,8 +804,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     dialogState.type === 'edit'
                       ? editForm || []
                       : handleAdd
-                        ? handleAdd?.fields
-                        : fields || []
+                      ? handleAdd?.fields
+                      : fields || []
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}

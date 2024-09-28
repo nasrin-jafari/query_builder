@@ -13,10 +13,6 @@ interface MandatoryInstallationData {
   status: string;
 }
 
-interface SelectedRow {
-  name: string;
-}
-
 interface ListData {
   computers_list: string[];
   organizations_list: never[];
@@ -63,11 +59,10 @@ const ADInstaller = () => {
   //     date_timestamp: agent.date_timestamp,
   //   })) ?? [];
 
-  const handleClickSelectedItem = async (actionType: string, selectedRows: SelectedRow[]) => {
+  const handleClickSelectedItem = async (actionType: string, selectedRows: string[]) => {
     setOpen(true);
-    const computerNames = selectedRows.map((entry) => entry.name);
     const newListData: ListData = {
-      computers_list: computerNames,
+      computers_list: selectedRows,
       organizations_list: [],
       action: actionType === 'uninstall' ? 'uninstall' : 'install',
     };
