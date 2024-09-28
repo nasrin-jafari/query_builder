@@ -23,9 +23,15 @@ const InspectAiResults = () => {
   const url = agent_id ? `/ai/specific-ai/${agent_id}/` : `/ai/detection-type/${typeDetect}/`;
 
   const { data, total, loading } = UseApi<HandleApiRequestResponse>(url);
-
+  const filterInspectAi = inspectAi.filter(
+    (item) => item.field !== 'agent_id' && item.field !== 'agent_ip'
+  );
+  const tableHeaders = agent_id ? filterInspectAi : inspectAi;
   return (
-    <PageBox title={`نتایج هوش مصنوعی   ${typeDetect ? typeDetect : agent_id}`}>
+    <PageBox
+      title={`نتایج هوش مصنوعی   ${typeDetect ? typeDetect : agent_id}`}
+      searchQuery={tableHeaders}
+    >
       <CustomDataGrid
         pageTotal={total}
         loading={loading}

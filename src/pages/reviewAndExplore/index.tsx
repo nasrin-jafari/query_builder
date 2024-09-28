@@ -6,6 +6,8 @@ import CardBox from '@/layout/CardBox';
 import NumberBox from '@/sections/reviewAndExplore/NumberBox';
 import ReviewItems from '@/sections/reviewAndExplore/ReviewItems';
 import { Box, Grid, Typography, useTheme } from '@mui/material';
+import { fieldsQueries } from '@/constants/tableHeaders';
+import React from 'react';
 
 interface Overview {
   logs_last_7_days: number;
@@ -34,7 +36,11 @@ const ReviewAndExplore: React.FC = () => {
   const { data: topAgentData } = UseApi<ChartDataItem[]>('/ranking/agents_all_logs/5/');
 
   return (
-    <PageBox title="نمای کلی و بررسی" description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا">
+    <PageBox
+      title="نمای کلی و بررسی"
+      description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
+      searchQuery={fieldsQueries}
+    >
       <Box sx={{ mb: 2.5, mt: 4 }}>{data && <NumberBox data={data.overview} />}</Box>
       <Box sx={{ mb: 2.5 }}>
         {data && topAgentData && <ReviewItems data={data} topAgent={topAgentData} />}

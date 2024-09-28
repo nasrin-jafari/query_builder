@@ -14,7 +14,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import { CSSObject, styled, Theme, useTheme } from '@mui/material/styles';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { CiMenuBurger } from 'react-icons/ci';
 import { FaHome } from 'react-icons/fa';
 import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
@@ -139,17 +139,17 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
                     ? theme.palette.primary.main
                     : theme.palette.primary.main,
               },
-              '@keyframes slideInFromLeft': {
-                '0%': {
-                  transform: 'translateX(-100%)',
-                  opacity: 0,
-                },
-                '100%': {
-                  transform: 'translateX(0)',
-                  opacity: 1,
-                },
-              },
-              animation: 'slideInFromLeft 0.2s ease-out',
+              // '@keyframes slideInFromLeft': {
+              //   '0%': {
+              //     transform: 'translateX(-100%)',
+              //     opacity: 0,
+              //   },
+              //   '100%': {
+              //     transform: 'translateX(0)',
+              //     opacity: 1,
+              //   },
+              // },
+              // animation: 'slideInFromLeft 0.2s ease-out',
             }}
           >
             <ListItemText
@@ -219,6 +219,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
                 <FaHome />
               </Link>
             </ListItemIcon>
+            <ListItemText primary={'داشبورد'} />
           </ListItem>
           {filteredTabs?.map((tab: any) => {
             const IconComponent = tab.icon ? tab.icon : null;

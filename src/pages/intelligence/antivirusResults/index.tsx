@@ -2,7 +2,7 @@ import { CustomDataGrid } from '@/components';
 import PictorialBar from '@/components/chart/PictorialBar';
 import PieChart from '@/components/chart/PieChart';
 import PageBox from '@/components/common/PageBox';
-import { multiav } from '@/constants/tableHeaders';
+import { fieldsQueries, multiav } from '@/constants/tableHeaders';
 import useApi from '@/hooks/UseApi';
 import PanelComponent from '@/layout/PanelComponent';
 import { useTheme } from '@mui/material';
@@ -74,7 +74,7 @@ const AntivirusResults = () => {
     {
       component: PieChart,
       props: {
-        data: events?.top_5_multiav_agents.map((agent) => ({
+        data: events?.top_5_multiav_agents?.map((agent) => ({
           ...agent,
           redirectTo: '/intelligence/antivirusResults/inspect',
           query: { ...router.query, computer_name: agent.en },
@@ -94,7 +94,11 @@ const AntivirusResults = () => {
           redirectTo: '/intelligence/antivirusResults/inspect',
           query: {
             ...router.query,
-            contentType: item.en.startsWith('clean') ? 'benign' : 'malware',
+            contentType: item.en.startsWith('clean')
+              ? 'benign'
+              : item.en.startsWith('infected')
+                ? 'malware'
+                : item.en,
           },
         })),
         renderBottomText: true,
@@ -118,6 +122,7 @@ const AntivirusResults = () => {
     <PageBox
       title="نتایج ضد ویروس مرکب"
       description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
+      searchQuery={fieldsQueries}
     >
       <PanelComponent loading={loading} components={components} />
     </PageBox>

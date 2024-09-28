@@ -127,14 +127,13 @@ const PictorialBar: FC<PictorialBarProps> = ({ data = [], colors }) => {
   };
 
   React.useEffect(() => {
-    if (data.length > 0) {
+    if (data?.length > 0) {
       initializeChart();
     }
   }, [data, theme, colors]);
-
   return (
     <div style={{ width: '100%', height: '250px' }}>
-      {data.length === 0 ? (
+      {!data || data?.length === 0 ? (
         <NoData type="bar" />
       ) : (
         <div ref={chartRef} style={{ width: '100%', height: '100%' }} />

@@ -42,12 +42,17 @@ const Panel: React.FC<PanelProps> = ({ initialSettings }) => {
       console.error('Error in form submission:', error);
     }
   };
-
   return (
     <PageBox title="تنظیمات سامانه">
       <Grid container spacing={2}>
         <Grid item md={6}>
-          <CustomForm data={initialData} fields={fields} onSubmit={handleForm} widthButton="20%" />
+          <CustomForm
+            data={initialData}
+            fields={fields}
+            onSubmit={handleForm}
+            widthButton="20%"
+            txtButton="ویرایش اطلاعات"
+          />
         </Grid>
       </Grid>
     </PageBox>

@@ -2,7 +2,7 @@ import { CustomDataGrid } from '@/components';
 import PictorialBar from '@/components/chart/PictorialBar';
 import PieChart from '@/components/chart/PieChart';
 import PageBox from '@/components/common/PageBox';
-import { multiav } from '@/constants/tableHeaders';
+import { fieldsQueries, multiav } from '@/constants/tableHeaders';
 import useApi from '@/hooks/UseApi';
 import PanelComponent from '@/layout/PanelComponent';
 import { useTheme } from '@mui/material';
@@ -113,7 +113,11 @@ const AiResults = () => {
   ];
 
   return (
-    <PageBox title="نتایج هوش مصنوعی" description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا">
+    <PageBox
+      title="نتایج هوش مصنوعی"
+      description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
+      searchQuery={fieldsQueries}
+    >
       <PanelComponent loading={loading} components={components} />
     </PageBox>
   );

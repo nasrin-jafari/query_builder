@@ -25,9 +25,15 @@ const InspectAntivirusResults = () => {
     : `/multiav/specific_computer/${computer_name}/`;
 
   const { data, total, loading } = UseApi<HandleApiRequestResponse>(url);
-
+  const filterMultiav = multiav.filter(
+    (item) => item.field !== 'agent_id' && item.field !== 'agent_ip'
+  );
+  const tableHeaders = contentType ? multiav : filterMultiav;
   return (
-    <PageBox title={`نتایج ${contentType ? contentType : computer_name}`}>
+    <PageBox
+      title={`نتایج ${contentType ? contentType : computer_name}`}
+      searchQuery={tableHeaders}
+    >
       <CustomDataGrid
         pageTotal={total}
         loading={loading}
