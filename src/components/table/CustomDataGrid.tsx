@@ -124,7 +124,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   handleSwitch,
 }) => {
   const [collapsedRows, setCollapsedRows] = useState<Record<number, boolean>>({});
-  const [selectedRows, setSelectedRows] = useState<number[]>([]); // State to manage selected rows
+  // const [selectedRows, setSelectedRows] = useState<number[]>([]); // State to manage selected rows
   const [selectedRowValues, setSelectedRowValues] = useState<any[]>([]);
   const { showBtnUpdate, showBtnDelete, showBtnCreate } = UseAceessBtn();
   const headerColumns = columns?.filter((header) => header?.isHeader);
@@ -224,12 +224,12 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
         : [...prevSelectedIds, rowId]
     );
 
-    // تغییر وضعیت selectedRows
-    setSelectedRows((prevSelectedRows) =>
-      prevSelectedRows.includes(rowIndex)
-        ? prevSelectedRows.filter((index) => index !== rowIndex)
-        : [...prevSelectedRows, rowIndex]
-    );
+    // // تغییر وضعیت selectedRows
+    // setSelectedRows((prevSelectedRows) =>
+    //   prevSelectedRows.includes(rowIndex)
+    //     ? prevSelectedRows.filter((index) => index !== rowIndex)
+    //     : [...prevSelectedRows, rowIndex]
+    // );
 
     // تغییر وضعیت selectedRowValues اگر itemSelectRowParam وجود داشته باشد
     if (itemSelectRowParam && rowToToggle) {
