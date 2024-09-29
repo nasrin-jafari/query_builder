@@ -1,4 +1,5 @@
 import axiosMethod from '@/api';
+import Captcha from '@/components/common/Captcha';
 import CustomForm from '@/components/form/CustomForm';
 import { Box, Button, Container, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
@@ -22,10 +23,20 @@ const Login = () => {
     securityQuestion?: any;
     username?: any;
   }>({});
+  const [captcha, setCaptcha] = useState('');
+  const [userCaptchaInput, setUserCaptchaInput] = useState('');
 
   const loginFields = [
     { label: 'نام کاربری', name: 'username', type: 'text' },
     { label: 'رمز عبور', name: 'password', type: 'password' },
+    {
+      label: 'کد امنیتی',
+      name: 'captcha',
+      type: 'text',
+      value: userCaptchaInput,
+      onChange: (e: any) => setUserCaptchaInput(e.target.value),
+      col: 6,
+    },
   ];
   const forgotPasswordFields = [
     ...(!securityQuestion.securityQuestion
@@ -61,7 +72,13 @@ const Login = () => {
 
   const loginValidationSchema = yup.object().shape({
     username: yup.string().required('*اجباری'),
-    password: yup.string().required('*اجباری').min(8, 'رمز عبور باید حداقل دارای 8 کاراکتر باشد'),
+    password: yup.string().required('*اجباری'),
+    captcha: yup
+      .string()
+      .required('*اجباری')
+      .test('captcha-match', ' کد امنیتی نادرست است', function (value) {
+        return value === captcha;
+      }),
   });
 
   const getValidationSchema = (
@@ -195,7 +212,9 @@ const Login = () => {
                 isForgotPassword ? forgotPasswordValidationSchema : loginValidationSchema
               }
               widthButton="25%"
-            />
+            >
+              {!isForgotPassword ? <Captcha onCaptchaChange={setCaptcha} /> : null}
+            </CustomForm>
 
             <Button
               sx={{ mt: 3, color: 'red' }}
