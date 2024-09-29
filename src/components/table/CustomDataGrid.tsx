@@ -48,6 +48,8 @@ import { FaUser } from 'react-icons/fa';
 import { RiComputerLine } from 'react-icons/ri';
 import { PiDownloadSimpleFill } from 'react-icons/pi';
 import { BiSortDown, BiSortUp } from 'react-icons/bi';
+import { MdOutlineAdd } from 'react-icons/md';
+import { exportFiles } from '@/utils/DownloadFiles';
 
 interface RowData {
   [key: string]: any;
@@ -91,6 +93,7 @@ interface ReusableDataGridProps {
   }[]; // New prop to specify action buttons for selected rows
   onAction?: (actionType: string, selectedRows: any[]) => void; // New prop to handle actions
   handleSwitch?: (fieldValue: boolean, rowId: number) => void;
+  downloadFile?: { path: string; fileName?: string; type?: 'file' | 'excel' };
 }
 
 interface ButtonType {
@@ -122,6 +125,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   selectedRowsButtons = [], // Default to empty array if not provided
   onAction,
   handleSwitch,
+  downloadFile,
 }) => {
   const [collapsedRows, setCollapsedRows] = useState<Record<number, boolean>>({});
   // const [selectedRows, setSelectedRows] = useState<number[]>([]); // State to manage selected rows
@@ -356,61 +360,76 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
           )}
         </Box>
       )}
-
-      <CardBox sx={{ mt: linkOverview ? 0 : 2 }}>
-        <TableContainer sx={{ pb: pageTotal <= 10 ? '14px' : 2 }}>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 2,
-              justifyContent: 'space-between',
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          justifyContent: 'flex-end',
+          mb: '16px',
+        }}
+      >
+        {downloadFile && (
+          <Button
+            variant="contained"
+            onClick={() => {
+              if (downloadFile) {
+                exportFiles(downloadFile);
+              }
             }}
-          >
-            <Box>
-              <Button
-                variant="contained"
+            style={{
+              color: theme.palette.grey[900],
+              // background: 'transparent',
+              // border: '1px solid grey',
+            }}
+            endIcon={
+              <PiDownloadSimpleFill
                 style={{
-                  color: theme.palette.grey[900],
-                  background: 'transparent',
-                  border: '1px solid grey',
-                  marginBottom: '16px',
+                  // color: theme.palette.primary.main,
+                  fontSize: '20px',
+                  marginRight: '10px',
                 }}
-                endIcon={
-                  <PiDownloadSimpleFill
-                    style={{
-                      color: theme.palette.primary.main,
-                      fontSize: '20px',
-                      marginRight: '10px',
-                    }}
-                  />
-                }
-              >
-                دانلود خروجی اکسل
-              </Button>
-            </Box>
-            {linkOverview ? (
-              <Box sx={{ direction: 'rtl' }}>
-                <CustomTooltip title="نمایش همه">
-                  <IconButton onClick={() => router.push(linkOverview)}>
-                    <TbExternalLink />
-                  </IconButton>
-                </CustomTooltip>
-              </Box>
-            ) : null}
-            {(handleForm || handleAdd) && showBtnCreate ? (
-              <Box sx={{ textAlign: 'right' }}>
-                <Button
-                  variant="contained"
-                  onClick={() => setDialogState({ open: true, type: 'add' })}
-                  sx={{ width: '10%' }}
-                >
-                  افزودن
-                </Button>
-              </Box>
-            ) : null}
+              />
+            }
+          >
+            دانلود خروجی اکسل
+          </Button>
+        )}
+        {(handleForm || handleAdd) && showBtnCreate ? (
+          <Box sx={{ textAlign: 'right' }}>
+            <Button
+              variant="contained"
+              onClick={() => setDialogState({ open: true, type: 'add' })}
+              style={{
+                color: theme.palette.grey[900],
+                // background: 'transparent',
+                // border: `1px solid ${theme.palette.primary.main}`,
+              }}
+              endIcon={
+                <MdOutlineAdd
+                  style={{
+                    // color: theme.palette.primary.main,
+                    fontSize: '20px',
+                  }}
+                />
+              }
+            >
+              افزودن{' '}
+            </Button>
           </Box>
-
+        ) : null}
+      </Box>
+      <CardBox sx={{ mt: linkOverview ? 0 : 2 }}>
+        {linkOverview ? (
+          <Box sx={{ direction: 'rtl' }}>
+            <CustomTooltip title="نمایش همه">
+              <IconButton onClick={() => router.push(linkOverview)}>
+                <TbExternalLink />
+              </IconButton>
+            </CustomTooltip>
+          </Box>
+        ) : null}
+        <TableContainer sx={{ pb: pageTotal <= 10 ? '14px' : 2 }}>
           <Table>
             <TableHead
               sx={{

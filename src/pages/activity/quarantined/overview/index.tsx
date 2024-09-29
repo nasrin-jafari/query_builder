@@ -3,6 +3,7 @@ import PageBox from '@/components/common/PageBox';
 import { quarantined_files } from '@/constants/tableHeaders';
 import useApi from '@/hooks/UseApi';
 import { useRouter } from 'next/router';
+import { exportFiles } from '@/utils/DownloadFiles';
 
 interface QuarantinedData {
   [key: string]: any;
@@ -35,16 +36,13 @@ const QuarantinedOverview = () => {
           {
             label: 'دانلود فایل',
             type: 'extra',
-            // onClick: (_, data) => {
-            //   router.push({
-            //     pathname: `/hosts/hostManagement/logs/detailsLog/`,
-            //     query: {
-            //       logId: data?.extra_information?.agent_id,
-            //       key: 'quarantined_files',
-            //       logs: 'alerts',
-            //     },
-            //   });
-            // },
+            onClick: (_, data) => {
+              exportFiles({
+                path: `/agents/quarantined-files/${data?.extra_information?.hash_sha256}/`,
+                fileName: `${data?.hash_md5}.q`,
+                type: 'file',
+              });
+            },
           },
         ]}
       />
