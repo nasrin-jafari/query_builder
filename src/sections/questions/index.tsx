@@ -3,9 +3,8 @@ import { FormData } from '@/components/form/CustomForm';
 import UseApi from '@/hooks/UseApi';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import * as Yup from 'yup';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { useRouter } from 'next/router';
+import * as Yup from 'yup';
 
 interface QuestionData {
   question_1: string;
@@ -14,7 +13,6 @@ interface QuestionData {
 
 const Question = () => {
   const theme = useTheme();
-  const router = useRouter();
   const token = localStorage.getItem('auth_token_typeScript') || '';
   const tokenDecode = jwt.decode(token) as JwtPayload;
   const { data: question, handleApiRequest } = UseApi<QuestionData>(
