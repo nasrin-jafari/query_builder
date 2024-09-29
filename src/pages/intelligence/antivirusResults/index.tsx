@@ -94,11 +94,7 @@ const AntivirusResults = () => {
           redirectTo: '/intelligence/antivirusResults/inspect',
           query: {
             ...router.query,
-            contentType: item.en.startsWith('clean')
-              ? 'benign'
-              : item.en.startsWith('infected')
-                ? 'malware'
-                : item.en,
+            contentType: item.en,
           },
         })),
         renderBottomText: true,
