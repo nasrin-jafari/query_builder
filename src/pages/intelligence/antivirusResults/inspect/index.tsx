@@ -29,11 +29,16 @@ const InspectAntivirusResults = () => {
     (item) => item.field !== 'agent_id' && item.field !== 'agent_ip'
   );
   const tableHeaders = contentType ? multiav : filterMultiav;
+
+  const title = contentType
+    ? contentType === 'BENIGN'
+      ? 'جزییات فایل های سالم نتایج ضد ویروس مرکب'
+      : contentType !== 'null'
+      ? 'جزییات فایل های آلوده نتایج ضد ویروس مرکب'
+      : 'جزییات فایل های ناشناخته نتایج ضد ویروس مرکب'
+    : ` بررسی عامل ${computer_name}`;
   return (
-    <PageBox
-      title={`نتایج ${contentType ? contentType : computer_name}`}
-      searchQuery={tableHeaders}
-    >
+    <PageBox title={title} searchQuery={tableHeaders}>
       <CustomDataGrid
         pageTotal={total}
         loading={loading}

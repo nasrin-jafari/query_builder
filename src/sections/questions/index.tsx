@@ -1,14 +1,16 @@
 import { CustomForm } from '@/components';
 import { FormData } from '@/components/form/CustomForm';
 import UseApi from '@/hooks/UseApi';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import * as Yup from 'yup';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import * as Yup from 'yup';
+
 interface QuestionData {
   question_1: string;
   question_2: string;
 }
+
 const Question = () => {
   const theme = useTheme();
   const token = localStorage.getItem('auth_token_typeScript') || '';
@@ -16,6 +18,7 @@ const Question = () => {
   const { data: question, handleApiRequest } = UseApi<QuestionData>(
     '/user/security_questions/get/'
   );
+
   const onSubmit = async (formData: FormData) => {
     const formDataToSave = {
       username: tokenDecode?.username,
@@ -32,7 +35,7 @@ const Question = () => {
     };
     try {
       const res = await handleApiRequest(`/user/security_questions/`, 'post', formDataToSave);
-      console.log(res);
+
       if (res) {
         location.reload();
       }
@@ -40,6 +43,12 @@ const Question = () => {
       console.error('Error updating switch:', error);
     }
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('auth_token_typeScript'); // حذف توکن از localStorage
+    window.location.href = '/';
+  };
+
   const validationSchema = Yup.object().shape({
     question1: Yup.string().required('این فیلد الزامی است'),
     question2: Yup.string().required('این فیلد الزامی است'),
@@ -85,6 +94,15 @@ const Question = () => {
             شد به این سوالات پاسخ دهید تا بتوانید حساب خود را بازیابی کنید.
           </Typography>
         </CustomForm>
+        {/* دکمه بازگشت به صفحه ورود */}
+        <Button
+          variant="outlined"
+          color="secondary"
+          sx={{ mt: 3 }}
+          onClick={handleLogout} // فراخوانی تابع لاگ‌اوت
+        >
+          بازگشت به صفحه ورود
+        </Button>
       </Container>
     </Box>
   );

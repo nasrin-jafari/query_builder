@@ -1,5 +1,5 @@
 // Layout.tsx
-import { Box, Button, Card, Container, Typography, useTheme } from '@mui/material';
+import { Box, Button, Container, Typography, useTheme } from '@mui/material';
 import { useRouter } from 'next/router';
 import jwt from 'jsonwebtoken';
 import { ReactNode, useEffect, useState } from 'react';
@@ -56,12 +56,12 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
       <SideBar content={children} filteredTabs={newTabs} />
-      <Card
+      <Box
         component="main"
         sx={{
-          p: 6,
-          pl: 9,
-          pr: 8,
+          py: 6,
+          pr: router.pathname === '/' ? 9 : 4,
+          pl: router.pathname === '/' ? 9 : 12,
           borderRadius: '12px',
           width: '100%',
           my: 4,
@@ -105,7 +105,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         ) : (
           children
         )}
-      </Card>
+      </Box>
     </>
   );
 }

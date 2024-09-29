@@ -40,6 +40,7 @@ const HostManagement = () => {
         loading={loading}
         columns={agents}
         rows={formatedData}
+        downloadFile={{ path: '/agents/excel/', type: 'excel' }}
         buttons={[
           {
             label: ' رخداد ها',

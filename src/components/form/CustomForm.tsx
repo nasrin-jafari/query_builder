@@ -161,25 +161,30 @@ const CustomForm: React.FC<FormProps> = ({
                 </Box>
               ))
             ) : (
-              <Grid container spacing={2}>
-                {fields.map((field, index) => (
-                  <Grid item xs={field.col || 12} key={index}>
-                    <StyledInputLabel shrink sx={{ mt: 2, fontSize: 18 }}>
-                      {field.label}
-                    </StyledInputLabel>
-                    {renderField(field, methods.control)}
-                  </Grid>
-                ))}
-              </Grid>
+              <>
+                <Grid
+                  container
+                  spacing={2}
+                  sx={{ alignItems: 'flex-end', justifyContent: 'space-between' }}
+                >
+                  {fields.map((field, index) => (
+                    <Grid item xs={field.col || 12} key={index}>
+                      <StyledInputLabel shrink sx={{ mt: 2, fontSize: 18 }}>
+                        {field.label}
+                      </StyledInputLabel>
+                      {renderField(field, methods.control)}
+                    </Grid>
+                  ))}
+                  <Box>{children}</Box>
+                </Grid>
+              </>
             )}
-
-            {children && <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>{children}</Box>}
 
             <Button
               type="submit"
               variant="contained"
               color="primary"
-              style={{ marginTop: '1rem', width: widthButton }}
+              style={{ marginTop: '2rem', width: widthButton }}
             >
               {txtButton}
             </Button>

@@ -4,6 +4,8 @@ export const fa = {
   intelligence: 'هوشمندی',
   mandatoryInstallation: 'نصاب اجباری',
   mitre: 'حملات MITRE',
+  attacks: 'حملات',
+  panel: 'پنل',
   permission: 'دسترسی ها',
   reservoirManagement: 'مدیریت مخازن',
   reviewAndExplore: 'بررسی و کنکاش',

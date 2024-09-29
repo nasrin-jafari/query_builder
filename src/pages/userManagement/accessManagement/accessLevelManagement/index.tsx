@@ -17,6 +17,7 @@ import { en } from '@/constants/en';
 import { fa } from '@/constants/fa';
 // import { useAceessBtn } from '@/hooks/useAceessBtn';
 import UseApi from '@/hooks/UseApi';
+import PageBox from '@/components/common/PageBox';
 
 interface CheckboxListProps {
   data: Record<string, any>;
@@ -92,7 +93,7 @@ const CheckboxList: React.FC<CheckboxListProps> = ({ data }) => {
   };
 
   return (
-    <div>
+    <PageBox title={'مدیریت دسترسی'}>
       {Object.keys(data).map((key) => (
         <Accordion
           key={key}
@@ -204,15 +205,14 @@ const CheckboxList: React.FC<CheckboxListProps> = ({ data }) => {
         افزودن دسترسی‌ها
       </Button>
       {/* )} */}
-    </div>
+    </PageBox>
   );
 };
 
 const AccessLevelManagement: React.FC = () => {
   const { data } = UseApi('/access_control/permissions/');
-  console.log(data);
   if (!data || typeof data !== 'object' || Array.isArray(data)) {
-    return <div>Error: Invalid data format</div>;
+    return false;
   }
 
   return <CheckboxList data={data as Record<string, any>} />;

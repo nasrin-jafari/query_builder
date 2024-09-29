@@ -4,6 +4,8 @@ export const en = {
   intelligence: 'intelligence',
   mandatoryInstallation: 'mandatoryInstallation',
   mitre: 'mitre',
+  attacks: 'attacks',
+  panel: 'panel',
   permission: 'دسترسی ها',
   reservoirManagement: 'reservoirManagement',
   reviewAndExplore: 'reviewAndExplore',
