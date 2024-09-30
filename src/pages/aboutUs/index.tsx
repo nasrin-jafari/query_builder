@@ -107,7 +107,10 @@ const AboutUs = () => {
                 }}
               >
                 {selectedVideo && (
-                  <source src={`${BASE_URL}/dashboard/video/${selectedVideo}/`} type="video/mp4" />
+                  <source
+                    src={`${process.env.NEXT_PUBLIC_BASEURL}/dashboard/video/${selectedVideo}/`}
+                    type="video/mp4"
+                  />
                 )}
                 مرورگر شما از پخش ویدئو پشتیبانی نمی‌کند.
               </video>
