@@ -1078,7 +1078,7 @@ const headers: Headers = {
   ],
   update_history: [
     // { field: 'id', headerName: 'شناسه', dataType: 'number', isHeader: false },
-    { field: 'file_server', headerName: 'آدرس سرور', dataType: 'text', isHeader: true },
+    { field: 'updateID', headerName: ' شناسه به روزرسانی', dataType: 'text', isHeader: true },
     { field: 'old_version', headerName: 'نسخه قبلی', dataType: 'text', isHeader: true },
     { field: 'new_version', headerName: 'نسخه جدید', dataType: 'text', isHeader: true },
     { field: 'status', headerName: 'وضعیت', dataType: 'checkbox', isHeader: true },

@@ -1,8 +1,24 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+// تابعی برای به دست آوردن URL پایه
+const getUrl = () => {
+  // بررسی اینکه آیا در محیط مرورگر هستیم یا نه
+  if (typeof window !== 'undefined') {
+    const { protocol, hostname } = window.location; // دریافت پروتکل و نام میزبان از آدرس فعلی
+    const dynamicIp = `${protocol}//${hostname}:9000/api`; // ایجاد آدرس پویا برای سرور API
+    if (hostname === 'localhost') {
+      return process.env.NEXT_PUBLIC_BASEURL; // در صورت اجرای در localhost، URL از محیط تنظیمات برمی‌گردد
+    }
+    return dynamicIp; // در غیر این صورت، آدرس پویا برگردانده می‌شود
+  }
+  return process.env.NEXT_PUBLIC_BASEURL; // در صورتی که در محیط مرورگر نباشیم، URL از محیط تنظیمات برمی‌گردد
+};
+
+// به دست آوردن URL پایه از طریق تابع getUrl
+export const BASE_URL = getUrl();
 
 const config = {
-  baseURL: process.env.NEXT_PUBLIC_BASEURL,
+  baseURL: BASE_URL,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
