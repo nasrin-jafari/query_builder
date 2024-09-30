@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Card, Typography, Button, useTheme } from '@mui/material';
+import { Box, Button, Typography, useTheme } from '@mui/material';
+import CardBox from '@/layout/CardBox';
 
 interface DataDetail {
   host: string;
@@ -18,16 +19,15 @@ interface DataCardProps {
 const LastUpdate: React.FC<DataCardProps> = ({ data, openConfirmationDialog, setSelectedItem }) => {
   const theme = useTheme();
   return (
-    <Box>
+    <CardBox sx={{ p: 0, background: theme.palette.grey[300], my: 2 }}>
       {data && data.length > 0 ? (
         data.map((detail, index) => (
-          <Card
+          <Box
             key={index}
-            variant="elevation"
             sx={{
               mt: 2,
               mb: 2,
-              bgcolor: theme.palette.grey[300],
+              background: theme.palette.grey[300],
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
@@ -81,12 +81,12 @@ const LastUpdate: React.FC<DataCardProps> = ({ data, openConfirmationDialog, set
                 ویرایش
               </Button>
             </Box>
-          </Card>
+          </Box>
         ))
       ) : (
         <Typography>هیچ داده‌ای یافت نشد.</Typography>
       )}
-    </Box>
+    </CardBox>
   );
 };
 
