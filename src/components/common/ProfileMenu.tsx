@@ -124,14 +124,14 @@ const ProfileMenu: React.FC = () => {
                 p: 1,
                 borderRadius: '6px',
                 fontWeight: 'bold',
-                color: theme.palette.grey[50],
+                color: theme.palette.grey[900],
               }}
             >
               {username}
             </Typography>
             <Typography
               sx={{
-                color: theme.palette.grey[600],
+                color: theme.palette.grey[900],
                 // p: 1,
                 borderRadius: '6px',
               }}
