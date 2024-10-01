@@ -14,7 +14,7 @@ import Image from 'next/image';
 import CardBox from '@/layout/CardBox';
 import UseApi from '@/hooks/UseApi';
 import { useState } from 'react';
-import { BASE_URL } from '@/api';
+// import { BASE_URL } from '@/api';
 
 const AboutUs = () => {
   const { data } = UseApi('/dashboard/videos-list/');
