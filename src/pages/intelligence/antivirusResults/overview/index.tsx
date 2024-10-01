@@ -3,6 +3,8 @@ import PageBox from '@/components/common/PageBox';
 import { multiav } from '@/constants/tableHeaders';
 import useApi from '@/hooks/UseApi';
 import { useRouter } from 'next/router';
+import { IoDocumentTextOutline } from 'react-icons/io5';
+
 interface ExtraInfoData {
   [key: string]: any;
 }
@@ -28,11 +30,12 @@ const ExtraInfo = () => {
         rows={data?.Data ?? []}
         buttons={[
           {
-            label: 'جزئیات پویش',
-            type: 'simple',
+            label: 'جزییات پویش',
+            type: 'allowAccess',
+            icon: <IoDocumentTextOutline />,
             onClick: (_, row) => {
               router.push({
-                pathname: '/intelligence/antivirusResults/overview/[extraInfo]',
+                pathname: '/intelligence/antivirusResults/overview/overviewDetails/',
                 query: {
                   extraInfo: row?.scan_id,
                 },

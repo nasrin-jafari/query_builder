@@ -292,13 +292,25 @@ export const TABS: ItemsTab[] = [
       // },
       {
         value: 'antivirusResults',
-        label: 'نتایج ضد ویروس مرکب',
+        label: '   نتایج ضد ویروس مرکب',
         path: '/intelligence/antivirusResults',
         routes: [
           {
-            value: 'antivirusResults/detailsResult',
-            label: 'نمایش جزئیات ضد ویروس',
-            path: '/intelligence/antivirusResults/detailsResult',
+            value: 'antivirusResults',
+            label: 'جزییات نتایج آنتی ویروس مرکب',
+            path: '/intelligence/antivirusResults/overview',
+            routes: [
+              {
+                value: 'antivirusResults',
+                label: 'جزییات نتایج آنتی ویروس مرکب',
+                path: '/intelligence/antivirusResults/overview/overviewDetails',
+              },
+            ],
+          },
+          {
+            value: 'antivirusResults',
+            label: 'جزییات نتایج آنتی ویروس مرکب',
+            path: '/intelligence/antivirusResults/inspect',
           },
         ],
       },

@@ -9,7 +9,7 @@ import {
   IoIosArrowUp,
   IoIosMore,
   IoMdClose,
-} from 'react-icons/io'; // Importing alternative icons
+} from 'react-icons/io';
 import {
   Box,
   Button,
@@ -85,13 +85,13 @@ interface ReusableDataGridProps {
     fields?: Field[];
     validation?: yup.ObjectSchema<any>;
   }[];
-  selectableRows?: boolean; // New prop to control row selection
-  itemSelectRowParam?: string; // New prop to specify which key to return
+  selectableRows?: boolean;
+  itemSelectRowParam?: string;
   selectedRowsButtons?: {
     label: string;
     actionType: string;
-  }[]; // New prop to specify action buttons for selected rows
-  onAction?: (actionType: string, selectedRows: any[]) => void; // New prop to handle actions
+  }[];
+  onAction?: (actionType: string, selectedRows: any[]) => void;
   handleSwitch?: (fieldValue: boolean, rowId: number) => void;
   downloadFile?: { path: string; fileName?: string; type?: 'file' | 'excel' };
 }
@@ -107,6 +107,8 @@ interface ButtonType {
   validation?: yup.ObjectSchema<any>;
 }
 
+const isFalsyExceptZero = (value: any) => value === '' || (value == null && value !== 0);
+
 const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   columns,
   rows = [],
@@ -120,15 +122,14 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   editForm,
   editState,
   fields,
-  selectableRows = false, // Default to false if not provided
+  selectableRows = false,
   itemSelectRowParam = '',
-  selectedRowsButtons = [], // Default to empty array if not provided
+  selectedRowsButtons = [],
   onAction,
   handleSwitch,
   downloadFile,
 }) => {
   const [collapsedRows, setCollapsedRows] = useState<Record<number, boolean>>({});
-  // const [selectedRows, setSelectedRows] = useState<number[]>([]); // State to manage selected rows
   const [selectedRowValues, setSelectedRowValues] = useState<any[]>([]);
   const { showBtnUpdate, showBtnDelete, showBtnCreate } = UseAceessBtn();
   const headerColumns = columns?.filter((header) => header?.isHeader);
@@ -141,7 +142,6 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
     button?: ButtonType;
   }>({ open: false, type: null });
   const [selectedRow, setSelectedRow] = useState<RowData | null>(null);
-
   const [anchorEls, setAnchorEls] = useState<Array<null | HTMLElement>>([]);
 
   const extraButtons = buttons?.filter((button) => button.type === 'extra');
@@ -221,21 +221,12 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   const handleSelectRow = (rowId: string, rowIndex: number) => {
     const rowToToggle = rows[rowIndex];
 
-    // تغییر وضعیت selectedRowIds
     setSelectedRowIds((prevSelectedIds) =>
       prevSelectedIds.includes(rowId)
         ? prevSelectedIds.filter((id) => id !== rowId)
         : [...prevSelectedIds, rowId]
     );
 
-    // // تغییر وضعیت selectedRows
-    // setSelectedRows((prevSelectedRows) =>
-    //   prevSelectedRows.includes(rowIndex)
-    //     ? prevSelectedRows.filter((index) => index !== rowIndex)
-    //     : [...prevSelectedRows, rowIndex]
-    // );
-
-    // تغییر وضعیت selectedRowValues اگر itemSelectRowParam وجود داشته باشد
     if (itemSelectRowParam && rowToToggle) {
       const value = rowToToggle[itemSelectRowParam];
       setSelectedRowValues((prevSelectedValues) =>
@@ -252,38 +243,12 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
     }
   };
 
-  // const handleDeleteItem = (value: any) => {
-  //   // حذف مقدار از selectedRowValues
-  //   setSelectedRowValues((prevSelectedValues) => {
-  //     const updatedValues = prevSelectedValues.filter((v) => v !== value);
-  //     return updatedValues;
-  //   });
-
-  //   if (itemSelectRowParam) {
-  //     // پیدا کردن ایندکس ردیف برای حذف تیک
-  //     const indexToUncheck = rows.findIndex((row) => row[itemSelectRowParam] === value);
-
-  //     if (indexToUncheck > -1) {
-  //       // حذف ایندکس از selectedRows
-  //       setSelectedRows((prevSelected) => {
-  //         const updatedRows = prevSelected.filter((index) => index !== indexToUncheck);
-  //         return updatedRows;
-  //       });
-
-  //       // حذف شناسه ردیف از selectedRowIds
-  //       setSelectedRowIds((prevSelectedIds) => {
-  //         const rowIdToRemove = rows[indexToUncheck][itemSelectRowParam as keyof (typeof rows)[0]];
-  //         const updatedIds = prevSelectedIds.filter((id) => id !== rowIdToRemove);
-  //         return updatedIds;
-  //       });
-  //     }
-  //   }
-  // };
   const handleSwitchChange = (fieldValue: boolean, rowId: number) => {
     if (handleSwitch) {
       handleSwitch(fieldValue, rowId);
     }
   };
+
   const handleSort = (sortKey: string) => {
     const currentPath = router.pathname;
     const currentQuery = router.query;
@@ -305,6 +270,28 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
       { shallow: true }
     );
   };
+
+  const renderDefaultContent = (value: any) =>
+    isFalsyExceptZero(value) ? (
+      '-'
+    ) : value.length > 30 ? (
+      <CustomTooltip title={value}>
+        <Typography
+          sx={{
+            width: '250px',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            fontSize: '16px',
+          }}
+        >
+          {value}
+        </Typography>
+      </CustomTooltip>
+    ) : (
+      value
+    );
+
   return (
     <>
       {selectedRowValues.length > 0 && (
@@ -335,8 +322,6 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     variant="outlined"
                     color="primary"
                     sx={{ fontSize: '14px' }}
-                    // onDelete={() => handleDeleteItem(value)}
-                    // deleteIcon={<IoMdClose />}
                   />
                 ))}
               </Box>
@@ -377,20 +362,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                 exportFiles(downloadFile);
               }
             }}
-            style={{
-              color: theme.palette.grey[900],
-              // background: 'transparent',
-              // border: '1px solid grey',
-            }}
-            endIcon={
-              <PiDownloadSimpleFill
-                style={{
-                  // color: theme.palette.primary.main,
-                  fontSize: '20px',
-                  marginRight: '10px',
-                }}
-              />
-            }
+            endIcon={<PiDownloadSimpleFill style={{ fontSize: '20px', marginRight: '10px' }} />}
           >
             دانلود خروجی اکسل
           </Button>
@@ -400,19 +372,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
             <Button
               variant="contained"
               onClick={() => setDialogState({ open: true, type: 'add' })}
-              style={{
-                color: theme.palette.grey[900],
-                // background: 'transparent',
-                // border: `1px solid ${theme.palette.primary.main}`,
-              }}
-              endIcon={
-                <MdOutlineAdd
-                  style={{
-                    // color: theme.palette.primary.main,
-                    fontSize: '20px',
-                  }}
-                />
-              }
+              endIcon={<MdOutlineAdd style={{ fontSize: '20px' }} />}
             >
               افزودن{' '}
             </Button>
@@ -514,10 +474,10 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                           let content: React.ReactNode;
 
                           const renderTimeContent = (value: number) =>
-                            value === null || value === undefined ? '-' : ConvertDates(value, true);
+                            isFalsyExceptZero(value) ? '-' : ConvertDates(value, true);
 
                           const renderScoreContent = (value: number) =>
-                            value === null || value === undefined ? (
+                            isFalsyExceptZero(value) ? (
                               '-'
                             ) : (
                               <Typography
@@ -526,8 +486,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     value >= 8
                                       ? theme.palette.error.main
                                       : value >= 6
-                                      ? theme.palette.primary.main
-                                      : theme.palette.warning.main,
+                                        ? theme.palette.primary.main
+                                        : theme.palette.warning.main,
                                 }}
                               >
                                 {value}
@@ -546,7 +506,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
 
                           const renderStatusContent = (value: any) => {
                             const getColor = (value: string) => {
-                              const stringValue = String(value); // تبدیل مقدار به رشته
+                              const stringValue = String(value);
                               if (stringValue === 'فعال' || stringValue === 'Clean') {
                                 return theme.palette.success.main;
                               }
@@ -556,7 +516,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               return theme.palette.text.primary;
                             };
 
-                            return value === null || value === undefined ? (
+                            return isFalsyExceptZero(value) ? (
                               '-'
                             ) : (
                               <Typography
@@ -571,7 +531,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                           };
 
                           const renderIconContent = (value: boolean | null | undefined) =>
-                            value === null || value === undefined ? (
+                            isFalsyExceptZero(value) ? (
                               '-'
                             ) : (
                               <Typography>
@@ -581,27 +541,6 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                   <IoMdClose color={theme.palette.error.main} size={24} />
                                 )}
                               </Typography>
-                            );
-
-                          const renderDefaultContent = (value: any) =>
-                            value === null || value === undefined ? (
-                              '-'
-                            ) : value.length > 30 ? (
-                              <CustomTooltip title={value}>
-                                <Typography
-                                  sx={{
-                                    width: '250px',
-                                    whiteSpace: 'nowrap',
-                                    overflow: 'hidden',
-                                    textOverflow: 'ellipsis',
-                                    fontSize: '16px',
-                                  }}
-                                >
-                                  {value}
-                                </Typography>
-                              </CustomTooltip>
-                            ) : (
-                              value
                             );
 
                           switch (true) {
@@ -625,7 +564,6 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               break;
                           }
 
-                          // Wrap all content in CopyValue except for the switch handler
                           const displayContent = column.field?.includes('enabled') ? (
                             content
                           ) : (
@@ -810,8 +748,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               dialogState.type === 'delete'
                 ? 'آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟'
                 : dialogState.type === 'edit'
-                ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
-                : 'افزودن آیتم جدید'
+                  ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
+                  : 'افزودن آیتم جدید'
             }
             content={
               dialogState.type === 'delete' ? (
@@ -823,8 +761,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     dialogState.type === 'edit'
                       ? editForm || []
                       : handleAdd
-                      ? handleAdd?.fields
-                      : fields || []
+                        ? handleAdd?.fields
+                        : fields || []
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}
