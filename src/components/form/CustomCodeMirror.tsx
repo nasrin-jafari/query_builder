@@ -2,6 +2,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import ReactCodeMirror from '@uiw/react-codemirror';
 import { Control, Controller } from 'react-hook-form';
 import { Field } from './CustomForm';
+import React from 'react';
 
 interface CustomCodeMirrorProps {
   field: Field;

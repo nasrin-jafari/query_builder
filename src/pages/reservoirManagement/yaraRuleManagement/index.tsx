@@ -23,9 +23,9 @@ const YaraRuleManagement: React.FC = () => {
     '/background-engine/yara/get/'
   );
   const [dataInit, setDataInit] = useState(data?.Data);
-  useEffect(()=>{
+  useEffect(() => {
     setDataInit(data?.Data);
-  },[data])
+  }, [data]);
 
   const fields = [
     {
@@ -47,6 +47,20 @@ const YaraRuleManagement: React.FC = () => {
       name: 'content',
       type: 'code',
       tab: 'از طریق متن',
+      col: 12,
+    },
+  ];
+  const fieldsEdit = [
+    {
+      label: 'نام فایل',
+      name: 'name',
+      type: 'text',
+      col: 6,
+    },
+    {
+      label: 'متن قانون',
+      name: 'content',
+      type: 'code',
       col: 12,
     },
   ];
@@ -114,16 +128,15 @@ const YaraRuleManagement: React.FC = () => {
       console.log(`Error: ${error}`);
     }
   };
-  const handleSwitch = async(fieldValue : boolean , rowId : number)=>{
+  const handleSwitch = async (fieldValue: boolean, rowId: number) => {
     const response = await axiosMethod.post(
-      `/background-engine/yara/status/${fieldValue == true ? 'disable' : 'enable'}/${rowId}/`,
+      `/background-engine/yara/status/${fieldValue == true ? 'disable' : 'enable'}/${rowId}/`
     );
     if (response) {
-     const res =  await axiosMethod.get('/background-engine/yara/get/')
+      const res = await axiosMethod.get('/background-engine/yara/get/');
       setDataInit(res.data.data?.Data);
     }
-  }
-
+  };
 
   return (
     <PageBox
@@ -137,7 +150,7 @@ const YaraRuleManagement: React.FC = () => {
         columns={yara}
         rows={dataInit || []}
         fields={fields}
-        editForm={fields}
+        editForm={fieldsEdit}
         handleForm={handleForm}
         handleSwitch={handleSwitch}
         notExtra

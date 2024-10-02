@@ -145,6 +145,11 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   const [anchorEls, setAnchorEls] = useState<Array<null | HTMLElement>>([]);
 
   const extraButtons = buttons?.filter((button) => button.type === 'extra');
+  const isCodeModal =
+    editForm &&
+    editForm.length > 0 &&
+    editForm.find((item) => item.type === 'code') &&
+    dialogState.type === 'edit';
 
   const handleMoreClick = (event: React.MouseEvent<HTMLElement>, rowIndex: number) => {
     const newAnchorEls = [...anchorEls];
@@ -744,6 +749,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
         {dialogState.open && (
           <ConfirmationDialog
             open={dialogState.open}
+            maxWidth={isCodeModal ? 'lg' : undefined}
             title={
               dialogState.type === 'delete'
                 ? 'آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟'
