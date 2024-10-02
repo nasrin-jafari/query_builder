@@ -1,7 +1,9 @@
 import { Box, Paper } from '@mui/material';
 import CustomTabs from '../../../components/common/CustomTabs';
-import AiUploadSection from '@/sections/intelligence/managementOfServices/aiUploadSection';
 import React from 'react';
+import AiUpload from '@/sections/intelligence/managementOfServices/AiUploader';
+import YaraUpload from '@/sections/intelligence/managementOfServices/yaraUpload';
+import MultiServices from '@/sections/intelligence/managementOfServices/multiServices';
 
 const ManagementOfServices = () => {
   const tabs = [
@@ -9,14 +11,17 @@ const ManagementOfServices = () => {
       label: 'بر اساس مدل های هوش مصنوعی',
       content: (
         <Box sx={{ display: 'flex', width: '100%' }}>
-          <AiUploadSection />
+          <AiUpload />
         </Box>
       ),
     },
     {
       label: 'موتور های پس زمینه',
-      // content: <YaraUpload />,
-      content: <p>sss</p>,
+      content: <YaraUpload />,
+    },
+    {
+      label: 'سرویس های کمکی',
+      content: <MultiServices />,
     },
   ];
 
