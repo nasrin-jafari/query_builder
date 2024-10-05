@@ -385,40 +385,42 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
           )}
         </Box>
       )}
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 2,
-          justifyContent: 'flex-end',
-          mb: '16px',
-        }}
-      >
-        {downloadFile && (
-          <Button
-            variant="contained"
-            onClick={() => {
-              if (downloadFile) {
-                exportFiles(downloadFile);
-              }
-            }}
-            endIcon={<PiDownloadSimpleFill style={{ fontSize: '20px', marginRight: '10px' }} />}
-          >
-            دانلود خروجی اکسل
-          </Button>
-        )}
-        {(handleForm || handleAdd) && showBtnCreate ? (
-          <Box sx={{ textAlign: 'right' }}>
+      {(downloadFile || handleForm || handleAdd) && (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            justifyContent: 'flex-end',
+            mb: '16px',
+          }}
+        >
+          {downloadFile && (
             <Button
               variant="contained"
-              onClick={() => setDialogState({ open: true, type: 'add' })}
-              endIcon={<MdOutlineAdd style={{ fontSize: '20px' }} />}
+              onClick={() => {
+                if (downloadFile) {
+                  exportFiles(downloadFile);
+                }
+              }}
+              endIcon={<PiDownloadSimpleFill style={{ fontSize: '20px', marginRight: '10px' }} />}
             >
-              افزودن{' '}
+              دانلود خروجی اکسل
             </Button>
-          </Box>
-        ) : null}
-      </Box>
+          )}
+          {(handleForm || handleAdd) && showBtnCreate ? (
+            <Box sx={{ textAlign: 'right' }}>
+              <Button
+                variant="contained"
+                onClick={() => setDialogState({ open: true, type: 'add' })}
+                endIcon={<MdOutlineAdd style={{ fontSize: '20px' }} />}
+              >
+                افزودن{' '}
+              </Button>
+            </Box>
+          ) : null}
+        </Box>
+      )}
       <CardBox sx={{ mt: linkOverview ? 0 : 2 }}>
         {linkOverview ? (
           <Box sx={{ direction: 'rtl' }}>
