@@ -1,15 +1,10 @@
 import axiosMethod from '@/api';
 import { ConfirmationDialog, CustomForm, CustomIconButton } from '@/components';
 import CustomTooltip from '@/components/common/CustomToolTip';
+import { UseAceessBtn } from '@/hooks/UseAceessBtn';
+import CardBox from '@/layout/CardBox';
 import { ConvertDates } from '@/utils/ConvertDates';
-import {
-  IoIosArrowBack,
-  IoIosArrowDown,
-  IoIosArrowForward,
-  IoIosArrowUp,
-  IoIosMore,
-  IoMdClose,
-} from 'react-icons/io';
+import { exportFiles } from '@/utils/DownloadFiles';
 import {
   Box,
   Button,
@@ -35,21 +30,26 @@ import {
   useTheme,
 } from '@mui/material';
 import { useRouter } from 'next/router';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { BiSortDown, BiSortUp } from 'react-icons/bi';
+import { FaUser } from 'react-icons/fa';
+import {
+  IoIosArrowBack,
+  IoIosArrowDown,
+  IoIosArrowForward,
+  IoIosArrowUp,
+  IoIosMore,
+  IoMdClose,
+} from 'react-icons/io';
+import { MdOutlineAdd } from 'react-icons/md';
+import { PiDownloadSimpleFill } from 'react-icons/pi';
+import { RiComputerLine } from 'react-icons/ri';
 import { TbExternalLink } from 'react-icons/tb';
 import { TiTick } from 'react-icons/ti';
 import * as yup from 'yup';
 import CopyValue from '../common/CopyValue';
 import { Field } from '../form/CustomForm';
 import TableRowSkeleton from './TableSkeleton';
-import CardBox from '@/layout/CardBox';
-import { UseAceessBtn } from '@/hooks/UseAceessBtn';
-import { FaUser } from 'react-icons/fa';
-import { RiComputerLine } from 'react-icons/ri';
-import { PiDownloadSimpleFill } from 'react-icons/pi';
-import { BiSortDown, BiSortUp } from 'react-icons/bi';
-import { MdOutlineAdd } from 'react-icons/md';
-import { exportFiles } from '@/utils/DownloadFiles';
 
 interface RowData {
   [key: string]: any;
@@ -241,7 +241,42 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
       );
     }
   };
+  const [isSelectAllChecked, setIsSelectAllChecked] = useState(false); // وضعیت چک‌باکس انتخاب همه
 
+  const handleSelectAllRows = (isChecked: boolean) => {
+    if (isChecked) {
+      const rowIdsToAdd = rows
+        .map((row) => row[itemSelectRowParam])
+        .filter((id) => !selectedRowIds.includes(id)); // فقط idهای جدید
+
+      const rowValuesToAdd = rows
+        .map((row) => row[itemSelectRowParam])
+        .filter((value) => !selectedRowValues.includes(value)); // فقط valueهای جدید
+
+      // به روزرسانی selectedRowIds و selectedRowValues
+      setSelectedRowIds((prevSelectedIds) => [...prevSelectedIds, ...rowIdsToAdd]);
+      setSelectedRowValues((prevSelectedValues) => [...prevSelectedValues, ...rowValuesToAdd]);
+    } else {
+      const rowIdsToRemove = rows.map((row) => row[itemSelectRowParam]);
+      const rowValuesToRemove = rows.map((row) => row[itemSelectRowParam]);
+
+      // عدم انتخاب همه سطرها
+      setSelectedRowIds((prevSelectedIds) =>
+        prevSelectedIds.filter((id) => !rowIdsToRemove.includes(id))
+      );
+
+      setSelectedRowValues((prevSelectedValues) =>
+        prevSelectedValues.filter((value) => !rowValuesToRemove.includes(value))
+      );
+    }
+
+    setIsSelectAllChecked(isChecked);
+  };
+
+  // ریست کردن چک‌باکس انتخاب همه هنگام تغییر مسیر
+  useEffect(() => {
+    setIsSelectAllChecked(false);
+  }, [router.query.page]); // زمانی که page در مسیر تغییر کند، چک‌باکس ریست می‌شود
   const handleActionClick = (actionType: string) => {
     if (onAction) {
       onAction(actionType, selectedRowValues);
@@ -405,7 +440,13 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               <TableRow>
                 {selectableRows && (
                   <TableCell align="center" sx={{ width: 50 }}>
-                    انتخاب
+                    <Checkbox
+                      checked={isSelectAllChecked}
+                      indeterminate={
+                        selectedRowIds.length > 0 && selectedRowIds.length < rows.length
+                      }
+                      onChange={(e) => handleSelectAllRows(e.target.checked)}
+                    />
                   </TableCell>
                 )}
                 <TableCell align="center" sx={{ width: 10 }}>
@@ -491,8 +532,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     value >= 8
                                       ? theme.palette.error.main
                                       : value >= 6
-                                        ? theme.palette.primary.main
-                                        : theme.palette.warning.main,
+                                      ? theme.palette.primary.main
+                                      : theme.palette.warning.main,
                                 }}
                               >
                                 {value}
@@ -754,8 +795,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               dialogState.type === 'delete'
                 ? 'آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟'
                 : dialogState.type === 'edit'
-                  ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
-                  : 'افزودن آیتم جدید'
+                ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
+                : 'افزودن آیتم جدید'
             }
             content={
               dialogState.type === 'delete' ? (
@@ -767,8 +808,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     dialogState.type === 'edit'
                       ? editForm || []
                       : handleAdd
-                        ? handleAdd?.fields
-                        : fields || []
+                      ? handleAdd?.fields
+                      : fields || []
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}
