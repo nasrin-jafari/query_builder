@@ -20,11 +20,9 @@ interface FetchTimerProps {
 const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
   const theme = useTheme();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const isLight = theme.palette.mode === 'light';
   const [isOpen, setOpen] = useState(false);
   const router = useRouter();
 
-  // Load the initial value from localStorage or use the default value
   const [selectedItem, setSelectedItem] = useState<number | null>(() => {
     const savedValue = localStorage.getItem('fetchTimerValue');
     return savedValue !== null ? JSON.parse(savedValue) : listOfItems[0]?.value;
@@ -81,8 +79,8 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
         alignItems: 'center',
         mb: mb ? mb : null,
         padding: '5px',
-        boxShadow: 1,
-        border: `1px solid ${isLight ? '#94a7bf' : '#313A43'}`,
+        // boxShadow: 1,
+        // border: `1px solid ${isLight ? '#94a7bf' : '#313A43'}`,
         borderRadius: 1,
         width: '120px',
         background: theme.palette.grey[300],
@@ -91,12 +89,12 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
       <Box
         ref={dropdownRef}
         sx={{
-          color: isLight ? '#06465d' : '#fff',
+          color: theme.palette.grey[700],
           fontSize: '13px',
           width: '70px',
           borderRadius: '10px',
-          border: `1px solid ${isLight ? '#94a7bf' : '#313A43'}`,
-          backgroundColor: isLight ? '#fff' : '#1a242e',
+          border: `1px solid ${theme.palette.grey[700]}`,
+          backgroundColor: theme.palette.grey[300],
           position: 'relative',
         }}
       >
@@ -113,10 +111,11 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
           {selectedItem !== null
             ? listOfItems.find((item) => item.value === selectedItem)?.label
             : listOfItems[0]?.label}
+
           <IoIosArrowDown
             style={{
               fontSize: '20px',
-              color: '#91A5BE',
+              color: theme.palette.grey[700],
               transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
               transition: 'all .4s ease-in-out',
             }}
@@ -127,13 +126,13 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
             paddingTop: '2px',
             display: isOpen ? 'block' : 'none',
             position: 'absolute',
-            top: '31px',
+            top: '30px',
             zIndex: '999',
-            backgroundColor: isLight ? '#fff' : '#1a242e',
+            backgroundColor: theme.palette.grey[300],
             right: '-1px',
             left: '-1px',
             borderRadius: '0 0 10px 10px',
-            border: `1px solid ${isLight ? '#94a7bf' : '#313A43'}`,
+            border: `1px solid ${theme.palette.grey[700]}`,
             overflow: 'hidden',
           }}
         >
@@ -145,11 +144,10 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
                 display: 'flex',
                 alignItems: 'center',
                 borderBottom:
-                  item.id !== listOfItems.length
-                    ? `1px solid ${isLight ? '#94a7bf' : '#313A43'}`
-                    : 'none',
+                  item.id !== listOfItems.length ? `1px solid ${theme.palette.grey[700]}` : 'none',
                 '&:hover': {
                   background: theme.palette.primary.main,
+                  color: theme.palette.common.white,
                 },
               }}
               key={item.id}
