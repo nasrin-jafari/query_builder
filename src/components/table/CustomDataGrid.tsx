@@ -505,267 +505,277 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                 <TableRowSkeleton />
               ) : (
                 <>
-                  {rows?.map((row, rowIndex) => (
-                    <React.Fragment key={row.id}>
-                      <TableRow>
-                        {selectableRows && (
-                          <TableCell align="center">
-                            <Checkbox
-                              checked={selectedRowIds.includes(row[itemSelectRowParam])}
-                              onChange={() => handleSelectRow(row[itemSelectRowParam], rowIndex)}
-                            />
-                          </TableCell>
-                        )}
-                        <TableCell align="center">{rowIndex + 1}</TableCell>
-                        {headerColumns?.map((column) => {
-                          const fieldValue = column.field ? row[column.field] : undefined;
-                          let content: React.ReactNode;
-
-                          const renderTimeContent = (value: number) =>
-                            isFalsyExceptZero(value) ? '-' : ConvertDates(value, true);
-
-                          const renderScoreContent = (value: number) =>
-                            isFalsyExceptZero(value) ? (
-                              '-'
-                            ) : (
-                              <Typography
-                                sx={{
-                                  color:
-                                    value >= 8
-                                      ? theme.palette.error.main
-                                      : value >= 6
-                                      ? theme.palette.primary.main
-                                      : theme.palette.warning.main,
-                                }}
-                              >
-                                {value}
-                              </Typography>
-                            );
-
-                          const renderSwitchHandlerContent = (fieldValue: boolean) => {
-                            return (
-                              <Switch
-                                checked={fieldValue}
-                                onChange={() => handleSwitchChange(fieldValue, row.id)}
-                                inputProps={{ 'aria-label': 'controlled' }}
+                  {rows && rows.length > 0 ? (
+                    rows?.map((row, rowIndex) => (
+                      <React.Fragment key={row.id}>
+                        <TableRow>
+                          {selectableRows && (
+                            <TableCell align="center">
+                              <Checkbox
+                                checked={selectedRowIds.includes(row[itemSelectRowParam])}
+                                onChange={() => handleSelectRow(row[itemSelectRowParam], rowIndex)}
                               />
-                            );
-                          };
+                            </TableCell>
+                          )}
+                          <TableCell align="center">{rowIndex + 1}</TableCell>
+                          {headerColumns?.map((column) => {
+                            const fieldValue = column.field ? row[column.field] : undefined;
+                            let content: React.ReactNode;
 
-                          const renderStatusContent = (value: any) => {
-                            const getColor = (value: string) => {
-                              const stringValue = String(value);
-                              if (stringValue === 'فعال' || stringValue === 'Clean') {
-                                return theme.palette.success.main;
-                              }
-                              if (stringValue === 'غیرفعال' || stringValue.includes('Malware')) {
-                                return theme.palette.error.main;
-                              }
-                              return theme.palette.text.primary;
+                            const renderTimeContent = (value: number) =>
+                              isFalsyExceptZero(value) ? '-' : ConvertDates(value, true);
+
+                            const renderScoreContent = (value: number) =>
+                              isFalsyExceptZero(value) ? (
+                                '-'
+                              ) : (
+                                <Typography
+                                  sx={{
+                                    color:
+                                      value >= 8
+                                        ? theme.palette.error.main
+                                        : value >= 6
+                                        ? theme.palette.primary.main
+                                        : theme.palette.warning.main,
+                                  }}
+                                >
+                                  {value}
+                                </Typography>
+                              );
+
+                            const renderSwitchHandlerContent = (fieldValue: boolean) => {
+                              return (
+                                <Switch
+                                  checked={fieldValue}
+                                  onChange={() => handleSwitchChange(fieldValue, row.id)}
+                                  inputProps={{ 'aria-label': 'controlled' }}
+                                />
+                              );
                             };
 
-                            return isFalsyExceptZero(value) ? (
-                              '-'
-                            ) : (
-                              <Typography
-                                sx={{
-                                  fontSize: '14px',
-                                  color: getColor(value),
-                                }}
-                              >
-                                {value}
-                              </Typography>
-                            );
-                          };
+                            const renderStatusContent = (value: any) => {
+                              const getColor = (value: string) => {
+                                const stringValue = String(value);
+                                if (stringValue === 'فعال' || stringValue === 'Clean') {
+                                  return theme.palette.success.main;
+                                }
+                                if (stringValue === 'غیرفعال' || stringValue.includes('Malware')) {
+                                  return theme.palette.error.main;
+                                }
+                                return theme.palette.text.primary;
+                              };
 
-                          const renderIconContent = (value: boolean | null | undefined) =>
-                            isFalsyExceptZero(value) ? (
-                              '-'
-                            ) : (
-                              <Typography>
-                                {value ? (
-                                  <TiTick color={theme.palette.success.main} size={24} />
-                                ) : (
-                                  <IoMdClose color={theme.palette.error.main} size={24} />
-                                )}
-                              </Typography>
-                            );
-
-                          switch (true) {
-                            case column.field?.includes('time'):
-                              content = renderTimeContent(fieldValue);
-                              break;
-                            case column.field?.includes('score'):
-                              content = renderScoreContent(fieldValue);
-                              break;
-                            case column.field?.includes('enabled'):
-                              content = renderSwitchHandlerContent(fieldValue);
-                              break;
-                            case ['status', 'infected'].some((key) => column.field?.includes(key)):
-                              content = renderStatusContent(fieldValue);
-                              break;
-                            case column.field?.includes('_is_'):
-                              content = renderIconContent(fieldValue);
-                              break;
-                            default:
-                              content = renderDefaultContent(fieldValue);
-                              break;
-                          }
-
-                          const displayContent = column.field?.includes('enabled') ? (
-                            content
-                          ) : (
-                            <CopyValue
-                              textCopy={
-                                React.isValidElement(content) &&
-                                content.props &&
-                                'title' in content.props
-                                  ? content.props.title
-                                  : content
-                              }
-                            >
-                              {content}
-                            </CopyValue>
-                          );
-
-                          return (
-                            <TableCell
-                              key={column.field}
-                              align="center"
-                              sx={{
-                                width: '250px',
-                                fontSize: 16,
-                              }}
-                            >
-                              {displayContent}
-                            </TableCell>
-                          );
-                        })}
-
-                        {buttons && (
-                          <TableCell align="center">
-                            {buttons?.map((button, index) => {
-                              const showButton = (_: string, condition: boolean) =>
-                                condition ? (
-                                  <CustomIconButton
-                                    key={index}
-                                    icon={button.icon && button.icon.type}
-                                    label={button.label}
-                                    type={button.type}
-                                    onClick={() => {
-                                      handleButtonClick(button, row);
-                                    }}
-                                  />
-                                ) : null;
-
-                              switch (button.type) {
-                                case 'delete':
-                                  return showButton('delete', showBtnDelete ?? false);
-                                case 'edit':
-                                  return showButton('edit', showBtnUpdate ?? false);
-                                case 'allowAccess':
-                                  return showButton('allowAccess', true);
-                                case 'content_type':
-                                  const componentMap: {
-                                    [key in RowData['content_type']]: JSX.Element;
-                                  } = {
-                                    OU: (
-                                      <CustomIconButton
-                                        key={index}
-                                        icon={button.icon && button.icon.type}
-                                        label={button.label}
-                                        type={button.type}
-                                        onClick={() => handleButtonClick(button, row)}
-                                      />
-                                    ),
-                                    Computer: (
-                                      <RiComputerLine
-                                        key={index}
-                                        style={{
-                                          fontSize: '19px',
-                                        }}
-                                      />
-                                    ),
-                                    User: (
-                                      <FaUser
-                                        key={index}
-                                        style={{
-                                          fontSize: '16px',
-                                        }}
-                                      />
-                                    ),
-                                  };
-
-                                  return componentMap[row.component_type] || null;
-
-                                default:
-                                  return null;
-                              }
-                            })}
-                            {extraButtons && extraButtons.length > 0 && (
-                              <IconButton onClick={(event) => handleMoreClick(event, rowIndex)}>
-                                <IoIosMore />
-                              </IconButton>
-                            )}
-                            <Popover
-                              id={id(rowIndex)}
-                              open={open(rowIndex)}
-                              anchorEl={anchorEls[rowIndex]}
-                              onClose={() => handleClose(rowIndex)}
-                              anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                              }}
-                            >
-                              {extraButtons?.map((button, index) => (
-                                <MenuItem
-                                  key={index}
-                                  onClick={() => {
-                                    handleButtonClick(button, row);
-                                    handleClose(rowIndex);
-                                  }}
-                                  sx={{ fontSize: '16px', direction: 'ltr' }}
-                                >
-                                  {button.label}
-                                </MenuItem>
-                              ))}
-                            </Popover>
-                          </TableCell>
-                        )}
-                        {!notExtra && (
-                          <TableCell align="right">
-                            <IconButton onClick={() => toggleRow(rowIndex)}>
-                              {collapsedRows[rowIndex] ? (
-                                <IoIosArrowUp color={theme.palette.primary.main} />
+                              return isFalsyExceptZero(value) ? (
+                                '-'
                               ) : (
-                                <IoIosArrowDown color={theme.palette.primary.main} />
-                              )}
-                            </IconButton>
-                          </TableCell>
-                        )}
-                      </TableRow>
-                      {collapsedRows[rowIndex] && (
-                        <TableRow>
-                          <TableCell colSpan={columns.length + 3}>
-                            <Collapse in={collapsedRows[rowIndex]} timeout="auto" unmountOnExit>
-                              <pre
-                                style={{
-                                  textAlign: 'left',
-                                  direction: 'ltr',
-                                  justifySelf: 'flex-start',
-                                  fontFamily: 'vazir',
-                                  padding: '25px',
+                                <Typography
+                                  sx={{
+                                    fontSize: '14px',
+                                    color: getColor(value),
+                                  }}
+                                >
+                                  {value}
+                                </Typography>
+                              );
+                            };
+
+                            const renderIconContent = (value: boolean | null | undefined) =>
+                              isFalsyExceptZero(value) ? (
+                                '-'
+                              ) : (
+                                <Typography>
+                                  {value ? (
+                                    <TiTick color={theme.palette.success.main} size={24} />
+                                  ) : (
+                                    <IoMdClose color={theme.palette.error.main} size={24} />
+                                  )}
+                                </Typography>
+                              );
+
+                            switch (true) {
+                              case column.field?.includes('time'):
+                                content = renderTimeContent(fieldValue);
+                                break;
+                              case column.field?.includes('score'):
+                                content = renderScoreContent(fieldValue);
+                                break;
+                              case column.field?.includes('enabled'):
+                                content = renderSwitchHandlerContent(fieldValue);
+                                break;
+                              case ['status', 'infected'].some((key) =>
+                                column.field?.includes(key)
+                              ):
+                                content = renderStatusContent(fieldValue);
+                                break;
+                              case column.field?.includes('_is_'):
+                                content = renderIconContent(fieldValue);
+                                break;
+                              default:
+                                content = renderDefaultContent(fieldValue);
+                                break;
+                            }
+
+                            const displayContent = column.field?.includes('enabled') ? (
+                              content
+                            ) : (
+                              <CopyValue
+                                textCopy={
+                                  React.isValidElement(content) &&
+                                  content.props &&
+                                  'title' in content.props
+                                    ? content.props.title
+                                    : content
+                                }
+                              >
+                                {content}
+                              </CopyValue>
+                            );
+
+                            return (
+                              <TableCell
+                                key={column.field}
+                                align="center"
+                                sx={{
+                                  width: '250px',
                                   fontSize: 16,
                                 }}
                               >
-                                {JSON.stringify(row.extra_information, null, 2)}
-                              </pre>
-                            </Collapse>
-                          </TableCell>
+                                {displayContent}
+                              </TableCell>
+                            );
+                          })}
+
+                          {buttons && (
+                            <TableCell align="center">
+                              {buttons?.map((button, index) => {
+                                const showButton = (_: string, condition: boolean) =>
+                                  condition ? (
+                                    <CustomIconButton
+                                      key={index}
+                                      icon={button.icon && button.icon.type}
+                                      label={button.label}
+                                      type={button.type}
+                                      onClick={() => {
+                                        handleButtonClick(button, row);
+                                      }}
+                                    />
+                                  ) : null;
+
+                                switch (button.type) {
+                                  case 'delete':
+                                    return showButton('delete', showBtnDelete ?? false);
+                                  case 'edit':
+                                    return showButton('edit', showBtnUpdate ?? false);
+                                  case 'allowAccess':
+                                    return showButton('allowAccess', true);
+                                  case 'content_type':
+                                    const componentMap: {
+                                      [key in RowData['content_type']]: JSX.Element;
+                                    } = {
+                                      OU: (
+                                        <CustomIconButton
+                                          key={index}
+                                          icon={button.icon && button.icon.type}
+                                          label={button.label}
+                                          type={button.type}
+                                          onClick={() => handleButtonClick(button, row)}
+                                        />
+                                      ),
+                                      Computer: (
+                                        <RiComputerLine
+                                          key={index}
+                                          style={{
+                                            fontSize: '19px',
+                                          }}
+                                        />
+                                      ),
+                                      User: (
+                                        <FaUser
+                                          key={index}
+                                          style={{
+                                            fontSize: '16px',
+                                          }}
+                                        />
+                                      ),
+                                    };
+
+                                    return componentMap[row.component_type] || null;
+
+                                  default:
+                                    return null;
+                                }
+                              })}
+                              {extraButtons && extraButtons.length > 0 && (
+                                <IconButton onClick={(event) => handleMoreClick(event, rowIndex)}>
+                                  <IoIosMore />
+                                </IconButton>
+                              )}
+                              <Popover
+                                id={id(rowIndex)}
+                                open={open(rowIndex)}
+                                anchorEl={anchorEls[rowIndex]}
+                                onClose={() => handleClose(rowIndex)}
+                                anchorOrigin={{
+                                  vertical: 'bottom',
+                                  horizontal: 'left',
+                                }}
+                              >
+                                {extraButtons?.map((button, index) => (
+                                  <MenuItem
+                                    key={index}
+                                    onClick={() => {
+                                      handleButtonClick(button, row);
+                                      handleClose(rowIndex);
+                                    }}
+                                    sx={{ fontSize: '16px', direction: 'ltr' }}
+                                  >
+                                    {button.label}
+                                  </MenuItem>
+                                ))}
+                              </Popover>
+                            </TableCell>
+                          )}
+                          {!notExtra && (
+                            <TableCell align="right">
+                              <IconButton onClick={() => toggleRow(rowIndex)}>
+                                {collapsedRows[rowIndex] ? (
+                                  <IoIosArrowUp color={theme.palette.primary.main} />
+                                ) : (
+                                  <IoIosArrowDown color={theme.palette.primary.main} />
+                                )}
+                              </IconButton>
+                            </TableCell>
+                          )}
                         </TableRow>
-                      )}
-                    </React.Fragment>
-                  ))}
+                        {collapsedRows[rowIndex] && (
+                          <TableRow>
+                            <TableCell colSpan={columns.length + 3}>
+                              <Collapse in={collapsedRows[rowIndex]} timeout="auto" unmountOnExit>
+                                <pre
+                                  style={{
+                                    textAlign: 'left',
+                                    direction: 'ltr',
+                                    justifySelf: 'flex-start',
+                                    fontFamily: 'vazir',
+                                    padding: '25px',
+                                    fontSize: 16,
+                                  }}
+                                >
+                                  {JSON.stringify(row.extra_information, null, 2)}
+                                </pre>
+                              </Collapse>
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </React.Fragment>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell sx={{ fontSize: 18 }} colSpan={100} align="center">
+                        اطلاعاتی یافت نشد
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </>
               )}
             </TableBody>
