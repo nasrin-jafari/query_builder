@@ -209,7 +209,9 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
                 <FaHome />
               </Link>
             </ListItemIcon>
-            <ListItemText primary={'داشبورد'} />
+            <Link href={'/'} passHref>
+              <ListItemText primary={'داشبورد'} />
+            </Link>
           </ListItem>
           {filteredTabs?.map((tab: any) => {
             const IconComponent = tab.icon ? tab.icon : null;
