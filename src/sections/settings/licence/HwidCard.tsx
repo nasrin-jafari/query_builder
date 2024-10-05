@@ -3,13 +3,13 @@ import { Button, Card, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { MdContentCopy } from 'react-icons/md';
+
 interface HwidCardProps {
   hwid: string;
   fetchHwid: () => void;
 }
 const HwidCard: React.FC<HwidCardProps> = ({ fetchHwid, hwid }) => {
   const theme = useTheme();
-  const isLight = theme.palette.mode === 'light';
 
   return (
     <Card sx={{ padding: '20px', textAlign: 'center', mt: 4, background: theme.palette.grey[300] }}>
@@ -33,13 +33,10 @@ const HwidCard: React.FC<HwidCardProps> = ({ fetchHwid, hwid }) => {
             style={{
               fontSize: '22px',
               cursor: 'pointer',
-              color: theme.palette.grey[700],
+              color: theme.palette.primary.main,
             }}
             onClick={() => CopyText(hwid)}
-            onMouseOver={(e) => (e.currentTarget.style.color = theme.palette.primary.main)}
-            onMouseOut={(e) =>
-              (e.currentTarget.style.color = theme.palette.grey[isLight ? 400 : 300])
-            }
+
           />
           <Typography
             variant="body1"
