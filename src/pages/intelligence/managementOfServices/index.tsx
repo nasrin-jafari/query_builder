@@ -4,8 +4,10 @@ import React from 'react';
 import AiUpload from '@/sections/intelligence/managementOfServices/AiUploader';
 import YaraUpload from '@/sections/intelligence/managementOfServices/yaraUpload';
 import MultiServices from '@/sections/intelligence/managementOfServices/multiServices';
+import { useTheme } from '@mui/material/styles';
 
 const ManagementOfServices = () => {
+  const theme = useTheme()
   const tabs = [
     {
       label: 'بر اساس مدل های هوش مصنوعی',
@@ -34,7 +36,7 @@ const ManagementOfServices = () => {
         sx={{
           width: { xs: '900px', lg: '1290px' },
           paddingTop: '10px',
-          background: '#293540',
+          background: theme.palette.grey[300],
           display: 'flex',
         }}
       >

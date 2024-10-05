@@ -80,7 +80,7 @@ const AiUpload = () => {
               background:
                 selectedModel === model.endpoint
                   ? theme.palette.primary.light
-                  : theme.palette.grey[300],
+                  : theme.palette.grey[500],
               boxShadow: 5,
               display: 'flex',
               alignItems: 'center',
@@ -90,7 +90,7 @@ const AiUpload = () => {
               border:
                 selectedModel === model.endpoint
                   ? `1px solid ${theme.palette.primary.main}`
-                  : `1px solid ${theme.palette.grey[500]}`,
+                  : `1px solid ${theme.palette.grey[100]}`,
               width: '190px',
               justifyContent: 'space-between',
               cursor: 'pointer',

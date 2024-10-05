@@ -158,7 +158,7 @@ const Uploader: React.FC<UploaderProps> = ({
           borderRadius: '16px',
           padding: '16px',
           width: '100%',
-          background: theme.palette.grey[300],
+          background: theme.palette.grey[500],
           animation: highlight ? 'highlight 0.6s ease-in-out' : 'none',
           '@keyframes highlight': {
             '0%': { transform: 'scale(1)', boxShadow: 'none' },
@@ -310,7 +310,7 @@ const Uploader: React.FC<UploaderProps> = ({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                border: `1px solid #4F575E`,
+                border: `1px solid ${theme.palette.grey[100]}`,
                 borderRadius: '12px',
                 width: '190px',
                 p: 1,
