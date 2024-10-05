@@ -1,6 +1,6 @@
 import { Box, IconButton, Tooltip, Typography, useTheme } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FiRefreshCw } from 'react-icons/fi';
 import { GoDotFill } from 'react-icons/go';
 import { IoIosArrowDown } from 'react-icons/io';
@@ -60,7 +60,6 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
       };
     }
     return undefined;
-
   }, [selectedItem, router.query]);
 
   useEffect(() => {
@@ -84,7 +83,7 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
         padding: '5px',
         boxShadow: 1,
         border: `1px solid ${isLight ? '#94a7bf' : '#313A43'}`,
-                borderRadius: 1,
+        borderRadius: 1,
         width: '120px',
         background: theme.palette.grey[300],
       }}
@@ -145,9 +144,10 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                borderBottom: item.id !== listOfItems.length - 1
-                  ? `1px solid ${isLight ? '#94a7bf' : '#313A43'}`
-                  : 'none',
+                borderBottom:
+                  item.id !== listOfItems.length
+                    ? `1px solid ${isLight ? '#94a7bf' : '#313A43'}`
+                    : 'none',
                 '&:hover': {
                   background: theme.palette.primary.main,
                 },
