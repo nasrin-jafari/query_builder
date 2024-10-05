@@ -206,7 +206,11 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
               }}
             >
               <Link href={'/'} passHref>
-                <FaHome />
+                <FaHome
+                  style={{
+                    color: router.pathname == '/' ? theme.palette.primary.main : 'inherit',
+                  }}
+                />
               </Link>
             </ListItemIcon>
             <Link href={'/'} passHref>
