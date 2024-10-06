@@ -1,6 +1,7 @@
 import { CustomDataGrid } from '@/components';
 import PageBox from '@/components/common/PageBox';
 import headers from '@/constants/tableHeaders';
+
 import useApi from '@/hooks/UseApi';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -24,24 +25,22 @@ const DetailsLog: React.FC = () => {
   const { key, logId, logs } = router.query;
 
   const { data, total, loading }: UseApiResponse = useApi(`/agents/${logId}/logs/${logs}_${key}/`);
-  // Safely access the columns if data and Title.en exist
-  const columns = data?.Title?.en ? headers[data.Title.en] : [];
+
+  const columns = headers[`${logs} ${key}`.replace(/\s+/g, '_').toLowerCase()];
   return (
     <>
-      {columns.length > 0 && (
-        <PageBox
-          title={data?.Title?.fa ?? ' '}
-          description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
-          searchQuery={columns}
-        >
-          <CustomDataGrid
-            loading={loading}
-            pageTotal={total}
-            columns={columns}
-            rows={data?.Data ?? []}
-          />
-        </PageBox>
-      )}
+      <PageBox
+        title={data?.Title?.fa ?? ' '}
+        description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
+        searchQuery={columns}
+      >
+        <CustomDataGrid
+          loading={loading}
+          pageTotal={total}
+          columns={columns}
+          rows={data?.Data ?? []}
+        />
+      </PageBox>
     </>
   );
 };
