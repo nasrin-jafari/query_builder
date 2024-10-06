@@ -79,19 +79,18 @@ const Logs: FC<LogsProps> = ({ data }) => {
   return (
     <>
       {data &&
-        Object.entries(data.pi_chart)?.map(([title, value], index) => {
+        Object.entries(data.pi_chart)?.map(([title, value]) => {
           const startIndex = currentIndex[title] || 0;
           const slicedData = Object.entries(value)
             // .slice(startIndex, startIndex + 4)
             .map(([key, value]) => ({
-              redirectTo: `/hosts/hostManagement/logs/detailsLog/`,
-              query: { ...router.query, logId: router.query.logId, logs: title, key },
+              redirectTo: `/activity/quarantined`,
               en: key,
               value: value.total,
             }));
 
           return (
-            <Grid item key={index} xs={12} md={4}>
+            <Grid item key={title} xs={12} md={4}>
               <CardBox>
                 <Box sx={{ direction: 'rtl', textAlign: 'left' }}>
                   <Box
