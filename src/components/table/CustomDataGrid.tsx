@@ -614,7 +614,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               break;
                           }
 
-                          const displayContent = column.field?.includes('enabled') ? (
+                          const displayContent = (column.field?.includes('enabled') ||  ['status', 'infected'].some((key) => column.field?.includes(key)))? (
                             content
                           ) : (
                             <CopyValue
