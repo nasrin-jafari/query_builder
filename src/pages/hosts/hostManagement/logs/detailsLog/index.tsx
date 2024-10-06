@@ -1,6 +1,6 @@
 import { CustomDataGrid } from '@/components';
 import PageBox from '@/components/common/PageBox';
-import headers from '@/constants/tableHeaders';
+import { alerts_quarantined_files } from '@/constants/tableHeaders';
 
 import useApi from '@/hooks/UseApi';
 import { useRouter } from 'next/router';
@@ -31,21 +31,20 @@ const DetailsLog: React.FC = () => {
 
   const { data, total, loading }: UseApiResponse = useApi(`/agents/${logId}/logs/${logs}_${key}/`);
 
-  // بررسی اینکه آیا ستون‌های جدول در headers وجود دارند
-  const columnsKey = `${logs} ${key}`.replace(/\s+/g, '_').toLowerCase();
-  const columns = headers[columnsKey] || []; // مقدار پیش‌فرض خالی اگر ستون‌ها پیدا نشدند
-
+  // // بررسی اینکه آیا ستون‌های جدول در headers وجود دارند
+  // const columnsKey = `${logs} ${key}`.replace(/\s+/g, '_').toLowerCase();
+  // const columns = headers[columnsKey] || []; // مقدار پیش‌فرض خالی اگر ستون‌ها پیدا نشدند
   return (
     <>
       <PageBox
         title={data?.Title?.fa ?? ' '}
         description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
-        searchQuery={columns}
+        searchQuery={alerts_quarantined_files}
       >
         <CustomDataGrid
           loading={loading}
           pageTotal={total}
-          columns={columns}
+          columns={alerts_quarantined_files}
           rows={data?.Data ?? []}
         />
       </PageBox>
