@@ -89,7 +89,7 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
       <Box
         ref={dropdownRef}
         sx={{
-          color: theme.palette.grey[700],
+          color: theme.palette.grey[900],
           fontSize: '13px',
           width: '70px',
           borderRadius: '10px',
