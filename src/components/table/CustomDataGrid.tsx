@@ -534,8 +534,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     value >= 8
                                       ? theme.palette.error.main
                                       : value >= 6
-                                      ? theme.palette.primary.main
-                                      : theme.palette.warning.main,
+                                        ? theme.palette.primary.main
+                                        : theme.palette.warning.main,
                                 }}
                               >
                                 {value}
@@ -555,11 +555,22 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                           const renderStatusContent = (value: any) => {
                             const getColor = (value: string) => {
                               const stringValue = String(value);
-                              if (stringValue === 'فعال' || stringValue === 'Clean') {
+                              if (
+                                stringValue === 'فعال' ||
+                                stringValue === 'Clean' ||
+                                stringValue === 'سالم'
+                              ) {
                                 return theme.palette.success.main;
                               }
-                              if (stringValue === 'غیرفعال' || stringValue.includes('Malware')) {
+                              if (
+                                stringValue === 'غیرفعال' ||
+                                stringValue.includes('Malware') ||
+                                stringValue === 'حاوی بدافزار'
+                              ) {
                                 return theme.palette.error.main;
+                              }
+                              if (stringValue === 'شناخته نشده') {
+                                return theme.palette.primary.main;
                               }
                               return theme.palette.text.primary;
                             };
@@ -612,21 +623,23 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               break;
                           }
 
-                          const displayContent = column.field?.includes('enabled') ? (
-                            content
-                          ) : (
-                            <CopyValue
-                              textCopy={
-                                React.isValidElement(content) &&
-                                content.props &&
-                                'title' in content.props
-                                  ? content.props.title
-                                  : content
-                              }
-                            >
-                              {content}
-                            </CopyValue>
-                          );
+                          const displayContent =
+                            column.field?.includes('enabled') ||
+                            ['status', 'infected'].some((key) => column.field?.includes(key)) ? (
+                              content
+                            ) : (
+                              <CopyValue
+                                textCopy={
+                                  React.isValidElement(content) &&
+                                  content.props &&
+                                  'title' in content.props
+                                    ? content.props.title
+                                    : content
+                                }
+                              >
+                                {content}
+                              </CopyValue>
+                            );
 
                           return (
                             <TableCell
@@ -797,8 +810,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               dialogState.type === 'delete'
                 ? 'آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟'
                 : dialogState.type === 'edit'
-                ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
-                : 'افزودن آیتم جدید'
+                  ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
+                  : 'افزودن آیتم جدید'
             }
             content={
               dialogState.type === 'delete' ? (
@@ -810,8 +823,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     dialogState.type === 'edit'
                       ? editForm || []
                       : handleAdd
-                      ? handleAdd?.fields
-                      : fields || []
+                        ? handleAdd?.fields
+                        : fields || []
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}

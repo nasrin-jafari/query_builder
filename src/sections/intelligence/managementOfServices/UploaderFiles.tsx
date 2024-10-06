@@ -4,6 +4,7 @@ import { CiFileOn } from 'react-icons/ci';
 import { IoIosCloudUpload, IoMdArrowBack, IoMdTrash } from 'react-icons/io';
 import { IoAnalytics } from 'react-icons/io5';
 import CustomTooltip from '@/components/common/CustomToolTip';
+import ResultsUploadAi from './ResultsUploadAi';
 
 type FileData = {
   success: boolean;
@@ -32,6 +33,7 @@ interface UploaderProps {
   showOutput: boolean;
   loading: boolean;
   singleFile?: boolean;
+  renderJsonText?: boolean;
 }
 
 const Uploader: React.FC<UploaderProps> = ({
@@ -43,6 +45,7 @@ const Uploader: React.FC<UploaderProps> = ({
   showOutput,
   loading,
   singleFile = false,
+  renderJsonText = false,
 }) => {
   const theme = useTheme();
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -320,9 +323,14 @@ const Uploader: React.FC<UploaderProps> = ({
               <Typography>بازگشت به آپلود فایل</Typography>
               <IoMdArrowBack />
             </Box>
-            <Card sx={{ mt: 2, width: '100%', background: 'transparent' }}>
-              {renderJsonPreText(data)}
-            </Card>
+
+            {renderJsonText ? (
+              <Card sx={{ mt: 2, width: '100%', background: 'transparent' }}>
+                {renderJsonPreText(data)}
+              </Card>
+            ) : (
+              <ResultsUploadAi results={data} />
+            )}
           </Box>
         )}
       </Paper>

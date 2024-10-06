@@ -1127,6 +1127,13 @@ const headers: Headers = {
     { field: 'created', headerName: 'تاریخ ایجاد', dataType: 'date', isHeader: true },
     { field: 'content', headerName: 'محتوا', dataType: 'text', isHeader: false },
   ],
+  aiUpload: [
+    { field: 'file_name', headerName: 'نام فایل', dataType: 'text', isHeader: true },
+    { field: 'MD5_hash', headerName: 'هش MD5', dataType: 'text', isHeader: true },
+    { field: 'SHA256_hash', headerName: 'هش SHA256', dataType: 'text', isHeader: true },
+    { field: 'scan_time', headerName: 'زمان پویش', dataType: 'date', isHeader: true },
+    { field: 'status', headerName: ' وضعیت', dataType: 'text', isHeader: true },
+  ],
 };
 export const fieldsQueries: Field[] = [
   { field: 'timestamp', headerName: 'تاریخ', dataType: 'date', isHeader: false },
@@ -1153,6 +1160,7 @@ const {
   multiav,
   multiav_details,
   ai,
+  aiUpload,
 } = headers;
 export {
   all_events,
@@ -1175,5 +1183,6 @@ export {
   multiav,
   multiav_details,
   ai,
+  aiUpload,
 };
 export default headers;

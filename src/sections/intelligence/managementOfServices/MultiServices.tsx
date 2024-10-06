@@ -70,14 +70,14 @@ const MultiServices = () => {
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>
       <FormControl sx={{ m: 1, width: 200 }}>
-        <InputLabel id="demo-multiple-checkbox-label">انتخاب مدل</InputLabel>
+        <InputLabel id="demo-multiple-checkbox-label">انتخاب سرویس کمکی</InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
           value={selectedModel}
           onChange={handleChange}
-          input={<OutlinedInput label="انتخاب مدل" />}
+          input={<OutlinedInput label="انتخاب سرویس کمکی" />}
           renderValue={(selected) => selected.join(', ')}
           MenuProps={MenuProps}
           sx={{ width: '180px' }}
