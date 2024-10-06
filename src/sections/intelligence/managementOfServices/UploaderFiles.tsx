@@ -148,6 +148,7 @@ const Uploader: React.FC<UploaderProps> = ({
             wordBreak: 'break-word',
             lineHeight: '1.5',
             fontFamily: 'monospace',
+            fontWeight :'bold'
           }}
           dangerouslySetInnerHTML={{ __html: formattedJson }}
         />
@@ -313,7 +314,7 @@ const Uploader: React.FC<UploaderProps> = ({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                border: `1px solid ${theme.palette.grey[100]}`,
+                border: `1px solid ${theme.palette.grey[900]}`,
                 borderRadius: '12px',
                 width: '190px',
                 p: 1,
