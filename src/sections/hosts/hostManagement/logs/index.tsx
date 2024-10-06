@@ -1,13 +1,6 @@
 import PieChart from '@/components/chart/PieChart';
-import CardBox from '@/layout/CardBox';
-import { Box, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
-import { FC, useEffect, useState } from 'react';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-
-interface CurrentIndex {
-  [key: string]: number;
-}
+import { FC } from 'react';
 
 interface PiChartEntry {
   total: number;
@@ -45,36 +38,7 @@ interface LogsProps {
 }
 
 const Logs: FC<LogsProps> = ({ data }) => {
-  const [currentIndex, setCurrentIndex] = useState<CurrentIndex>({});
   const router = useRouter();
-  useEffect(() => {
-    if (data) {
-      const initialIndex: CurrentIndex = {};
-      Object.entries(data.pi_chart).forEach(([title]) => {
-        initialIndex[title] = 0;
-      });
-      setCurrentIndex(initialIndex);
-    }
-  }, [data]);
-
-  const handleNext = (title: string) => {
-    const currentMaxIndex = Object.keys(data.pi_chart[title]).length - 4;
-    if (currentIndex[title] < currentMaxIndex) {
-      setCurrentIndex((prevIndex) => ({
-        ...prevIndex,
-        [title]: prevIndex[title] + 4,
-      }));
-    }
-  };
-
-  const handlePrev = (title: string) => {
-    if (currentIndex[title] > 0) {
-      setCurrentIndex((prevIndex) => ({
-        ...prevIndex,
-        [title]: prevIndex[title] - 4,
-      }));
-    }
-  };
 
   const eventDataChart =
     data.events?.length > 0
