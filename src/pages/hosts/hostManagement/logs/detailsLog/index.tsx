@@ -1,221 +1,48 @@
 import { CustomDataGrid } from '@/components';
-import { quarantined_files } from '@/constants/tableHeaders';
+import PageBox from '@/components/common/PageBox';
+import headers from '@/constants/tableHeaders';
+import useApi from '@/hooks/UseApi';
+import { useRouter } from 'next/router';
+import React from 'react';
 
-const DetailsLog = () => {
-  const dataa = [
-    {
-      accessed_file_path:
-        'C:\\Users\\ali\\Documents\\EDR\\cybercore - Copy\\x64\\Release\\injdllx86.dll',
-      pid: 2640,
-      score: 8,
-      timestamp: 1728209418,
-      agent_id: 'ALI-PC/',
-      tag: 'T1011',
-      hash_md5: '164f84d8e9532a26308b431cad69561d',
-      extra_information: {
-        agent_ip: '172.16.50.83',
-        parent_process_file_path: 'C:\\Windows\\Explorer.EXE',
-        quarantine_time: 1728209419,
-        quarantine_reason: 'MALWARE',
-        file_size: 29696,
-        file_name: 'injdllx86.dll',
-        extra_info: "'{AI Predicted value is more than threshold:0.353245}'",
-        hash_sha256: '',
-        uuid: 'ece10afa-d1d1-4967-baf5-161741cebbc6',
-      },
-    },
-    {
-      accessed_file_path:
-        'C:\\Users\\ali\\Documents\\EDR\\cybercore - Copy\\x64\\Release\\injdllx86.dll',
-      pid: 2640,
-      score: 8,
-      timestamp: 1728209418,
-      agent_id: 'ALI-PC/',
-      tag: 'T1011',
-      hash_md5: '164f84d8e9532a26308b431cad69561d',
-      extra_information: {
-        agent_ip: '172.16.50.83',
-        parent_process_file_path: 'C:\\Windows\\Explorer.EXE',
-        quarantine_time: 1728209419,
-        quarantine_reason: 'MALWARE',
-        file_size: 29696,
-        file_name: 'injdllx86.dll',
-        extra_info: "'{AI Predicted value is more than threshold:0.353245}'",
-        hash_sha256: '',
-        uuid: '4387e05e-be7b-401a-910b-eb034b53b7d6',
-      },
-    },
-    {
-      accessed_file_path:
-        'C:\\Users\\ali\\Documents\\EDR\\cybercore - Copy\\utils\\hunt\\BLUESPAWN-client.exe',
-      pid: 2640,
-      score: 8,
-      timestamp: 1728209372,
-      agent_id: 'ALI-PC/',
-      tag: 'T1011',
-      hash_md5: '1cd2c7f745eb5b8e2051fc3f2166c68d',
-      extra_information: {
-        agent_ip: '172.16.50.83',
-        parent_process_file_path: 'C:\\Windows\\Explorer.EXE',
-        quarantine_time: 1728209372,
-        quarantine_reason: 'MALWARE',
-        file_size: 17771520,
-        file_name: 'BLUESPAWN-client.exe',
-        extra_info: "'{AI Predicted value is more than threshold:0.469432}'",
-        hash_sha256: '',
-        uuid: '2b7646a6-7f8e-41e9-9b8a-3de3c8c242d9',
-      },
-    },
-    {
-      accessed_file_path:
-        'C:\\Users\\ali\\Documents\\EDR\\cybercore - Copy\\utils\\hunt\\BLUESPAWN-client.exe',
-      pid: 2640,
-      score: 8,
-      timestamp: 1728209372,
-      agent_id: 'ALI-PC/',
-      tag: 'T1011',
-      hash_md5: '1cd2c7f745eb5b8e2051fc3f2166c68d',
-      extra_information: {
-        agent_ip: '172.16.50.83',
-        parent_process_file_path: 'C:\\Windows\\Explorer.EXE',
-        quarantine_time: 1728209372,
-        quarantine_reason: 'MALWARE',
-        file_size: 17771520,
-        file_name: 'BLUESPAWN-client.exe',
-        extra_info: "'{AI Predicted value is more than threshold:0.469432}'",
-        hash_sha256: '',
-        uuid: 'c80166fc-b152-443c-a3a4-b2bb7bec1572',
-      },
-    },
-    {
-      accessed_file_path:
-        'C:\\Users\\ali\\Documents\\EDR\\cybercore - Copy\\tmp\\lzma2406\\bin\\7zdec.exe',
-      pid: 2640,
-      score: 7,
-      timestamp: 1728209294,
-      agent_id: 'ALI-PC/',
-      tag: 'T1110',
-      hash_md5: '0fc2e07361206c9ac56890a406dc2b91',
-      extra_information: {
-        agent_ip: '172.16.50.83',
-        parent_process_file_path: 'C:\\Windows\\Explorer.EXE',
-        quarantine_time: 1728209294,
-        quarantine_reason: 'MALWARE',
-        file_size: 43008,
-        file_name: '7zdec.exe',
-        extra_info:
-          "'{AI Predicted negtaive is more than threshold, positive:0.061741 - negative: 0.938259}'",
-        hash_sha256: '',
-        uuid: 'b06ace6a-a025-4443-93fe-39a23f65a987',
-      },
-    },
-    {
-      accessed_file_path:
-        'C:\\Users\\ali\\Documents\\EDR\\cybercore - Copy\\tmp\\lzma2406\\bin\\7zdec.exe',
-      pid: 2640,
-      score: 7,
-      timestamp: 1728209294,
-      agent_id: 'ALI-PC/',
-      tag: 'T1110',
-      hash_md5: '0fc2e07361206c9ac56890a406dc2b91',
-      extra_information: {
-        agent_ip: '172.16.50.83',
-        parent_process_file_path: 'C:\\Windows\\Explorer.EXE',
-        quarantine_time: 1728209294,
-        quarantine_reason: 'MALWARE',
-        file_size: 43008,
-        file_name: '7zdec.exe',
-        extra_info:
-          "'{AI Predicted negtaive is more than threshold, positive:0.061741 - negative: 0.938259}'",
-        hash_sha256: '',
-        uuid: 'cea67ebb-397c-4eaf-8614-0235aca04c5b',
-      },
-    },
-    {
-      accessed_file_path:
-        'C:\\Users\\ali\\Documents\\EDR\\cybercore - Copy\\tmp\\DBBasedQueue\\DBBasedQueue\\SQLite3\\vs2019\\x86\\Release\\sqlite3.dll',
-      pid: 2640,
-      score: 0,
-      timestamp: 1728209292,
-      agent_id: 'ALI-PC/',
-      tag: 'T1010',
-      hash_md5: '51d735cfc943ca53cd6f4dfda6c62309',
-      extra_information: {
-        agent_ip: '172.16.50.83',
-        parent_process_file_path: 'C:\\Windows\\Explorer.EXE',
-        quarantine_time: 1728209292,
-        quarantine_reason: 'MALWARE',
-        file_size: 643072,
-        file_name: 'sqlite3.dll',
-        extra_info: "'{static scan, Malware already exists in static scan db}'",
-        hash_sha256: '',
-        uuid: 'ff8f6d18-fd5c-4bc4-b80d-b9af66fbf022',
-      },
-    },
-    {
-      accessed_file_path:
-        'C:\\Users\\ali\\Documents\\EDR\\cybercore - Copy\\tmp\\DBBasedQueue\\DBBasedQueue\\SQLite3\\vs2019\\x86\\Release\\sqlite3.dll',
-      pid: 2640,
-      score: 0,
-      timestamp: 1728209292,
-      agent_id: 'ALI-PC/',
-      tag: 'T1010',
-      hash_md5: '51d735cfc943ca53cd6f4dfda6c62309',
-      extra_information: {
-        agent_ip: '172.16.50.83',
-        parent_process_file_path: 'C:\\Windows\\Explorer.EXE',
-        quarantine_time: 1728209292,
-        quarantine_reason: 'MALWARE',
-        file_size: 643072,
-        file_name: 'sqlite3.dll',
-        extra_info: "'{static scan, Malware already exists in static scan db}'",
-        hash_sha256: '',
-        uuid: '2880bac7-eb6d-470a-ad5a-833e2786bdde',
-      },
-    },
-    {
-      accessed_file_path: 'C:\\Users\\ali\\Documents\\EDR\\cybercore - Copy\\Release\\sqlite3.dll',
-      pid: 2640,
-      score: 8,
-      timestamp: 1728209259,
-      agent_id: 'ALI-PC/',
-      tag: 'T1011',
-      hash_md5: '51d735cfc943ca53cd6f4dfda6c62309',
-      extra_information: {
-        agent_ip: '172.16.50.83',
-        parent_process_file_path: 'C:\\Windows\\Explorer.EXE',
-        quarantine_time: 1728209259,
-        quarantine_reason: 'MALWARE',
-        file_size: 643072,
-        file_name: 'sqlite3.dll',
-        extra_info: "'{AI Predicted value is more than threshold:0.647149}'",
-        hash_sha256: '',
-        uuid: '47904788-7c39-4e75-8a12-82f8863efdd8',
-      },
-    },
-    {
-      accessed_file_path: 'C:\\Users\\ali\\Documents\\EDR\\cybercore - Copy\\Release\\sqlite3.dll',
-      pid: 2640,
-      score: 8,
-      timestamp: 1728209259,
-      agent_id: 'ALI-PC/',
-      tag: 'T1011',
-      hash_md5: '51d735cfc943ca53cd6f4dfda6c62309',
-      extra_information: {
-        agent_ip: '172.16.50.83',
-        parent_process_file_path: 'C:\\Windows\\Explorer.EXE',
-        quarantine_time: 1728209259,
-        quarantine_reason: 'MALWARE',
-        file_size: 643072,
-        file_name: 'sqlite3.dll',
-        extra_info: "'{AI Predicted value is more than threshold:0.647149}'",
-        hash_sha256: '',
-        uuid: 'eeff83c4-ca61-4c67-b937-bf1fc5fb92e5',
-      },
-    },
-  ];
+interface LogData {
+  Title: {
+    fa: string;
+    en: string;
+  };
+  Data: Array<Record<string, any>>;
+}
+
+interface UseApiResponse {
+  data: LogData | null;
+  total: number;
+  loading: boolean;
+}
+
+const DetailsLog: React.FC = () => {
+  const router = useRouter();
+  const { key, logId, logs } = router.query;
+
+  const { data, total, loading }: UseApiResponse = useApi(`/agents/${logId}/logs/${logs}_${key}/`);
+  // Safely access the columns if data and Title.en exist
+  const columns = data?.Title?.en ? headers[data.Title.en] : [];
   return (
-    <CustomDataGrid loading={false} pageTotal={2} columns={quarantined_files} rows={dataa ?? []} />
+    <>
+      {columns.length > 0 && (
+        <PageBox
+          title={data?.Title?.fa ?? ' '}
+          description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
+          searchQuery={columns}
+        >
+          <CustomDataGrid
+            loading={loading}
+            pageTotal={total}
+            columns={columns}
+            rows={data?.Data ?? []}
+          />
+        </PageBox>
+      )}
+    </>
   );
 };
 
