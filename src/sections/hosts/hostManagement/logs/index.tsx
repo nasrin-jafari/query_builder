@@ -1,4 +1,5 @@
 import PieChart from '@/components/chart/PieChart';
+import { Box } from '@mui/material';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 
@@ -48,10 +49,12 @@ const Logs: FC<LogsProps> = ({ data }) => {
           query: { ...router.query, eventType: item.en, eventTypeFa: item.fa },
         }))
       : [];
+
   return (
-    <>
+    <Box>
       <PieChart data={eventDataChart} />
-    </>
+      aa
+    </Box>
   );
 };
 
