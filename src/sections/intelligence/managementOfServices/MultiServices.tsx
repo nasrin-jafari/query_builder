@@ -99,6 +99,7 @@ const MultiServices = () => {
         setShowOutput={setShowOutput}
         loading={loading}
         singleFile
+        renderJsonText
       />
     </Box>
   );
