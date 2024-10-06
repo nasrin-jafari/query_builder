@@ -24,9 +24,17 @@ const DetailsLog: React.FC = () => {
   const router = useRouter();
   const { key, logId, logs } = router.query;
 
+  // اگر key یا logId یا logs مقداردهی نشده‌اند، نمایش لودینگ یا یک مقدار پیش‌فرض
+  if (!key || !logId || !logs) {
+    return <div>Loading...</div>;
+  }
+
   const { data, total, loading }: UseApiResponse = useApi(`/agents/${logId}/logs/${logs}_${key}/`);
 
-  const columns = headers[`${logs} ${key}`.replace(/\s+/g, '_').toLowerCase()];
+  // بررسی اینکه آیا ستون‌های جدول در headers وجود دارند
+  const columnsKey = `${logs} ${key}`.replace(/\s+/g, '_').toLowerCase();
+  const columns = headers[columnsKey] || []; // مقدار پیش‌فرض خالی اگر ستون‌ها پیدا نشدند
+
   return (
     <>
       <PageBox
