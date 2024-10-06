@@ -1,7 +1,7 @@
 import PieChart from '@/components/chart/PieChart';
 import { ChartDataItem } from '@/components/chart/type';
 import CardBox from '@/layout/CardBox';
-import { Divider, Grid } from '@mui/material';
+import { Divider, Grid, Theme, useMediaQuery } from '@mui/material';
 import { FC } from 'react';
 import { useRouter } from 'next/router';
 
@@ -11,6 +11,7 @@ interface EventStatusProps {
 }
 
 const EventStatus: FC<EventStatusProps> = ({ data, isLoading }) => {
+  const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
   const router = useRouter();
   const events_status_data = data?.map((item) => ({
     ...item,
@@ -26,7 +27,7 @@ const EventStatus: FC<EventStatusProps> = ({ data, isLoading }) => {
     <Grid item md={4} xs={12}>
       <CardBox minHeight={'270px'}>
         <Divider sx={{ fontSize: '17px' }}>نمایش وضعیت رویداد</Divider>
-        <PieChart data={events_status_data} isLoading={isLoading} />
+        <PieChart renderBottomText={isMd} data={events_status_data} isLoading={isLoading} />
       </CardBox>
     </Grid>
   );

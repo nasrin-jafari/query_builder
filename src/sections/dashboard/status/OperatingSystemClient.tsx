@@ -29,7 +29,7 @@ const OpratingSystemClient: FC<ResourceStatusProps> = ({ data, isLoading }) => {
   });
 
   return (
-    <Grid item md={4} xs={12}>
+    <Grid item sm={6} xs={12} lg={4}>
       <CardBox minHeight={'270px'}>
         <Divider sx={{ fontSize: '17px' }}>سرویس گیرنده‌های سیستم عامل</Divider>
         <PieChart data={analysis_data} isLoading={isLoading} />

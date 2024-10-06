@@ -15,7 +15,7 @@ const SystemConnectionStatus: FC<ResourceStatusProps> = ({ data }) => {
   const theme = useTheme();
   return (
     <>
-      <Grid item md={3} xs={12}>
+      <Grid item sm={6} lg={3} xs={12}>
         <CardBox minHeight={'270px'}>
           <Divider sx={{ fontSize: '17px' }}>وضعیت اتصال سامانه‌های کمکی</Divider>
           <Box sx={{ p: 2, pb: 0 }}>

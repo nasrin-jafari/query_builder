@@ -119,13 +119,14 @@ const PageBox: React.FC<PageBoxProps> = ({
       </Box>
 
       <Box
+        onClick={handleClose}
         sx={{
           position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: '',
+          backgroundColor: open ? 'rgba(0, 0, 0, 0.5)' : 'transparent',
           zIndex: 1300,
           display: open ? 'flex' : 'none',
           alignItems: 'center',
@@ -137,6 +138,7 @@ const PageBox: React.FC<PageBoxProps> = ({
       >
         <Box
           ref={modalRef}
+          onClick={(e) => e.stopPropagation()}
           sx={{
             backgroundColor: theme.palette.grey[300],
             borderRadius: '20px',

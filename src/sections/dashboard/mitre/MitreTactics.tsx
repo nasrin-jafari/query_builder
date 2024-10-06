@@ -12,7 +12,7 @@ interface MitreTacticsProps {
 const MitreTactics: FC<MitreTacticsProps> = ({ data, isLoading }) => {
   return (
     <>
-      <Grid item md={4} xs={12}>
+      <Grid item lg={4} sm={6} xs={12}>
         <CardBox>
           <Divider sx={{ fontSize: '17px' }}>تاکتیک های حمله</Divider>
           <BarChart data={data} isLoading={isLoading} />

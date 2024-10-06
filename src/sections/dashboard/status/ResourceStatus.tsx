@@ -60,7 +60,7 @@ const ServerStatusCard: FC<ServerStatusCardProps> = ({ titleCard, Icon, title, d
 
 const ResourceStatus: FC<ResourceStatusProps> = ({ data }) => {
   return (
-    <Grid item md={5} xs={12}>
+    <Grid item sm={12} xs={12} lg={5}>
       <CardBox minHeight={'270px'}>
         <Divider sx={{ fontSize: '17px' }}>وضعیت منابع سرور</Divider>
         <Grid container spacing={2} sx={{ mt: 2, textAlign: 'center' }}>
