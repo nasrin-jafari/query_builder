@@ -88,18 +88,33 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [openTab, setOpenTab] = useState<string | null>(null);
+  const [subMenuOpen, setSubMenuOpen] = useState<boolean>(true); // به طور پیش فرض true است
+
   const router = useRouter();
   const currentPath = router.pathname;
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    const activeTab = filteredTabs.find((tab) => isTabActive(tab));
+    if (activeTab) {
+      setOpenTab(activeTab.value); // Open the active tab when drawer opens
+      setSubMenuOpen(true); // Keep the submenu open when the drawer opens
+    }
   };
+
   const handleTabClick = (tabValue: string) => {
-    setOpenTab((prevOpenTab) => (prevOpenTab === tabValue ? null : tabValue));
-    setOpen(true);
+    if (openTab === tabValue) {
+      // If it's open, close it
+      setSubMenuOpen(!subMenuOpen); // Toggle the submenu open state
+    } else {
+      // Otherwise, set the clicked tab as active and open it
+      setOpenTab(tabValue);
+      setSubMenuOpen(true); // Open the submenu
+    }
   };
+
   const handleDrawerClose = () => {
-    setOpenTab(null);
+    // setOpenTab(null);
     setOpen(false);
   };
 
@@ -107,14 +122,18 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
     setOpenTab(null);
   };
   const isTabActive = (tab: ItemsTab) => {
-    if (tab.path && currentPath === tab.path) {
-      return true;
-    }
-    if (tab.routes) {
-      return tab.routes.some((route) => currentPath === route.path);
-    }
-    return false;
+    return (
+      (tab.path && currentPath === tab.path) ||
+      tab.routes?.some((route) => currentPath === route.path)
+    );
   };
+
+  useEffect(() => {
+    const activeTab = filteredTabs.find((tab) => isTabActive(tab));
+    if (activeTab) {
+      setOpenTab(activeTab.value); // Open the initial active tab
+    }
+  }, [filteredTabs, router.pathname]);
 
   const renderSubItems = (routes: ItemsTab[] | undefined): JSX.Element[] => {
     if (!routes) return [];
@@ -233,6 +252,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
                         openTab === tab.value || isTabActive(tab)
                           ? theme.palette.primary.main
                           : 'inherit',
+
                       '&:hover': {
                         color: theme.palette.primary.main,
                       },
@@ -242,8 +262,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
                       <ListItemIcon
                         sx={{
                           fontSize: 24,
-                          color:
-                            openTab === tab.value || isTabActive(tab) ? 'primary.main' : 'inherit',
+                          color: openTab === tab.value ? 'primary.main' : 'inherit',
                         }}
                       >
                         <IconComponent />
@@ -261,10 +280,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
                         cursor: 'pointer',
                         color: currentPath === tab.path ? theme.palette.primary.main : 'inherit',
                         '&:hover': {
-                          color:
-                            currentPath === tab.path
-                              ? theme.palette.primary.main
-                              : theme.palette.primary.main,
+                          color: currentPath === tab.path ? theme.palette.primary.main : 'inherit',
                         },
                       }}
                     >
@@ -272,10 +288,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
                         <ListItemIcon
                           sx={{
                             fontSize: 24,
-                            color:
-                              openTab === tab.value || isTabActive(tab)
-                                ? 'primary.main'
-                                : 'inherit',
+                            color: openTab === tab.value ? 'primary.main' : 'inherit',
                           }}
                         >
                           <IconComponent />
@@ -288,7 +301,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
                 )}
 
                 {tab.routes && (
-                  <Collapse in={openTab === tab.value} unmountOnExit>
+                  <Collapse in={openTab === tab.value && subMenuOpen && open} unmountOnExit>
                     {renderSubItems(tab.routes)}
                   </Collapse>
                 )}
