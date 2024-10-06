@@ -1,7 +1,6 @@
 import PieChart from '@/components/chart/PieChart';
 import CardBox from '@/layout/CardBox';
 import { Box, Divider, Grid, IconButton, Typography } from '@mui/material';
-import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
@@ -46,7 +45,6 @@ interface LogsProps {
 
 const Logs: FC<LogsProps> = ({ data }) => {
   const [currentIndex, setCurrentIndex] = useState<CurrentIndex>({});
-  const router = useRouter();
   useEffect(() => {
     if (data) {
       const initialIndex: CurrentIndex = {};
