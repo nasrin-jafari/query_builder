@@ -110,25 +110,25 @@ interface ButtonType {
 const isFalsyExceptZero = (value: any) => value === '' || (value == null && value !== 0);
 
 const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
-  columns,
-  rows = [],
-  loading,
-  buttons,
-  pageTotal = 1,
-  linkOverview = '',
-  notExtra = false,
-  handleAdd,
-  handleForm,
-  editForm,
-  editState,
-  fields,
-  selectableRows = false,
-  itemSelectRowParam = '',
-  selectedRowsButtons = [],
-  onAction,
-  handleSwitch,
-  downloadFile,
-}) => {
+                                                           columns,
+                                                           rows = [],
+                                                           loading,
+                                                           buttons,
+                                                           pageTotal = 1,
+                                                           linkOverview = '',
+                                                           notExtra = false,
+                                                           handleAdd,
+                                                           handleForm,
+                                                           editForm,
+                                                           editState,
+                                                           fields,
+                                                           selectableRows = false,
+                                                           itemSelectRowParam = '',
+                                                           selectedRowsButtons = [],
+                                                           onAction,
+                                                           handleSwitch,
+                                                           downloadFile,
+                                                         }) => {
   const [collapsedRows, setCollapsedRows] = useState<Record<number, boolean>>({});
   const [selectedRowValues, setSelectedRowValues] = useState<any[]>([]);
   const { showBtnUpdate, showBtnDelete, showBtnCreate } = UseAceessBtn();
@@ -534,8 +534,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     value >= 8
                                       ? theme.palette.error.main
                                       : value >= 6
-                                      ? theme.palette.primary.main
-                                      : theme.palette.warning.main,
+                                        ? theme.palette.primary.main
+                                        : theme.palette.warning.main,
                                 }}
                               >
                                 {value}
@@ -555,11 +555,13 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                           const renderStatusContent = (value: any) => {
                             const getColor = (value: string) => {
                               const stringValue = String(value);
-                              if (stringValue === 'فعال' || stringValue === 'Clean') {
+                              if (stringValue === 'فعال' || stringValue === 'Clean' || stringValue === 'سالم') {
                                 return theme.palette.success.main;
                               }
-                              if (stringValue === 'غیرفعال' || stringValue.includes('Malware')) {
+                              if (stringValue === 'غیرفعال' || stringValue.includes('Malware') || stringValue ===   'حاوی بدافزار') {
                                 return theme.palette.error.main;
+                              }  if (stringValue === 'شناخته نشده' ) {
+                                return theme.palette.primary.main;
                               }
                               return theme.palette.text.primary;
                             };
@@ -612,7 +614,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                               break;
                           }
 
-                          const displayContent = column.field?.includes('enabled') ? (
+                          const displayContent = (column.field?.includes('enabled') ||  ['status', 'infected'].some((key) => column.field?.includes(key)))? (
                             content
                           ) : (
                             <CopyValue
@@ -797,8 +799,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               dialogState.type === 'delete'
                 ? 'آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟'
                 : dialogState.type === 'edit'
-                ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
-                : 'افزودن آیتم جدید'
+                  ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
+                  : 'افزودن آیتم جدید'
             }
             content={
               dialogState.type === 'delete' ? (
@@ -810,8 +812,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     dialogState.type === 'edit'
                       ? editForm || []
                       : handleAdd
-                      ? handleAdd?.fields
-                      : fields || []
+                        ? handleAdd?.fields
+                        : fields || []
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}

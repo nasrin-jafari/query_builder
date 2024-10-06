@@ -23,7 +23,10 @@ const BarChartHorizontal: React.FC<BarChartProps> = ({ data = [], isLoading }) =
 
       const option = {
         grid: {
-          left: '20%',
+          left: '12%',
+          right: '5%',
+          top: '5%',
+          bottom: '5%',
         },
         toolbox: {
           feature: {

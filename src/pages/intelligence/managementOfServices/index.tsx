@@ -2,10 +2,12 @@ import { Box, Paper } from '@mui/material';
 import CustomTabs from '../../../components/common/CustomTabs';
 import React from 'react';
 import AiUpload from '@/sections/intelligence/managementOfServices/AiUploader';
-import YaraUpload from '@/sections/intelligence/managementOfServices/yaraUpload';
-import MultiServices from '@/sections/intelligence/managementOfServices/multiServices';
+import MultiServices from '@/sections/intelligence/managementOfServices/MultiServices';
+import { useTheme } from '@mui/material/styles';
+import YaraUpload from '@/sections/intelligence/managementOfServices/YaraUpload';
 
 const ManagementOfServices = () => {
+  const theme = useTheme();
   const tabs = [
     {
       label: 'بر اساس مدل های هوش مصنوعی',
@@ -32,9 +34,9 @@ const ManagementOfServices = () => {
       <Paper
         elevation={3}
         sx={{
-          width: { xs: '900px', lg: '1290px' },
+          minWidth: { xs: '900px', lg: '1100px' },
           paddingTop: '10px',
-          background: '#293540',
+          background: theme.palette.grey[300],
           display: 'flex',
         }}
       >

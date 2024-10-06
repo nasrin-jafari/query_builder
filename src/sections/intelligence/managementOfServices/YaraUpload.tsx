@@ -39,6 +39,7 @@ const ParentComponent = () => {
       setShowOutput={setShowOutput}
       showOutput={showOutput}
       loading={loading}
+      renderJsonText
     />
   );
 };

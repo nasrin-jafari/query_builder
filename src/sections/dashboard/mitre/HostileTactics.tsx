@@ -12,7 +12,7 @@ interface HostileTacticsProps {
 const HostileTactics: FC<HostileTacticsProps> = ({ data, isLoading }) => {
   return (
     <>
-      <Grid item md={4} xs={12}>
+      <Grid item lg={4} sm={12} xs={12}>
         <CardBox>
           <Divider sx={{ fontSize: '17px' }}>تکنیک‌های خصمانه</Divider>
           <BarChartHorizontal data={data} isLoading={isLoading} />
