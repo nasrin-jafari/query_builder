@@ -82,7 +82,7 @@ const ResultsUploadAi: React.FC<ResultsUploadAiProps> = ({ results }) => {
           },
         ]}
       />
-      <ConfirmationDialog onClose={handleClose} open={open} content={contentModal} />
+      <ConfirmationDialog title={isFileTypeDetection ? `جزییات بیشتر `:undefined} onClose={handleClose} open={open} content={contentModal} />
     </>
   );
 };
