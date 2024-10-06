@@ -1,6 +1,7 @@
 import PieChart from '@/components/chart/PieChart';
 import CardBox from '@/layout/CardBox';
 import { Box, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
@@ -45,6 +46,7 @@ interface LogsProps {
 
 const Logs: FC<LogsProps> = ({ data }) => {
   const [currentIndex, setCurrentIndex] = useState<CurrentIndex>({});
+  const router = useRouter();
   useEffect(() => {
     if (data) {
       const initialIndex: CurrentIndex = {};
@@ -64,7 +66,7 @@ const Logs: FC<LogsProps> = ({ data }) => {
       }));
     }
   };
-
+ console.log(data ,"data pie charts")
   const handlePrev = (title: string) => {
     if (currentIndex[title] > 0) {
       setCurrentIndex((prevIndex) => ({
@@ -82,11 +84,12 @@ const Logs: FC<LogsProps> = ({ data }) => {
           const slicedData = Object.entries(value)
             // .slice(startIndex, startIndex + 4)
             .map(([key, value]) => ({
-              redirectTo: `/activity/quarantined`,
+              redirectTo: `/hosts/hostManagement/logs/detailsLog/`,
+              query: { ...router.query, logId: router.query.logId, logs: title, key },
               en: key,
               value: value.total,
             }));
-
+         console.log(slicedData, 'slicedData');
           return (
             <Grid item key={title} xs={12} md={4}>
               <CardBox>

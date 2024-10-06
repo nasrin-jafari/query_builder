@@ -1,4 +1,3 @@
-import { CustomDataGrid } from '@/components';
 import headers from '@/constants/tableHeaders';
 import useApi from '@/hooks/UseApi';
 import { Box } from '@mui/material';
@@ -24,18 +23,13 @@ const DetailsLog: React.FC = () => {
   const { key, logId, logs } = router.query;
 
   const { data, total, loading }: UseApiResponse = useApi(`/agents/${logId}/logs/${logs}_${key}/`);
-  // Safely access the columns if data and Title.en exist
   const columns = data?.Title?.en ? headers[data.Title.en] : [];
-  return (
-    <Box>
-      <CustomDataGrid
-        loading={loading}
-        pageTotal={total}
-        columns={columns}
-        rows={data?.Data ?? []}
-      />
-    </Box>
-  );
+  console.log(data, 'data');
+  console.log(total, 'total');
+  console.log(loading, 'loading');
+  console.log(columns, 'col');
+
+  return <Box>saeass</Box>;
 };
 
 export default DetailsLog;
