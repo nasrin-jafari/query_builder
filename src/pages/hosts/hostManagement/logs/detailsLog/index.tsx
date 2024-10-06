@@ -1,49 +1,52 @@
-// import { CustomDataGrid } from '@/components';
-// import PageBox from '@/components/common/PageBox';
-// import headers from '@/constants/tableHeaders';
-// import useApi from '@/hooks/UseApi';
-// import { useRouter } from 'next/router';
-import React from 'react';
+import { CustomDataGrid } from '@/components';
+import PageBox from '@/components/common/PageBox';
+import { quarantined_files } from '@/constants/tableHeaders';
+import useApi from '@/hooks/UseApi';
+import { useRouter } from 'next/router';
+import { exportFiles } from '@/utils/DownloadFiles';
 
-// interface LogData {
-//   Title: {
-//     fa: string;
-//     en: string;
-//   };
-//   Data: Array<Record<string, any>>;
-// }
+interface QuarantinedData {
+  [key: string]: any;
+}
+interface FetchDataResponse {
+  Data: QuarantinedData[];
+  Total: number;
+}
+const DetailsLog = () => {
+  const { data, total, loading } = useApi<FetchDataResponse>('/agents/quarantined-files/');
+  const router = useRouter();
 
-// interface UseApiResponse {
-//   data: LogData | null;
-//   total: number;
-//   loading: boolean;
-// }
-
-const DetailsLog: React.FC = () => {
-  // const router = useRouter();
-  // const { key, logId, logs } = router.query;
-
-  // const { data, total, loading }: UseApiResponse = useApi(`/agents/${logId}/logs/${logs}_${key}/`);
-  // // Safely access the columns if data and Title.en exist
-  // const columns = data?.Title?.en ? headers[data.Title.en] : [];
   return (
-    <>
-      {/* {columns.length > 0 && (
-        <PageBox
-          title={data?.Title?.fa ?? ' '}
-          description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
-          searchQuery={columns}
-        >
-          <CustomDataGrid
-            loading={loading}
-            pageTotal={total}
-            columns={columns}
-            rows={data?.Data ?? []}
-          />
-        </PageBox>
-      )} */}
-      <h1>ssss</h1>
-    </>
+    <PageBox searchQuery={quarantined_files} title="قرنطینه شده ها">
+      <CustomDataGrid
+        loading={loading}
+        pageTotal={total}
+        columns={quarantined_files}
+        rows={data?.Data ?? []}
+        buttons={[
+          {
+            label: 'نتایج ضد ویروس مرکب',
+            type: 'extra',
+            onClick: () => {
+              router.push({
+                pathname: '/intelligence/antivirusResults',
+              });
+            },
+          },
+          {
+            label: 'دانلود فایل',
+            type: 'extra',
+            onClick: (_, data) => {
+              exportFiles({
+                path: `/agents/quarantined-files/${data?.extra_information?.hash_sha256}/`,
+                fileName: `${data?.hash_md5}.q`,
+                type: 'file',
+              });
+            },
+          },
+        ]}
+      />
+    </PageBox>
   );
 };
 
