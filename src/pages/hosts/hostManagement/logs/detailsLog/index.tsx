@@ -1,3 +1,4 @@
+import { CustomDataGrid } from '@/components';
 import headers from '@/constants/tableHeaders';
 import useApi from '@/hooks/UseApi';
 import { Box } from '@mui/material';
@@ -29,7 +30,11 @@ const DetailsLog: React.FC = () => {
   console.log(loading, 'loading');
   console.log(columns, 'col');
 
-  return <Box>saeass</Box>;
+  return (
+    <Box>
+      <CustomDataGrid />
+    </Box>
+  );
 };
 
 export default DetailsLog;
