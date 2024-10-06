@@ -53,7 +53,7 @@ const Logs: FC<LogsProps> = ({ data }) => {
   return (
     <Box>
       <PieChart data={eventDataChart} />
-      aa
+      aae aweawewe
     </Box>
   );
 };
