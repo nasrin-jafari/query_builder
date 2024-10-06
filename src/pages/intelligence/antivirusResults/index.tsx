@@ -98,7 +98,7 @@ const AntivirusResults = () => {
           },
         })),
         renderBottomText: true,
-        colors: [theme.palette.success.main, theme.palette.error.main],
+        colors: [theme.palette.error.main , theme.palette.success.main,  theme.palette.primary.main],
       },
       title: 'وضعیت آنالیز',
       gridProps: { xs: 6, xl: 3 },
