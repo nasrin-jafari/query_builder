@@ -76,61 +76,17 @@ const Logs: FC<LogsProps> = ({ data }) => {
     }
   };
 
+  const eventDataChart =
+    data.events?.length > 0
+      ? data.events.map((item) => ({
+          ...item,
+          redirectTo: `/hosts/hostManagement/analysis`,
+          query: { ...router.query, eventType: item.en, eventTypeFa: item.fa },
+        }))
+      : [];
   return (
     <>
-      {data &&
-        Object.entries(data.pi_chart)?.map(([title, value]) => {
-          const startIndex = currentIndex[title] || 0;
-          const slicedData = Object.entries(value)
-            // .slice(startIndex, startIndex + 4)
-            .map(([key, value]) => ({
-              redirectTo: `/hosts/hostManagement/logs/detailsLog/`,
-              query: { ...router.query, logId: router.query.logId, logs: title, key },
-              en: key,
-              value: value.total,
-            }));
-
-          return (
-            <Grid item key={title} xs={12} md={4}>
-              <CardBox>
-                <Box sx={{ direction: 'rtl', textAlign: 'left' }}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Typography variant="subtitle1">{title}</Typography>
-                    <Box>
-                      <IconButton onClick={() => handlePrev(title)}>
-                        <IoIosArrowBack size={16} />
-                      </IconButton>
-                      <IconButton onClick={() => handleNext(title)}>
-                        <IoIosArrowForward size={16} />
-                      </IconButton>
-                    </Box>
-                  </Box>
-                  <Divider sx={{ borderColor: '#39393D' }} />
-                  <Box
-                    sx={{
-                      paddingTop: '10px',
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        height: '200px',
-                        direction: 'ltr',
-                      }}
-                    >
-                      <PieChart data={slicedData} startIndex={startIndex} />
-                    </Box>
-                  </Box>
-                </Box>
-              </CardBox>
-            </Grid>
-          );
-        })}
+      <PieChart data={eventDataChart} />
     </>
   );
 };
