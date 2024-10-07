@@ -49,7 +49,7 @@ deploy_development:
       docker stop edr-frontend;
       docker rm edr-frontend;
       else
-      echo "edr-frontend- container does not exist";
+      echo "edr-frontend container does not exist";
       fi
     - docker compose up -d
     - >
