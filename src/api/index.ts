@@ -15,7 +15,7 @@ const getUrl = () => {
 export const BASE_URL = getUrl();
 
 const config = {
-  baseURL: process.env.NEXT_PUBLIC_BASEURL,
+  baseURL: BASE_URL,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

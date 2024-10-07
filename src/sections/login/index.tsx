@@ -226,7 +226,7 @@ const Login = () => {
               {isForgotPassword ? 'بازگشت به صفحه ورود' : 'فراموشی رمز عبور'}
             </Button>
 
-            <Typography sx={{ color: theme.palette.grey[50], mt: 5 }}>نسخه : 0.0.2</Typography>
+            <Typography sx={{ color: theme.palette.grey[50], mt: 5 }}>نسخه : 1.0.0</Typography>
           </Container>
         </Container>
       </Box>
