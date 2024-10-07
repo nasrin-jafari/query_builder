@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import PageBox from '@/components/common/PageBox';
 import { Box } from '@mui/material';
 import React from 'react';
+import { filters } from '@/constants/tableHeaders';
+import { CustomDataGrid } from '@/components';
 
 // interface LogData {
 //   Title: {
@@ -35,9 +37,9 @@ const DetailsLog: React.FC = () => {
 
   return (
     <Box>
-      {/* <CustomDataGrid loading={false} pageTotal={2} columns={[]} rows={[]} notExtra /> */}
       <PageBox title="asdsad">
         <h1></h1>
+        <CustomDataGrid loading={false} pageTotal={2} columns={filters} rows={[]} notExtra />
       </PageBox>
     </Box>
   );
