@@ -10,9 +10,6 @@ interface UserData {
   protocol: string;
 }
 
-interface HandleApiRequestResponse {
-  Data: UserData[];
-}
 const LogProfiles = () => {
   const { data, total, loading, handleApiRequest } = UseApi<UserData>('/log_profiles/get/');
 
