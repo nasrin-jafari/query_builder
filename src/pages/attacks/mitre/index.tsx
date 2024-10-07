@@ -158,6 +158,8 @@ const Mitre: React.FC<SidebarProps> = () => {
                   alignItems: 'flex-start',
                   alignContent: 'flex-start',
                   gap: 1,
+                  height: '700px',
+                  overflow : 'auto'
                 }}
               >
                 {filteredData?.body?.map((technique: Technique) => {
@@ -171,7 +173,7 @@ const Mitre: React.FC<SidebarProps> = () => {
                       sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        width: '400px',
+                        width: '399px',
                       }}
                     >
                       <Box
