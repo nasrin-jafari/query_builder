@@ -97,11 +97,6 @@ export const TABS: ItemsTab[] = [
                 label: 'جزییات لاگ',
                 path: '/detailsLog',
               },
-              {
-                value: 'hostManagement/logsDetail',
-                label: 'جزییات لاگ',
-                path: '/logsDetail',
-              },
             ],
           },
         ],
