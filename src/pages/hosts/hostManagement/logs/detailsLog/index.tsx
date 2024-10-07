@@ -1,55 +1,50 @@
 import { CustomDataGrid } from '@/components';
+import headers from '@/constants/tableHeaders';
+import useApi from '@/hooks/UseApi';
+import { useRouter } from 'next/router';
 import PageBox from '@/components/common/PageBox';
 import { Box } from '@mui/material';
 import React from 'react';
 
-// Interface for log data
 interface LogData {
-  name: string;
+  Title: {
+    fa: string;
+    en: string;
+  };
+  Data: Array<Record<string, any>>;
 }
 
-interface DetailsLogProps {
-  data: LogData[];
-  pageTotal: number;
+interface UseApiResponse {
+  data: LogData | null;
+  total: number;
+  loading: boolean;
 }
 
-const DetailsLog: React.FC<DetailsLogProps> = ({ data, pageTotal }) => {
-  const aiUpload = [{ field: 'name', headerName: 'نام فایل', dataType: 'text', isHeader: true }];
+const DetailsLog: React.FC = () => {
+  const router = useRouter();
+  const { key, logId, logs } = router.query;
+
+  const { data, total, loading }: UseApiResponse = useApi(`/agents/${logId}/logs/${logs}_${key}/`);
+  const columns = data?.Title?.en ? headers[data.Title.en] : [];
+  // console.log(data, 'data');
+  // console.log(total, 'total');
+  // console.log(loading, 'loading');
+  // console.log(columns, 'col');
 
   return (
     <Box>
       <PageBox title="asdsad">
         <CustomDataGrid
-          loading={false}
-          pageTotal={pageTotal}
-          columns={aiUpload}
-          rows={data}
+          loading={loading}
+          pageTotal={total}
+          columns={columns}
+          rows={data?.Data ?? []}
           notExtra
         />
+        <h1></h1>
       </PageBox>
     </Box>
   );
-};
-
-// This function runs at build time and fetches data for the page
-export const getStaticProps = async () => {
-  // Fetch your data here (e.g., from an API)
-  const data = [
-    {
-      name: 'alireza',
-    },
-  ];
-
-  // You can also calculate the total pages
-  const pageTotal = 2;
-
-  // Return the data as props to the component
-  return {
-    props: {
-      data,
-      pageTotal,
-    },
-  };
 };
 
 export default DetailsLog;
