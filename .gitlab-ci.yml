@@ -1,7 +1,7 @@
 variables:
   TAG_TEST: "${CI_PIPELINE_ID}-t"
   TAG_PROD: "${CI_PIPELINE_ID}-p"
-  INCLUDE_PRODUCTION: "false"
+  INCLUDE_PRODUCTION: "true"
   INCLUDE_DEVELOPMENT: "true"
   INCLUDE_SCAN: "true"
   CI_DEBUG_TRACE: "true"
