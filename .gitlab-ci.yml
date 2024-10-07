@@ -3,11 +3,15 @@ variables:
   TAG_PROD: "${CI_PIPELINE_ID}-p"
   INCLUDE_PRODUCTION: "false"
   INCLUDE_DEVELOPMENT: "true"
+  INCLUDE_SCAN: "true"
+  CI_DEBUG_TRACE: "true"
+  DOCKER_DRIVER: overlay2
 
 stages:
   - build_development
   - deploy_development
   - test_development
+  - security_scan
   - build_production
   - deploy_production
   - test_production
@@ -72,6 +76,46 @@ test_development:
       echo "URL is not reachable. Pipeline failed.";
       exit 1;
     fi
+
+depscan:
+  stage: security_scan
+  rules:
+    - if: '$INCLUDE_SCAN == "true"'
+      when: always
+  tags:
+    - edr-frontendts
+  image: 
+    name: python:3.9-slim
+  script:
+    - pip install pip-audit
+    - pip install safety
+    - echo "Starting dependency security scan..."
+    - |
+      if [ ! -f requirements.txt ]; then
+        pip freeze > requirements.txt
+      fi
+
+      echo "Running pip-audit..."
+      pip-audit -r requirements.txt -f json > pip-audit-report.json || true
+
+      echo "Running safety check..."
+      safety check -r requirements.txt --json > safety-report.json || true
+
+      echo "Generating combined report..."
+      echo "=== Dependency Security Scan Report ===" > dependency-scan-report.txt
+      echo "" >> dependency-scan-report.txt
+      echo "1. Pip Audit Results:" >> dependency-scan-report.txt
+      cat pip-audit-report.json >> dependency-scan-report.txt
+      echo "" >> dependency-scan-report.txt
+      echo "2. Safety Check Results:" >> dependency-scan-report.txt
+      cat safety-report.json >> dependency-scan-report.txt
+  artifacts:
+    when: always
+    paths:
+      - dependency-scan-report.txt
+      - pip-audit-report.json
+      - safety-report.json
+  allow_failure: true
 
 build_production:
   stage: build_production
