@@ -166,6 +166,11 @@ export const TABS: ItemsTab[] = [
         label: 'تنظیمات سامانه',
         path: '/settings/panel',
       },
+      {
+        value: 'logProfiles',
+        label: 'پروفایل رخدادها',
+        path: '/settings/logProfiles',
+      },
     ],
   },
   {

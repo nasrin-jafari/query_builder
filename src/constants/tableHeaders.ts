@@ -3074,6 +3074,13 @@ const headers: Headers = {
     { field: 'scan_time', headerName: 'زمان پویش', dataType: 'date', isHeader: true },
     { field: 'status', headerName: ' وضعیت', dataType: 'text', isHeader: true },
   ],
+
+  logProfile: [
+    { field: 'profile_id', headerName: 'شناسه فایل', dataType: 'text', isHeader: true },
+    { field: 'host', headerName: 'هاست', dataType: 'text', isHeader: true },
+    { field: 'port', headerName: 'پورت', dataType: 'number', isHeader: true },
+    { field: 'protocol', headerName: 'پروتکل', dataType: 'text', isHeader: true },
+  ],
 };
 export const fieldsQueries: Field[] = [
   { field: 'timestamp', headerName: 'تاریخ', dataType: 'date', isHeader: false },
@@ -3126,6 +3133,7 @@ const {
   driver_registry_keynamechanged,
   driver_registry_keyvalueset,
   etw_network_connectionattemptedinfo,
+  logProfile,
 } = headers;
 export {
   all_events,
@@ -3174,5 +3182,6 @@ export {
   driver_registry_keynamechanged,
   driver_registry_keyvalueset,
   etw_network_connectionattemptedinfo,
+  logProfile,
 };
 export default headers;
