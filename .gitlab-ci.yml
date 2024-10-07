@@ -24,7 +24,7 @@ build_development:
   tags:
     - edr-frontendts
   script:
-    - docker build -t --no-cache "edrfrontendts:$TAG_TEST" .
+    - docker build -t "edrfrontendts:$TAG_TEST" --no-cache .
     - if [ $? -eq 0 ]; then
       echo "Docker image built with tag:$TAG_TEST for test environment";
       docker tag edrfrontendts:$TAG_TEST $CI_REGISTRY_IMAGE:$TAG_TEST;
@@ -156,7 +156,7 @@ deploy_production:
       git config --global user.email "root"
       git config --global user.name "root"
       git clone http://$CI_JOB_TOKEN@$REPO_URL edr-production
-      cd edr-production/edr-frontend-ts
+      cd edr-production/edr-frontend
 
       # Check if the image already exists on the host
       if docker images "$CI_REGISTRY_IMAGE:$TAG_PROD" | grep -q "$TAG_PROD"; then
