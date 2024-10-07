@@ -1,53 +1,67 @@
-// import { CustomDataGrid } from '@/components';
-// import headers from '@/constants/tableHeaders';
-import { CustomDataGrid } from '@/components';
 import PageBox from '@/components/common/PageBox';
-import { Box } from '@mui/material';
+import {
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableContainer,
+  Paper,
+} from '@mui/material';
 import React from 'react';
 
-// interface LogData {
-//   Title: {
-//     fa: string;
-//     en: string;
-//   };
-//   Data: Array<Record<string, any>>;
-// }
+// Interface for log data
+interface LogData {
+  name: string;
+}
 
-// interface UseApiResponse {
-//   data: LogData | null;
-//   total: number;
-//   loading: boolean;
-// }
+interface DetailsLogProps {
+  data: LogData[];
+  pageTotal: number;
+}
 
-const DetailsLog: React.FC = () => {
-  // const router = useRouter();
-  // const { key, logId, logs } = router.query;
+const DetailsLog: React.FC<DetailsLogProps> = ({ data }) => {
+  return (
+    <Box>
+      <PageBox title="Logs Table">
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">نام فایل</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data?.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell align="center">{row.name}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </PageBox>
+    </Box>
+  );
+};
 
-  // const { data, total, loading } = useApi(`/agents/${logId}/logs/${logs}_${key}/`);
-  // console.log(data, total, loading);
-
-  // const columns = data?.Title?.en ? headers[data.Title.en] : [];
-  // console.log(data, 'data');
-  // console.log(total, 'total');
-  // console.log(loading, 'loading');
-  // console.log(columns, 'col');
-
+// This function runs at build time and fetches data for the page
+export const getStaticProps = async () => {
+  // Fetch your data here (e.g., from an API)
   const data = [
     {
       name: 'alireza',
     },
   ];
 
-  const aiUpload = [{ field: 'name', headerName: 'نام فایل', dataType: 'text', isHeader: true }];
-
-  return (
-    <Box>
-      <PageBox title="asdsad">
-        <h1></h1>
-        <CustomDataGrid loading={false} pageTotal={2} columns={aiUpload} rows={data} notExtra />
-      </PageBox>
-    </Box>
-  );
+  // Return the data as props to the component
+  return {
+    props: {
+      data,
+      pageTotal: 2, // Example value for total pages
+    },
+  };
 };
 
 export default DetailsLog;
