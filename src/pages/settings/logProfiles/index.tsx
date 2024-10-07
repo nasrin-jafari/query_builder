@@ -10,8 +10,12 @@ interface UserData {
   protocol: string;
 }
 
+interface HandleResponse {
+  Data: UserData[];
+}
+
 const LogProfiles = () => {
-  const { data, total, loading, handleApiRequest } = UseApi<UserData>('/log_profiles/get/');
+  const { data, total, loading, handleApiRequest } = UseApi<HandleResponse>('/log_profiles/get/');
 
   const fields = [
     {
@@ -56,8 +60,6 @@ const LogProfiles = () => {
   };
 
   const handleEdit = async (editeData: UserData, row: UserData) => {
-    console.log(row);
-    console.log(editeData);
     try {
       const res = await handleApiRequest(`/log_profiles/update/${row.profile_id}/`, 'put', {
         host: editeData?.host,
@@ -81,7 +83,7 @@ const LogProfiles = () => {
         pageTotal={total}
         loading={loading}
         columns={logProfile}
-        rows={Array.isArray(data) ? data : []}
+        rows={data?.Data || []}
         editForm={fields}
         fields={fields}
         // editState={setIsEdit}
