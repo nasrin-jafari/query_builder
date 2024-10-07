@@ -24,7 +24,7 @@ build_development:
   tags:
     - edr-frontendts
   script:
-    - docker build -t "edrfrontendts:$TAG_TEST" .
+    - docker build -t --no-cache "edrfrontendts:$TAG_TEST" .
     - if [ $? -eq 0 ]; then
       echo "Docker image built with tag:$TAG_TEST for test environment";
       docker tag edrfrontendts:$TAG_TEST $CI_REGISTRY_IMAGE:$TAG_TEST;
