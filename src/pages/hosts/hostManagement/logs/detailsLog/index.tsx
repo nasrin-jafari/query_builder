@@ -1,12 +1,9 @@
 // import { CustomDataGrid } from '@/components';
 // import headers from '@/constants/tableHeaders';
-import useApi from '@/hooks/UseApi';
-import { useRouter } from 'next/router';
+import { CustomDataGrid } from '@/components';
 import PageBox from '@/components/common/PageBox';
 import { Box } from '@mui/material';
 import React from 'react';
-import { filters } from '@/constants/tableHeaders';
-import { CustomDataGrid } from '@/components';
 
 // interface LogData {
 //   Title: {
@@ -23,11 +20,11 @@ import { CustomDataGrid } from '@/components';
 // }
 
 const DetailsLog: React.FC = () => {
-  const router = useRouter();
-  const { key, logId, logs } = router.query;
+  // const router = useRouter();
+  // const { key, logId, logs } = router.query;
 
-  const { data, total, loading } = useApi(`/agents/${logId}/logs/${logs}_${key}/`);
-  console.log(data, total, loading);
+  // const { data, total, loading } = useApi(`/agents/${logId}/logs/${logs}_${key}/`);
+  // console.log(data, total, loading);
 
   // const columns = data?.Title?.en ? headers[data.Title.en] : [];
   // console.log(data, 'data');
@@ -35,11 +32,19 @@ const DetailsLog: React.FC = () => {
   // console.log(loading, 'loading');
   // console.log(columns, 'col');
 
+  const data = [
+    {
+      name: 'alireza',
+    },
+  ];
+
+  const aiUpload = [{ field: 'name', headerName: 'نام فایل', dataType: 'text', isHeader: true }];
+
   return (
     <Box>
       <PageBox title="asdsad">
         <h1></h1>
-        <CustomDataGrid loading={false} pageTotal={2} columns={filters} rows={[]} notExtra />
+        <CustomDataGrid loading={false} pageTotal={2} columns={aiUpload} rows={data} notExtra />
       </PageBox>
     </Box>
   );
