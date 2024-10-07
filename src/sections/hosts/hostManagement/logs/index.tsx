@@ -66,7 +66,7 @@ const Logs: FC<LogsProps> = ({ data }) => {
       }));
     }
   };
- console.log(data ,"data pie charts")
+  console.log(data, 'data pie charts');
   const handlePrev = (title: string) => {
     if (currentIndex[title] > 0) {
       setCurrentIndex((prevIndex) => ({
@@ -84,12 +84,12 @@ const Logs: FC<LogsProps> = ({ data }) => {
           const slicedData = Object.entries(value)
             // .slice(startIndex, startIndex + 4)
             .map(([key, value]) => ({
-              redirectTo: `/hosts/hostManagement/logs/detailsLog/`,
+              redirectTo: `/hosts/hostManagement/logs/logsDetail`,
               query: { ...router.query, logId: router.query.logId, logs: title, key },
               en: key,
               value: value.total,
             }));
-         console.log(slicedData, 'slicedData');
+          console.log(slicedData, 'slicedData');
           return (
             <Grid item key={title} xs={12} md={4}>
               <CardBox>
