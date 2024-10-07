@@ -1,14 +1,6 @@
+import { CustomDataGrid } from '@/components';
 import PageBox from '@/components/common/PageBox';
-import {
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TableContainer,
-  Paper,
-} from '@mui/material';
+import { Box } from '@mui/material';
 import React from 'react';
 
 // Interface for log data
@@ -21,26 +13,19 @@ interface DetailsLogProps {
   pageTotal: number;
 }
 
-const DetailsLog: React.FC<DetailsLogProps> = ({ data }) => {
+const DetailsLog: React.FC<DetailsLogProps> = ({ data, pageTotal }) => {
+  const aiUpload = [{ field: 'name', headerName: 'نام فایل', dataType: 'text', isHeader: true }];
+
   return (
     <Box>
-      <PageBox title="Logs Table">
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">نام فایل</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data?.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell align="center">{row.name}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+      <PageBox title="asdsad">
+        <CustomDataGrid
+          loading={false}
+          pageTotal={pageTotal}
+          columns={aiUpload}
+          rows={data}
+          notExtra
+        />
       </PageBox>
     </Box>
   );
@@ -55,11 +40,14 @@ export const getStaticProps = async () => {
     },
   ];
 
+  // You can also calculate the total pages
+  const pageTotal = 2;
+
   // Return the data as props to the component
   return {
     props: {
       data,
-      pageTotal: 2, // Example value for total pages
+      pageTotal,
     },
   };
 };
