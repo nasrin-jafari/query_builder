@@ -97,6 +97,11 @@ export const TABS: ItemsTab[] = [
                 label: 'جزییات لاگ',
                 path: '/detailsLog',
               },
+              {
+                value: 'hostManagement/logsInsepect',
+                label: 'جزییات لاگ',
+                path: '/logsInsepect',
+              },
             ],
           },
         ],
