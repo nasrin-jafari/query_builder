@@ -24,7 +24,7 @@ build_development:
   tags:
     - edr-frontend
   script:
-    - docker build -t "edrfrontend:$TAG_TEST" --no-cache .
+    - docker build -t "edrfrontend:$TAG_TEST" .
     - if [ $? -eq 0 ]; then
       echo "Docker image built with tag:$TAG_TEST for test environment";
       docker tag edrfrontend:$TAG_TEST $CI_REGISTRY_IMAGE:$TAG_TEST;
@@ -126,7 +126,7 @@ build_production:
     - edr-frontend
   script:
     - rm ./src/api/index.ts
-    - mv ./src/api/prod_index.js ./src/api/index.ts
+    - mv ./src/api/prod_index.ts ./src/api/index.ts
     - docker build -t "edrfrontend:$TAG_PROD" .
     - if [ $? -eq 0 ]; then
       echo "Docker image built with tag:$TAG_PROD for production environment";
