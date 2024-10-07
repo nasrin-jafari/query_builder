@@ -32,7 +32,9 @@ const LogsDetails: React.FC = () => {
 
   return (
     <Box>
+      {data?.Data ? <p>data</p> : <p>no data</p>}
       <CustomDataGrid loading={false} pageTotal={2} columns={[]} rows={[]} notExtra />
+      logs
     </Box>
   );
 };
