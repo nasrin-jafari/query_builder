@@ -91,12 +91,12 @@ const LogProfiles = () => {
         notExtra
         buttons={[
           {
-            label: 'حذف کاربر',
+            label: 'حذف ',
             type: 'delete',
             onClick: handleDelete,
           },
           {
-            label: 'ویرایش کاربر',
+            label: 'ویرایش ',
             type: 'edit',
             onClick: handleEdit,
           },
