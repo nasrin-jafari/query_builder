@@ -1,0 +1,187 @@
+variables:
+  TAG_TEST: "${CI_PIPELINE_ID}-t"
+  TAG_PROD: "${CI_PIPELINE_ID}-p"
+  INCLUDE_PRODUCTION: "false"
+  INCLUDE_DEVELOPMENT: "true"
+  INCLUDE_SCAN: "true"
+  CI_DEBUG_TRACE: "true"
+  DOCKER_DRIVER: overlay2
+
+stages:
+  - build_development
+  - deploy_development
+  - test_development
+  - security_scan
+  - build_production
+  - deploy_production
+  - test_production
+
+build_development:
+  stage: build_development
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_DEVELOPMENT == "true"'
+      when: always
+  tags:
+    - edr-frontendts
+  script:
+    - docker build -t "edrfrontendts:$TAG_TEST" .
+    - if [ $? -eq 0 ]; then
+      echo "Docker image built with tag:$TAG_TEST for test environment";
+      docker tag edrfrontendts:$TAG_TEST $CI_REGISTRY_IMAGE:$TAG_TEST;
+      docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY;
+      docker push $CI_REGISTRY_IMAGE:$TAG_TEST;
+      docker rmi edrfrontendts:$TAG_TEST || true
+      echo "Last Test Image Removed";
+      else
+      echo "Build failed. Exiting the pipeline.";
+      exit 1;
+      fi
+
+deploy_development:
+  stage: deploy_development
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_DEVELOPMENT == "true"'
+      when: always
+  tags:
+    - edr-frontendts
+  script:
+    - if docker ps -a --format '{{.Names}}' | grep -q '^edr-frontend-ts$'; then
+      docker stop edr-frontend-ts;
+      docker rm edr-frontend-ts;
+      else
+      echo "edr-frontend-ts container does not exist";
+      fi
+    - docker compose up -d
+    - >
+      if [[ -n $(docker images -f "dangling=true" -q) ]]; then
+        docker images -f "dangling=true" -q | xargs docker rmi > /dev/null 2>&1 || true
+      else
+        echo "No untagged images to remove."
+      fi
+
+test_development:
+  stage: test_development
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_DEVELOPMENT == "true"'
+      when: always
+  tags:
+    - edr-frontendts
+  script: |
+    sleep 30  # Give the application some time to start
+    status_code=$(curl -s -o /dev/null -w "%{http_code}" http://$URL)
+    echo "HTTP Status Code: $status_code"
+    if [ "$status_code" == "200" ]; then
+      echo "URL is reachable. Pipeline is successful.";
+    else
+      echo "URL is not reachable. Pipeline failed.";
+      exit 1;
+    fi
+
+depscan:
+  stage: security_scan
+  rules:
+    - if: '$INCLUDE_SCAN == "true"'
+      when: always
+  tags:
+    - edr-frontendts
+  image: 
+    name: python:3.9-slim
+  script:
+    - pip install pip-audit
+    - pip install safety
+    - echo "Starting dependency security scan..."
+    - |
+      if [ ! -f requirements.txt ]; then
+        pip freeze > requirements.txt
+      fi
+
+      echo "Running pip-audit..."
+      pip-audit -r requirements.txt -f json > pip-audit-report.json || true
+
+      echo "Running safety check..."
+      safety check -r requirements.txt --json > safety-report.json || true
+
+      echo "Generating combined report..."
+      echo "=== Dependency Security Scan Report ===" > dependency-scan-report.txt
+      echo "" >> dependency-scan-report.txt
+      echo "1. Pip Audit Results:" >> dependency-scan-report.txt
+      cat pip-audit-report.json >> dependency-scan-report.txt
+      echo "" >> dependency-scan-report.txt
+      echo "2. Safety Check Results:" >> dependency-scan-report.txt
+      cat safety-report.json >> dependency-scan-report.txt
+  artifacts:
+    when: always
+    paths:
+      - dependency-scan-report.txt
+      - pip-audit-report.json
+      - safety-report.json
+  allow_failure: true
+
+build_production:
+  stage: build_production
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_PRODUCTION == "true"'
+      when: always
+  tags:
+    - edr-frontendts
+  script:
+    - rm .env.local
+    - mv .env_prod .env.local
+    - docker build -t "edrfrontendts:$TAG_PROD" .
+    - if [ $? -eq 0 ]; then
+      echo "Docker image built with tag:$TAG_PROD for production environment";
+      docker tag edrfrontendts:$TAG_PROD $CI_REGISTRY_IMAGE:$TAG_PROD;
+      docker tag edrfrontendts:$TAG_PROD $CI_REGISTRY_IMAGE_PRODUCTION:latest;
+      docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY;
+      docker push $CI_REGISTRY_IMAGE:$TAG_PROD;
+      docker push $CI_REGISTRY_IMAGE_PRODUCTION:latest;
+      docker rmi edrfrontendts:$TAG_PROD || true
+      docker rmi $CI_REGISTRY_IMAGE:$TAG_PROD || true
+      docker rmi $CI_REGISTRY_IMAGE_PRODUCTION:latest || true
+      echo "Last Prod Images Removed";
+      else
+      echo "Build failed. Exiting the pipeline.";
+      exit 1;
+      fi
+
+deploy_production:
+  stage: deploy_production
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_PRODUCTION == "true"'
+      when: always
+  tags:
+    - edr-frontendts
+  script:
+    - |
+      git config --global user.email "root"
+      git config --global user.name "root"
+      git clone http://$CI_JOB_TOKEN@$REPO_URL edr-production
+      cd edr-production/edr-frontend-ts
+
+      # Check if the image already exists on the host
+      if docker images "$CI_REGISTRY_IMAGE:$TAG_PROD" | grep -q "$TAG_PROD"; then
+        sed -i "s#image:.*#image: $CI_REGISTRY_IMAGE:$TAG_PROD#g" deployment.yaml
+
+        git add deployment.yaml
+        git commit -m "Update image tag for production deployment"
+        if git push origin main; then
+          echo "Production deployment completed successfully."
+        else
+          echo "Failed to push changes to the remote repository."
+          exit 1
+        fi
+      else
+        echo "Image $CI_REGISTRY_IMAGE:$TAG_PROD does not exist on the host. Skipping deployment."
+      fi
+
+    - rm -rf edr-production
+
+test_production:
+  stage: test_production
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_PRODUCTION == "true"'
+      when: always
+  tags:
+    - edr-frontendts
+  script:
+    - echo "Soon!";

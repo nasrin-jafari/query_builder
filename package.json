@@ -39,7 +39,6 @@
     "date-fns-jalali": "^2.30.0-0",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
-    "i18next": "^22.5.1",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.1",
     "next": "^14.0.4",
