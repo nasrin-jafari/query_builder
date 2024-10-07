@@ -66,7 +66,6 @@ const Logs: FC<LogsProps> = ({ data }) => {
       }));
     }
   };
-  console.log(data, 'data pie charts');
   const handlePrev = (title: string) => {
     if (currentIndex[title] > 0) {
       setCurrentIndex((prevIndex) => ({
@@ -89,7 +88,6 @@ const Logs: FC<LogsProps> = ({ data }) => {
               en: key,
               value: value.total,
             }));
-          console.log(slicedData, 'slicedData');
           return (
             <Grid item key={title} xs={12} md={4}>
               <CardBox>
