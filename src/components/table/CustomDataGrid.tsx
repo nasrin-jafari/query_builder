@@ -133,10 +133,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
   const [collapsedRows, setCollapsedRows] = useState<Record<number, boolean>>({});
   const [selectedRowValues, setSelectedRowValues] = useState<any[]>([]);
   const { showBtnUpdate, showBtnDelete, showBtnCreate } = UseAceessBtn();
-  // const showBtnUpdate = true;
-  // const showBtnDelete = true;
-  // const showBtnCreate = true;
-  // console.log(showBtnUpdate, showBtnDelete, showBtnCreate);
+
   const headerColumns = columns?.filter((header) => header?.isHeader);
 
   const router = useRouter();
