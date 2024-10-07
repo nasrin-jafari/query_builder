@@ -1,7 +1,7 @@
 import axiosMethod from '@/api';
 import { ConfirmationDialog, CustomForm, CustomIconButton } from '@/components';
 import CustomTooltip from '@/components/common/CustomToolTip';
-import { UseAceessBtn } from '@/hooks/UseAceessBtn';
+// import { UseAceessBtn } from '@/hooks/UseAceessBtn';
 import CardBox from '@/layout/CardBox';
 import { ConvertDates } from '@/utils/ConvertDates';
 import { exportFiles } from '@/utils/DownloadFiles';
@@ -131,7 +131,10 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
 }) => {
   const [collapsedRows, setCollapsedRows] = useState<Record<number, boolean>>({});
   const [selectedRowValues, setSelectedRowValues] = useState<any[]>([]);
-  const { showBtnUpdate, showBtnDelete, showBtnCreate } = UseAceessBtn();
+  // const { showBtnUpdate, showBtnDelete, showBtnCreate } = UseAceessBtn();
+  const showBtnUpdate = true;
+  const showBtnDelete = true;
+  const showBtnCreate = true;
   const headerColumns = columns?.filter((header) => header?.isHeader);
 
   const router = useRouter();
