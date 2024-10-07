@@ -19,9 +19,10 @@ export const UseAceessBtn = () => {
         const token = jwt.decode(storedValue) as Token;
         for (const routes in token?.permissions) {
           for (const nestedRoutes in token?.permissions[routes]) {
+            console.log('levelTwoValue', token?.permissions[routes]);
+            console.log('nestedRoutes', nestedRoutes);
             if (router.pathname.includes(nestedRoutes)) {
               const levelTwoValue = token?.permissions[routes][nestedRoutes];
-
               if (levelTwoValue.includes('create')) {
                 setShowBtnCreate(true);
               } else {

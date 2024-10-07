@@ -50,6 +50,7 @@ import * as yup from 'yup';
 import CopyValue from '../common/CopyValue';
 import { Field } from '../form/CustomForm';
 import TableRowSkeleton from './TableSkeleton';
+import { UseAceessBtn } from '@/hooks/UseAceessBtn';
 
 interface RowData {
   [key: string]: any;
@@ -131,10 +132,11 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
 }) => {
   const [collapsedRows, setCollapsedRows] = useState<Record<number, boolean>>({});
   const [selectedRowValues, setSelectedRowValues] = useState<any[]>([]);
-  // const { showBtnUpdate, showBtnDelete, showBtnCreate } = UseAceessBtn();
-  const showBtnUpdate = true;
-  const showBtnDelete = true;
-  const showBtnCreate = true;
+  const { showBtnUpdate, showBtnDelete, showBtnCreate } = UseAceessBtn();
+  // const showBtnUpdate = true;
+  // const showBtnDelete = true;
+  // const showBtnCreate = true;
+  // console.log(showBtnUpdate, showBtnDelete, showBtnCreate);
   const headerColumns = columns?.filter((header) => header?.isHeader);
 
   const router = useRouter();
