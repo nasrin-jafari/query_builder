@@ -45,11 +45,13 @@ deploy_development:
   tags:
     - edr-frontend
   script:
+    - echo "Checking if the image exists..."
+    - docker pull 172.16.50.33:8443/edrfrontend:${CI_PIPELINE_ID}-t || exit 1
     - if docker ps -a --format '{{.Names}}' | grep -q '^edr-frontend$'; then
-      docker stop edr-frontend;
-      docker rm edr-frontend;
+        docker stop edr-frontend;
+        docker rm edr-frontend;
       else
-      echo "edr-frontend container does not exist";
+        echo "edr-frontend container does not exist";
       fi
     - docker compose up -d
     - >
@@ -58,6 +60,7 @@ deploy_development:
       else
         echo "No untagged images to remove."
       fi
+
 
 test_development:
   stage: test_development
