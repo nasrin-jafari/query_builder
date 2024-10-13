@@ -3,7 +3,8 @@ variables:
   TAG_PROD: "${CI_PIPELINE_ID}-p"
   INCLUDE_PRODUCTION: "true"
   INCLUDE_DEVELOPMENT: "true"
-  INCLUDE_SCAN: "true"
+  INCLUDE_SCAN: "false"
+  INCLUDE_SECURITY: "false"
   CI_DEBUG_TRACE: "true"
   DOCKER_DRIVER: overlay2
 
@@ -11,10 +12,12 @@ stages:
   - build_development
   - deploy_development
   - test_development
+  - scan_development
   - security_scan
   - build_production
   - deploy_production
   - test_production
+
 
 build_development:
   stage: build_development
@@ -81,9 +84,9 @@ test_development:
     fi
 
 depscan:
-  stage: security_scan
+  stage: scan_development
   rules:
-    - if: '$INCLUDE_SCAN == "true"'
+    - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_DEVELOPMENT == "true" && $INCLUDE_SCAN == "true"'
       when: always
   tags:
     - edr-frontend
@@ -119,6 +122,42 @@ depscan:
       - pip-audit-report.json
       - safety-report.json
   allow_failure: true
+
+trivy_scan:
+  stage: security_scan
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_SCAN == "true"'
+      when: always
+  tags:
+    - edr-frontend
+  image:
+    name: 172.16.50.33:8443/other/aquasec/trivy:latest
+    entrypoint: [""]
+  services:
+    - docker:dind
+  script:
+    - trivy image $CI_REGISTRY_IMAGE:$TAG_TEST
+  allow_failure: true
+
+grype_scan:
+  tags:
+    - edr-frontend
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_SCAN == "true"'
+      when: always
+  stage: security_scan
+  image: 172.16.50.33:8443/other/docker:20.10
+  services:
+    - docker:dind
+  script:
+    - echo "Starting Grype scan..."
+    - docker pull 172.16.50.33:8443/other/anchore/grype:latest  
+    - docker run --rm -v /var/run/docker.sock:/var/run/docker.sock focker.ir/anchore/grype $CI_REGISTRY_IMAGE:$TAG_TEST | tee grype_scan.log 
+  artifacts:
+    paths:
+      - grype_scan.log
+  allow_failure: true
+
 
 build_production:
   stage: build_production
