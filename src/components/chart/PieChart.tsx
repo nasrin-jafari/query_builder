@@ -50,15 +50,6 @@ const PieChart: FC<PieChartProps> = ({
       const chartInstance = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
 
       const option = {
-        toolbox: {
-          feature: {
-            saveAsImage: {
-              iconStyle: {
-                borderColor: theme.palette.grey[900],
-              },
-            },
-          },
-        },
         tooltip: {
           trigger: 'item',
           formatter: (params: any) => {
@@ -78,36 +69,38 @@ const PieChart: FC<PieChartProps> = ({
           left: renderBottomText ? 'center' : 'right',
           right: renderBottomText ? 'auto' : 10,
           top: renderBottomText ? 'bottom' : 'middle',
-          data: legendData.map((item) => item.name),
-          formatter: (name: string) => `${name}`,
+          data: legendData.map((item) => ({
+            name: item.name,
+            value: item.value,
+          })),
+          formatter: (name: string) => {
+            const item = legendData.find((i) => i.name === name);
+            return item ? `${item.name} (${item.value})` : name;
+          },
           textStyle: {
             fontFamily: 'vazir',
             color: theme.palette.grey[900],
             fontSize: 14,
+            lineHeight: 20,
           },
         },
         series: [
           {
             name: `اطلاعات :`,
             type: 'pie',
-            radius: renderBottomText ? ['40%', '55%'] : ['50%', '70%'],
+            radius: renderBottomText ? ['40%', '55%'] : ['40%', '65%'],
             center: renderBottomText ? ['50%', '40%'] : ['30%', '50%'],
-            padAngle: 2,
+            padAngle: 0,
             avoidLabelOverlap: true,
             itemStyle: {
-              borderRadius: 5,
+              borderRadius: 0,
             },
             label: {
-              textStyle: {
-                color: theme.palette.grey[900],
-                fontSize: 14,
-                fontStyle: 'normal',
-                fontWeight: 'normal',
-              },
-              formatter: (params: any) => ` ${params.value}% `,
+              show: false,
+              position: 'center',
             },
             labelLine: {
-              show: true,
+              show: false,
               length: 10,
               length2: 10,
             },
@@ -156,7 +149,7 @@ const PieChart: FC<PieChartProps> = ({
         <div
           ref={chartContainerRef}
           className="mainPieChart"
-          style={{ width: '100%', height: renderBottomText ? '350px' : '200px', direction: 'rtl' }}
+          style={{ width: '100%', height: renderBottomText ? '350px' : '230px', direction: 'rtl' }}
         ></div>
       )}
     </div>
