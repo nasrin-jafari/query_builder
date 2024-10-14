@@ -19,6 +19,7 @@ export const darkPalette: ExtendedPaletteOptions = {
   info: {
     light: '#14c8d4',
     main: '#0093EF',
+    dark: '#514fa6',
   },
   success: {
     light: 'rgba(55, 211, 171, 0.20)',
@@ -26,13 +27,15 @@ export const darkPalette: ExtendedPaletteOptions = {
     dark: '#43eec6',
   },
   warning: {
-    light: '#F8A71E',
+    light: '#ffc43d',
     main: '#F8A71E',
+    dark: '#f58634',
   },
   error: {
     light: 'rgba(235, 87, 87, 0.32)',
     main: '#EB5757',
   },
+
   grey: {
     50: '#5A6B87',
     100: '#313A43',

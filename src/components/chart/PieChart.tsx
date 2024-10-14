@@ -10,7 +10,7 @@ interface PieChartProps {
   startIndex?: number;
   renderBottomText?: boolean;
   isLoading?: boolean;
-  colors?: string[]; // New colors prop
+  colors?: string[];
 }
 
 const PieChart: FC<PieChartProps> = ({
@@ -80,7 +80,7 @@ const PieChart: FC<PieChartProps> = ({
           textStyle: {
             fontFamily: 'vazir',
             color: theme.palette.grey[900],
-            fontSize: 14,
+            fontSize: 16,
             lineHeight: 20,
           },
         },
@@ -89,7 +89,7 @@ const PieChart: FC<PieChartProps> = ({
             name: `اطلاعات :`,
             type: 'pie',
             radius: renderBottomText ? ['40%', '55%'] : ['40%', '65%'],
-            center: renderBottomText ? ['50%', '40%'] : ['30%', '50%'],
+            center: renderBottomText ? ['50%', '40%'] : ['20%', '50%'],
             padAngle: 0,
             avoidLabelOverlap: true,
             itemStyle: {
@@ -105,7 +105,15 @@ const PieChart: FC<PieChartProps> = ({
               length2: 10,
             },
             data: chartDataWithPercentage,
-            color: colors.length ? colors : undefined, // Set colors if provided
+            color: colors.length
+              ? colors
+              : [
+                  theme.palette.info.dark,
+                  theme.palette.warning.light,
+                  theme.palette.error.main,
+                  theme.palette.info.main,
+                  theme.palette.grey[700],
+                ], // Set colors if provided
             animation: true,
             animationDuration: 500,
             animationEasing: 'quadraticIn',
@@ -141,6 +149,7 @@ const PieChart: FC<PieChartProps> = ({
   useEffect(() => {
     initializeChart();
   }, [data, theme.palette.grey, colors]);
+
   return (
     <div style={{ width: '100%', height: renderBottomText ? '340px' : '181px', direction: 'rtl' }}>
       {!data || data?.length === 0 ? (

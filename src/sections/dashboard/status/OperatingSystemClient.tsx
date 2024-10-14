@@ -31,11 +31,7 @@ const OpratingSystemClient: FC<ResourceStatusProps> = ({ data, isLoading }) => {
     <Grid item sm={6} xs={12} lg={3}>
       <CardBox title="سرویس گیرنده‌های سیستم عامل">
         <Box>
-          <NightingaleChart
-            data={analysis_data}
-            isLoading={isLoading}
-            colors={['#514fa6', '#ffc43d', '#f58634', '#ee6161', '#c8d6db']}
-          />
+          <NightingaleChart data={analysis_data} isLoading={isLoading} />
         </Box>
       </CardBox>
     </Grid>

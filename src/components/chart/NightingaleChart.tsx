@@ -84,7 +84,7 @@ const NightingaleChart: FC<NightingaleChartProps> = ({
           {
             name: 'Radius Mode',
             type: 'pie',
-            radius: ['55%', '85%'],
+            radius: ['50%', '85%'],
             center: ['20%', '55%'],
             roseType: 'radius',
             itemStyle: {

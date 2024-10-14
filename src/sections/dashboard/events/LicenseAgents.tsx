@@ -1,7 +1,7 @@
 import PieChart from '@/components/chart/PieChart';
 import { ChartDataItem } from '@/components/chart/type';
 import CardBox from '@/layout/CardBox';
-import { Divider, Grid, Theme, useMediaQuery } from '@mui/material';
+import { Grid, Theme, useMediaQuery } from '@mui/material';
 import { FC } from 'react';
 
 interface LicenseAgentsProps {
@@ -14,8 +14,7 @@ const LicenseAgents: FC<LicenseAgentsProps> = ({ data, isLoading }) => {
 
   return (
     <Grid item md={4} xs={12}>
-      <CardBox minHeight={'270px'}>
-        <Divider sx={{ fontSize: '17px' }}>نمایش لایسنس عامل ها</Divider>
+      <CardBox title="نمایش لایسنس عامل ها">
         <PieChart
           renderBottomText={isMd}
           data={data?.map((item) => ({

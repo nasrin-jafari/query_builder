@@ -1,6 +1,6 @@
 import { ChartDataItem } from '@/components/chart/type';
 import CardBox from '@/layout/CardBox';
-import { Box, Divider, Grid, Typography, useTheme } from '@mui/material';
+import { Box, Grid, Typography, useTheme } from '@mui/material';
 import { FC } from 'react';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
 import { LuNetwork } from 'react-icons/lu';
@@ -27,7 +27,7 @@ const SystemConnectionStatus: FC<ResourceStatusProps> = ({ data }) => {
                       size={22}
                       style={{ marginLeft: 5 }}
                     />
-                    <Typography>{item.fa}</Typography>
+                    <Typography fontSize={16}>{item.fa}</Typography>
                   </Box>
 
                   <Box

@@ -21,6 +21,7 @@ export const lightPalette: ExtendedPaletteOptions = {
   info: {
     light: '#14c8d4',
     main: '#0093EF',
+    dark: '#514fa6',
   },
   success: {
     light: 'rgba(55, 211, 171, 0.20)',
@@ -30,11 +31,13 @@ export const lightPalette: ExtendedPaletteOptions = {
   warning: {
     light: 'rgba(248, 167, 30, 0.20)',
     main: '#F8A71E',
+    dark: '#f58634',
   },
   error: {
     light: 'rgba(235, 87, 87, 0.30)',
     main: '#EB5757',
   },
+
   grey: {
     50: '#9BB5BE',
     100: '#F6F8F9',

@@ -21,8 +21,7 @@ export default function CardBox({ children, sx, title }: CardBoxProps) {
         sx={{
           background: theme.palette.grey[300],
           borderRadius: '20px',
-          padding: '20px',
-          // minHeight: 'auto',
+          padding: '25px',
           position: 'relative',
           height: '100%',
           ...sx,
