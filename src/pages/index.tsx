@@ -41,23 +41,18 @@ export default function Home() {
       content: (
         <>
           <>
-            <CustomDivider textAlign="left">وضعیت منابع</CustomDivider>
             <Status data={data} isLoading={isLoading} />
           </>
           <>
-            <CustomDivider textAlign="left">وضعیت رویدادها </CustomDivider>
             <Events data={data} isLoading={isLoading} />
           </>
           <>
-            <CustomDivider textAlign="left">تهدیدات MITRE </CustomDivider>
             <Mitre data={data} isLoading={isLoading} />
           </>
           <>
-            <CustomDivider textAlign="left">سرعت سرور </CustomDivider>
             <SpeedTest data={data?.speed_test} isLoading={isLoading} />
           </>
           <>
-            <CustomDivider textAlign="left">منابع مورد استفاده </CustomDivider>
             <ResourceConsumption data={data?.progress_bars} />
           </>
         </>
