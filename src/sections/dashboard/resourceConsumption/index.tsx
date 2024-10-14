@@ -23,13 +23,26 @@ interface ResourceConsumptionProps {
 }
 
 export const UsageItem: FC<UsageItemProps> = ({ title, total, usage }) => {
+  const percentage = total ? ((usage ?? 0) / total) * 100 : 0;
+
   return (
     <Grid item md={6} xs={12}>
-      <CardBox sx={{ mt: 2 }}>
-        <Typography variant="h6">{title}</Typography>
-        <Box sx={{ width: '100%' }}>
-          <ProgressBar total={total ?? 0} usage={usage ?? 0} />
-        </Box>
+      <CardBox sx={{ mt: 2, pb: 0 }}>
+        <Grid container>
+          <Grid item md={6}>
+            <Typography fontWeight="bold" variant="h6">
+              {title}
+            </Typography>
+            <Typography fontWeight="bold" variant="h5">
+              {total ? `${percentage.toFixed(2)}%` : 'اطلاعات موجود نیست'}
+            </Typography>
+          </Grid>
+          <Grid item md={6}>
+            <Box sx={{ width: '100%' }}>
+              <ProgressBar total={total ?? 0} usage={usage ?? 0} />
+            </Box>
+          </Grid>
+        </Grid>
       </CardBox>
     </Grid>
   );
