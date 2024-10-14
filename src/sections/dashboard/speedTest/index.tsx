@@ -37,9 +37,9 @@ const SpeedTest: FC<SpeedTestProps> = ({ data, isLoading }) => {
 
   return (
     <Grid container spacing={2} sx={{ mt: 1 }}>
-      {renderGauge('سرعت دانلود سرور', data.download, theme.palette.info.dark)}
-      {renderGauge('سرعت آپلود سرور', data.upload, theme.palette.primary.main)}
-      {renderGauge('پینگ سرور', data.ping, theme.palette.success.dark)}
+      {renderGauge('سرعت دانلود سرور', data?.download, theme.palette.info.dark)}
+      {renderGauge('سرعت آپلود سرور', data?.upload, theme.palette.primary.main)}
+      {renderGauge('پینگ سرور', data?.ping, theme.palette.success.dark)}
     </Grid>
   );
 };

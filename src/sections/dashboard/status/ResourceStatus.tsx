@@ -68,7 +68,7 @@ const ResourceStatus: FC<ResourceStatusProps> = ({ data }) => {
         <Grid container spacing={2} sx={{ mt: 2, textAlign: 'center' }}>
           <ServerStatusCard
             titleCard="Memory"
-            Icon="/images/icons/uptime.png"
+            Icon="/images/icons/memory.png"
             description={`کل:${data?.memory_usage_total}`}
             title={`استفاده: ${data?.memory_usage_used}`}
           />

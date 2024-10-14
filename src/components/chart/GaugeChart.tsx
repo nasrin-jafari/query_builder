@@ -36,9 +36,6 @@ const GaugeChart: React.FC<GaugeChartProps> = ({ data, name, isLoading, color })
             itemStyle: {
               color: color ? color : theme.palette.primary.main, // رنگ قرمز
               shadowColor: color ? color : theme.palette.primary.light,
-              shadowBlur: 10,
-              shadowOffsetX: 1,
-              shadowOffsetY: 1,
             },
             axisLine: {
               lineStyle: {
