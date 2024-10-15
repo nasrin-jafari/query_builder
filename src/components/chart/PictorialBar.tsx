@@ -132,7 +132,7 @@ const PictorialBar: FC<PictorialBarProps> = ({ data = [], colors }) => {
     }
   }, [data, theme, colors]);
   return (
-    <div style={{ width: '100%', height: '250px' }}>
+    <div style={{ width: '100%', height: '310px' }}>
       {!data || data?.length === 0 ? (
         <NoData type="bar" />
       ) : (

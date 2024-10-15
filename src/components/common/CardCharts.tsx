@@ -12,7 +12,7 @@ const CardCharts: React.FC<CardChartsProps> = ({ children, sx }) => {
       sx={{
         border: `1px solid ${theme.palette.grey[400]}`,
         borderRadius: '14px',
-        padding: '12px',
+        padding: '20px 12px',
         ...sx,
       }}
     >

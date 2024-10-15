@@ -38,7 +38,7 @@ const PanelComponent: FC<PanelComponentProps> = ({ loading, components }) => {
             components.map((component, index) => (
               <Grid item {...component.gridProps} key={index}>
                 {component.withCard ? (
-                  <CardCharts sx={{ height: component.props.height, ...component.props.sx }}>
+                  <CardCharts sx={{ height: component.props.height }}>
                     {component.title && (
                       <Typography variant="h6" sx={{ mb: 3 }}>
                         {component.title}

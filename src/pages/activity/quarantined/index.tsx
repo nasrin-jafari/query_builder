@@ -58,8 +58,15 @@ const ActivityQuarantined = () => {
         data: events?.events_time_chart,
         height: '100%',
         width: '100%',
-        sx: { display: 'flex', justifyContent: 'center', alignItems: 'center' },
+        sx: {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+        },
       },
+      title: 'پر مخاطره ترین ها',
+
       gridProps: { xs: 6, xl: 4 },
       skeletonHeight: 400,
       withCard: true,

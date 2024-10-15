@@ -56,22 +56,6 @@ const AntivirusResults = () => {
 
   const components = [
     {
-      component: CustomDataGrid,
-      props: {
-        rows: all_detected_Data?.Data,
-        columns: headersCol,
-        linkOverview: '/intelligence/antivirusResults/overview',
-        notExtra: true,
-        loading,
-      },
-      gridProps: {
-        xs: 12,
-        xl: 6,
-      },
-      skeletonHeight: 400,
-      withCard: false,
-    },
-    {
       component: PieChart,
       props: {
         data: events?.top_5_multiav_agents?.map((agent) => ({
@@ -82,7 +66,7 @@ const AntivirusResults = () => {
         renderBottomText: true,
       },
       title: 'فعال ترین ها',
-      gridProps: { xs: 6, xl: 3 },
+      gridProps: { xs: 6, xl: 4 },
       skeletonHeight: 400,
       withCard: true,
     },
@@ -98,19 +82,46 @@ const AntivirusResults = () => {
           },
         })),
         renderBottomText: true,
-        colors: [theme.palette.error.main , theme.palette.success.main,  theme.palette.primary.main],
+        colors: [theme.palette.error.main, theme.palette.success.main, theme.palette.primary.main],
       },
       title: 'وضعیت آنالیز',
-      gridProps: { xs: 6, xl: 3 },
+      gridProps: { xs: 6, xl: 4 },
       skeletonHeight: 400,
       withCard: true,
     },
     {
       component: PictorialBar,
-      props: { data: events?.multiav_time_chart },
-      gridProps: { xs: 12 },
+      props: {
+        data: events?.multiav_time_chart,
+        height: '100%',
+        width: '100%',
+        sx: {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+        },
+      },
+      title: 'پر مخاطره ترین ها',
+
+      gridProps: { xs: 6, xl: 4 },
       skeletonHeight: 400,
       withCard: true,
+    },
+    {
+      component: CustomDataGrid,
+      props: {
+        rows: all_detected_Data?.Data,
+        columns: headersCol,
+        linkOverview: '/intelligence/antivirusResults/overview',
+        notExtra: true,
+        loading,
+      },
+      gridProps: {
+        xs: 12,
+      },
+      skeletonHeight: 400,
+      withCard: false,
     },
   ];
 
