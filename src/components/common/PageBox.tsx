@@ -35,6 +35,7 @@ const PageBox: React.FC<PageBoxProps> = ({
           backgroundColor: theme.palette.grey[100],
           padding: '28px 30px',
           borderRadius: '14px',
+          mt: 1.4,
         }}
       >
         <Head>

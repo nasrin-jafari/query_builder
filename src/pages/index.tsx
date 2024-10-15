@@ -6,10 +6,11 @@ import Mitre from '@/sections/dashboard/mitre';
 import ResourceConsumption from '@/sections/dashboard/resourceConsumption';
 import SpeedTest from '@/sections/dashboard/speedTest';
 import Status from '@/sections/dashboard/status';
-import { Divider, styled } from '@mui/material';
+import { Box, Divider, styled } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import CustomAppBar from '@/layout/CustomAppBar';
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
@@ -106,8 +107,9 @@ export default function Home() {
   ];
 
   return (
-    <>
+    <Box>
+      <CustomAppBar title={'داشبورد'} sx={{ px: 3, mb: '-10px' }} />
       <CustomTabs tabs={tabs} orientation="vertical" />
-    </>
+    </Box>
   );
 }

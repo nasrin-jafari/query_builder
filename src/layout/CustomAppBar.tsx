@@ -3,7 +3,7 @@ import UseApi from '@/hooks/UseApi';
 import { LicenseData } from '@/sections/settings/licence';
 import { ConvertRemainingDays } from '@/utils/ConvertRemainingDays';
 import { Box, Button, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { SxProps, Theme, useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
@@ -21,9 +21,10 @@ export interface Fields {
 interface CustomAppBarProps {
   title: string | string[] | undefined;
   SearchFields?: Fields[];
+  sx?: SxProps<Theme>;
 }
 
-const CustomAppBar: React.FC<CustomAppBarProps> = ({ SearchFields, title }) => {
+const CustomAppBar: React.FC<CustomAppBarProps> = ({ SearchFields, title, sx }) => {
   const theme = useTheme();
   const [open, setOpen] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
@@ -60,7 +61,7 @@ const CustomAppBar: React.FC<CustomAppBarProps> = ({ SearchFields, title }) => {
       sx={{
         background: theme.palette.grey[50],
         width: '100%',
-        pb: 1.5,
+        ...sx,
       }}
     >
       <Box
