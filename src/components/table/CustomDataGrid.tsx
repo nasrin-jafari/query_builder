@@ -494,11 +494,15 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                   </TableCell>
                 ))}
                 {buttons && (
-                  <TableCell align="center" sx={{ width: 150 }}>
+                  <TableCell align="center" sx={{ width: 200 }}>
                     عملیات
                   </TableCell>
                 )}
-                {!notExtra && <TableCell align="right">جزئیات</TableCell>}
+                {!notExtra && (
+                  <TableCell align="right" sx={{ width: 50 }}>
+                    جزئیات
+                  </TableCell>
+                )}
               </TableRow>
             </TableHead>
 
