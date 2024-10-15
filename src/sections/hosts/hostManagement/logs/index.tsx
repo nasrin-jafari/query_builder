@@ -1,9 +1,9 @@
 import PieChart from '@/components/chart/PieChart';
-import CardBox from '@/layout/CardBox';
 import { Box, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import CardCharts from '@/components/common/CardCharts';
 
 interface CurrentIndex {
   [key: string]: number;
@@ -90,7 +90,7 @@ const Logs: FC<LogsProps> = ({ data }) => {
             }));
           return (
             <Grid item key={title} xs={12} md={4}>
-              <CardBox>
+              <CardCharts>
                 <Box sx={{ direction: 'rtl', textAlign: 'left' }}>
                   <Box
                     sx={{
@@ -125,7 +125,7 @@ const Logs: FC<LogsProps> = ({ data }) => {
                     </Box>
                   </Box>
                 </Box>
-              </CardBox>
+              </CardCharts>
             </Grid>
           );
         })}

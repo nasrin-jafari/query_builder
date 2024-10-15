@@ -28,15 +28,15 @@ const BarChartHorizontal: React.FC<BarChartProps> = ({ data = [], isLoading }) =
           top: '5%',
           bottom: '5%',
         },
-        toolbox: {
-          feature: {
-            saveAsImage: {
-              iconStyle: {
-                borderColor: theme.palette.grey[900],
-              },
-            },
-          },
-        },
+        // toolbox: {
+        //   feature: {
+        //     saveAsImage: {
+        //       iconStyle: {
+        //         borderColor: theme.palette.grey[900],
+        //       },
+        //     },
+        //   },
+        // },
         xAxis: {
           type: 'value',
           axisLine: {
