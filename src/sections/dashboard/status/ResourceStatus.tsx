@@ -75,7 +75,6 @@ const ResourceStatus: FC<ResourceStatusProps> = ({ data }) => {
           <ServerStatusCard
             titleCard="Load Average"
             Icon="/images/icons/loadavrage.png"
-            // Icon={BiSolidTachometer}
             title={`${data?.load_average}`}
           />{' '}
           <ServerStatusCard
