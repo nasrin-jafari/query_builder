@@ -7,7 +7,7 @@ interface MitreTacticsProps {
   isLoading: boolean;
 }
 
-const MitreTactics: FC<MitreTacticsProps> = ({ data, isLoading }) => {
+const MitreTactics: FC<MitreTacticsProps> = ({ data }) => {
   const theme = useTheme();
   const colors = [
     theme.palette.primary.main,
@@ -18,7 +18,7 @@ const MitreTactics: FC<MitreTacticsProps> = ({ data, isLoading }) => {
 
   const maxValue =
     data
-      .map((item) => item.value)
+      ?.map((item) => item.value)
       .filter((value): value is number => value !== undefined) // فیلتر کردن مقادیر undefined
       .reduce((max, value) => Math.max(max, value), 0) * 2;
 
