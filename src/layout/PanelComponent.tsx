@@ -1,6 +1,6 @@
 import { Box, Grid, Skeleton, Typography } from '@mui/material';
 import React, { FC } from 'react';
-import CardBox from './CardBox';
+import CardCharts from '@/components/common/CardCharts';
 
 interface ComponentProps {
   component: React.ElementType;
@@ -38,17 +38,17 @@ const PanelComponent: FC<PanelComponentProps> = ({ loading, components }) => {
             components.map((component, index) => (
               <Grid item {...component.gridProps} key={index}>
                 {component.withCard ? (
-                  <CardBox sx={{ height: component.props.height }}>
+                  <CardCharts sx={{ height: component.props.height, background: 'transparent' }}>
                     {component.title && (
-                      <Typography variant="h5" sx={{ mb: 3 }}>
+                      <Typography variant="h6" sx={{ mb: 3 }}>
                         {component.title}
                       </Typography>
                     )}
                     <component.component {...component.props} />
-                  </CardBox>
+                  </CardCharts>
                 ) : (
                   <>
-                    {component.title && <Typography variant="h5">{component.title}</Typography>}
+                    {component.title && <Typography variant="h6">{component.title}</Typography>}
                     <component.component {...component.props} />
                   </>
                 )}
