@@ -2,7 +2,6 @@ import axiosMethod from '@/api';
 import { ConfirmationDialog, CustomForm, CustomIconButton } from '@/components';
 import CustomTooltip from '@/components/common/CustomToolTip';
 // import { UseAceessBtn } from '@/hooks/UseAceessBtn';
-import CardBox from '@/layout/CardBox';
 import { ConvertDates } from '@/utils/ConvertDates';
 import { exportFiles } from '@/utils/DownloadFiles';
 import {
@@ -340,7 +339,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
         <Box sx={{ mb: 2 }}>
           <Card
             sx={{
-              backgroundColor: theme.palette.grey[300],
+              backgroundColor: theme.palette.grey[100],
               borderRadius: 2,
               boxShadow: 2,
             }}
@@ -423,7 +422,13 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
           ) : null}
         </Box>
       )}
-      <CardBox sx={{ mt: linkOverview ? 0 : 2 }}>
+      <Card
+        sx={{
+          mt: linkOverview ? 0 : 2,
+          background: theme.palette.grey[100],
+          border: '1px solid rgba(81, 81, 81,0.51)',
+        }}
+      >
         {linkOverview ? (
           <Box sx={{ direction: 'rtl' }}>
             <CustomTooltip title="نمایش همه">
@@ -433,12 +438,12 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
             </CustomTooltip>
           </Box>
         ) : null}
-        <TableContainer sx={{ pb: pageTotal <= 10 ? '14px' : 2 }}>
+        <TableContainer sx={{ pb: pageTotal <= 10 ? '0' : 2 }}>
           <Table>
             <TableHead
               sx={{
                 '&  th': { fontWeight: 'bold', fontSize: 16 },
-                background: theme.palette.grey[300],
+                background: theme.palette.grey[100],
               }}
             >
               <TableRow>
@@ -509,7 +514,14 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                 <>
                   {rows?.map((row, rowIndex) => (
                     <React.Fragment key={row.id}>
-                      <TableRow>
+                      <TableRow
+                        sx={{
+                          backgroundColor:
+                            rowIndex % 2 === 0
+                              ? theme.palette.background.default
+                              : theme.palette.grey[100],
+                        }}
+                      >
                         {selectableRows && (
                           <TableCell align="center">
                             <Checkbox
@@ -536,8 +548,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     value >= 8
                                       ? theme.palette.error.main
                                       : value >= 6
-                                      ? theme.palette.primary.main
-                                      : theme.palette.warning.main,
+                                        ? theme.palette.primary.main
+                                        : theme.palette.warning.main,
                                 }}
                               >
                                 {value}
@@ -760,7 +772,11 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                         )}
                       </TableRow>
                       {collapsedRows[rowIndex] && (
-                        <TableRow>
+                        <TableRow
+                          sx={{
+                            backgroundColor: rowIndex % 2 === 0 ? '' : theme.palette.grey[100],
+                          }}
+                        >
                           <TableCell colSpan={columns.length + 3}>
                             <Collapse in={collapsedRows[rowIndex]} timeout="auto" unmountOnExit>
                               <pre
@@ -787,7 +803,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
           </Table>
         </TableContainer>
         {pageTotal <= 10 ? null : (
-          <Stack spacing={2} sx={{ mt: 2, '& ul': { justifyContent: 'center' } }}>
+          <Stack spacing={2} sx={{ mt: 2, '& ul': { justifyContent: 'center' }, mb: 2 }}>
             <Pagination
               count={Math.ceil(pageTotal / 10)}
               page={router.query.page ? parseInt(router.query.page as string) : 1}
@@ -812,8 +828,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               dialogState.type === 'delete'
                 ? 'آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟'
                 : dialogState.type === 'edit'
-                ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
-                : 'افزودن آیتم جدید'
+                  ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
+                  : 'افزودن آیتم جدید'
             }
             content={
               dialogState.type === 'delete' ? (
@@ -825,8 +841,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     dialogState.type === 'edit'
                       ? editForm || []
                       : handleAdd
-                      ? handleAdd?.fields
-                      : fields || []
+                        ? handleAdd?.fields
+                        : fields || []
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}
@@ -839,7 +855,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
             type={dialogState.type}
           />
         )}
-      </CardBox>
+      </Card>
     </>
   );
 };

@@ -79,22 +79,20 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
         alignItems: 'center',
         mb: mb ? mb : null,
         padding: '5px',
-        // boxShadow: 1,
-        // border: `1px solid ${isLight ? '#94a7bf' : '#313A43'}`,
-        borderRadius: 1,
+        borderRadius: '14px',
         width: '120px',
-        background: theme.palette.grey[300],
+        background: theme.palette.grey[100],
       }}
     >
       <Box
         ref={dropdownRef}
         sx={{
-          color: theme.palette.grey[900],
+          color: theme.palette.grey[300],
           fontSize: '13px',
           width: '70px',
           borderRadius: '10px',
-          border: `1px solid ${theme.palette.grey[700]}`,
-          backgroundColor: theme.palette.grey[300],
+          border: `1px solid ${theme.palette.grey[200]}`,
+          backgroundColor: theme.palette.grey[100],
           position: 'relative',
         }}
       >
@@ -128,7 +126,7 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
             position: 'absolute',
             top: '30px',
             zIndex: '999',
-            backgroundColor: theme.palette.grey[300],
+            backgroundColor: theme.palette.grey[100],
             right: '-1px',
             left: '-1px',
             borderRadius: '0 0 10px 10px',

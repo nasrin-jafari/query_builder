@@ -81,7 +81,7 @@ const ProfileMenu: React.FC = () => {
         PaperProps={{
           elevation: 0,
           sx: {
-            bgcolor: theme.palette.grey[300],
+            bgcolor: theme.palette.grey[100],
             overflow: 'visible',
             filter: 'drop-shadow(0px 4px 8px rgba(0,0,0,0.32))',
             mt: 2,
@@ -101,7 +101,7 @@ const ProfileMenu: React.FC = () => {
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: theme.palette.grey[300],
+              bgcolor: theme.palette.grey[100],
               transform: 'translateY(-50%) rotate(45deg)',
               zIndex: 0,
             },

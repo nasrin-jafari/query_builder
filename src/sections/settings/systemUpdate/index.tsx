@@ -224,7 +224,7 @@ const SystemUpdate = () => {
         <CardBox
           sx={{
             display: 'flex',
-            background: theme.palette.grey[300],
+            background: theme.palette.grey[100],
             padding: '28px 10px',
             alignItems: 'center',
           }}

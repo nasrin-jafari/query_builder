@@ -36,7 +36,7 @@ const ManagementOfServices = () => {
         sx={{
           minWidth: { xs: '900px', lg: '1100px' },
           paddingTop: '10px',
-          background: theme.palette.grey[300],
+          background: theme.palette.grey[100],
           display: 'flex',
         }}
       >

@@ -179,7 +179,7 @@ const Login = () => {
         <Container
           maxWidth="lg"
           sx={{
-            bgcolor: theme.palette.grey[300],
+            bgcolor: theme.palette.grey[100],
             borderRadius: `${theme.shape.borderRadius}px`,
             padding: 5,
             textAlign: 'center',

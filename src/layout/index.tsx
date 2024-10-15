@@ -89,8 +89,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Box
             sx={{
               padding: 3,
-              borderRadius: 2,
-              backgroundColor: theme.palette.grey[300],
+              backgroundColor: theme.palette.background.default,
               boxShadow: 3,
               width: '100%',
             }}
@@ -113,14 +112,13 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Box
             component="main"
             sx={{
-              py: 6,
+              pb: 6,
+              pt: 2,
               pr: router.pathname === '/' ? 9 : 4,
               pl: router.pathname === '/' ? 9 : 12,
-              borderRadius: '12px',
               width: '100%',
-              my: 4,
               minHeight: '100vh',
-              background: 'transparent',
+              backgroundColor: theme.palette.grey[50],
             }}
           >
             {children}
@@ -131,7 +129,6 @@ export default function Layout({ children }: { children: ReactNode }) {
   );
 }
 
-// Helper functions remain unchanged
 const flattenRoutes = (routes: Route[]): Route[] => {
   const flatRoutes: Route[] = [];
   const flatten = (route: Route) => {

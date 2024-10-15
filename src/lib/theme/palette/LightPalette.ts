@@ -7,6 +7,9 @@ interface ExtendedPaletteOptions extends PaletteOptions {
     1200?: string;
     1300?: string;
   };
+  background: PaletteOptions['background'] & {
+    card: '#fff';
+  };
 }
 
 export const lightPalette: ExtendedPaletteOptions = {
@@ -39,10 +42,10 @@ export const lightPalette: ExtendedPaletteOptions = {
   },
 
   grey: {
-    50: '#9BB5BE',
-    100: '#F6F8F9',
-    200: '#F4F4FA',
-    300: '#F6F8F9',
+    50: '#F6F8F9',
+    100: '#fff',
+    200: '#9BB5BE',
+    300: '#39393D',
     400: '#EEEEEE',
     500: '#E9E9EA',
     600: '#ffff',
@@ -58,6 +61,7 @@ export const lightPalette: ExtendedPaletteOptions = {
     white: '#ffffff',
   },
   background: {
-    default: '#EEEEEE',
+    default: '#F6F8F9',
+    card: '#fff',
   },
 };

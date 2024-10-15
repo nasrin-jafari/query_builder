@@ -6,6 +6,9 @@ interface ExtendedPaletteOptions extends PaletteOptions {
     1200?: string;
     1300?: string;
   };
+  background: PaletteOptions['background'] & {
+    card: '#1A242E';
+  };
 }
 export const darkPalette: ExtendedPaletteOptions = {
   mode: 'dark',
@@ -37,10 +40,10 @@ export const darkPalette: ExtendedPaletteOptions = {
   },
 
   grey: {
-    50: '#5A6B87',
-    100: '#313A43',
-    200: '#39393D',
-    300: '#1A242E',
+    50: '#09151F',
+    100: '#1A242E',
+    200: '#9BB5BE',
+    300: '#F4F4FA',
     400: '#161C24',
     500: '#09151F',
     600: '#000',
@@ -57,5 +60,6 @@ export const darkPalette: ExtendedPaletteOptions = {
   },
   background: {
     default: '#09151F',
+    card: '#1A242E',
   },
 };

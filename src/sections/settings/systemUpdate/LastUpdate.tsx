@@ -19,7 +19,7 @@ interface DataCardProps {
 const LastUpdate: React.FC<DataCardProps> = ({ data, openConfirmationDialog, setSelectedItem }) => {
   const theme = useTheme();
   return (
-    <CardBox sx={{ p: 0, background: theme.palette.grey[300], my: 2 }}>
+    <CardBox sx={{ p: 0, background: theme.palette.grey[100], my: 2 }}>
       {data && data.length > 0 ? (
         data.map((detail, index) => (
           <Box
@@ -27,7 +27,7 @@ const LastUpdate: React.FC<DataCardProps> = ({ data, openConfirmationDialog, set
             sx={{
               mt: 2,
               mb: 2,
-              background: theme.palette.grey[300],
+              background: theme.palette.grey[100],
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',

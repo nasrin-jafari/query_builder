@@ -148,7 +148,7 @@ const Uploader: React.FC<UploaderProps> = ({
             wordBreak: 'break-word',
             lineHeight: '1.5',
             fontFamily: 'monospace',
-            fontWeight :'bold'
+            fontWeight: 'bold',
           }}
           dangerouslySetInnerHTML={{ __html: formattedJson }}
         />
@@ -288,7 +288,7 @@ const Uploader: React.FC<UploaderProps> = ({
                   startIcon={<IoAnalytics />}
                 >
                   {loading ? (
-                    <CircularProgress style={{ color: theme.palette.grey[300] }} size={24} />
+                    <CircularProgress style={{ color: theme.palette.grey[100] }} size={24} />
                   ) : (
                     'بررسی فایل ها'
                   )}

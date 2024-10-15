@@ -24,7 +24,7 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ children, title, align })
     />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: theme.palette.grey[300],
+      backgroundColor: theme.palette.grey[100],
       color: theme.palette.grey[900],
       boxShadow: theme.shadows[1],
       fontSize: 13,

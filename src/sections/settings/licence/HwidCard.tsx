@@ -12,7 +12,7 @@ const HwidCard: React.FC<HwidCardProps> = ({ fetchHwid, hwid }) => {
   const theme = useTheme();
 
   return (
-    <Card sx={{ padding: '20px', textAlign: 'center', mt: 4, background: theme.palette.grey[300] }}>
+    <Card sx={{ padding: '20px', textAlign: 'center', mt: 4, background: theme.palette.grey[100] }}>
       <Button size="small" onClick={fetchHwid} variant="contained" style={{ color: '#fff' }}>
         ایجاد hwid
       </Button>
@@ -36,7 +36,6 @@ const HwidCard: React.FC<HwidCardProps> = ({ fetchHwid, hwid }) => {
               color: theme.palette.primary.main,
             }}
             onClick={() => CopyText(hwid)}
-
           />
           <Typography
             variant="body1"

@@ -41,7 +41,7 @@ const useStyles = (theme: Theme) => ({
   },
   innerBoxVertical: {
     flexGrow: 1,
-    bgcolor: theme.palette.grey[300],
+    bgcolor: theme.palette.grey[100],
     height: 'auto',
     position: 'fixed',
     right: 0,

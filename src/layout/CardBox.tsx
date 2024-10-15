@@ -19,7 +19,7 @@ export default function CardBox({ children, sx, title }: CardBoxProps) {
     <>
       <MainBox
         sx={{
-          background: theme.palette.grey[300],
+          background: theme.palette.grey[100],
           borderRadius: '20px',
           padding: '25px',
           position: 'relative',
