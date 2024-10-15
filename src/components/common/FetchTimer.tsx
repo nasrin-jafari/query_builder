@@ -1,9 +1,10 @@
-import { Box, IconButton, Tooltip, Typography, useTheme } from '@mui/material';
+import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { FiRefreshCw } from 'react-icons/fi';
 import { GoDotFill } from 'react-icons/go';
 import { IoIosArrowDown } from 'react-icons/io';
+import CustomTooltip from '@/components/common/CustomToolTip';
 
 const listOfItems = [
   { id: 1, label: 'off', value: null },
@@ -90,10 +91,11 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
           color: theme.palette.grey[300],
           fontSize: '13px',
           width: '70px',
-          borderRadius: '10px',
-          border: `1px solid ${theme.palette.grey[200]}`,
+          borderRadius: isOpen ? '10px 10px   0 0 ' : '10px',
+          border: `1px solid ${theme.palette.grey[400]}`,
           backgroundColor: theme.palette.grey[100],
           position: 'relative',
+          height: '32px',
         }}
       >
         <Box
@@ -106,9 +108,16 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
             alignItems: 'center',
           }}
         >
-          {selectedItem !== null
-            ? listOfItems.find((item) => item.value === selectedItem)?.label
-            : listOfItems[0]?.label}
+          <Typography
+            sx={{
+              fontSize: '13px',
+              // mt: isOpen ? '-3px' : null
+            }}
+          >
+            {selectedItem !== null
+              ? listOfItems.find((item) => item.value === selectedItem)?.label
+              : listOfItems[0]?.label}
+          </Typography>
 
           <IoIosArrowDown
             style={{
@@ -116,6 +125,8 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
               color: theme.palette.grey[700],
               transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
               transition: 'all .4s ease-in-out',
+              // marginTop: isOpen ? '-8px' : '-4px',
+              marginTop: '-4px',
             }}
           />
         </Box>
@@ -124,25 +135,25 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
             paddingTop: '2px',
             display: isOpen ? 'block' : 'none',
             position: 'absolute',
-            top: '30px',
+            top: '28px',
             zIndex: '999',
             backgroundColor: theme.palette.grey[100],
             right: '-1px',
             left: '-1px',
             borderRadius: '0 0 10px 10px',
-            border: `1px solid ${theme.palette.grey[700]}`,
+            border: `1px solid ${theme.palette.grey[400]}`,
             overflow: 'hidden',
           }}
         >
           {listOfItems.map((item) => (
             <Box
               sx={{
-                padding: '10px',
+                padding: '6px',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 borderBottom:
-                  item.id !== listOfItems.length ? `1px solid ${theme.palette.grey[700]}` : 'none',
+                  item.id !== listOfItems.length ? `1px solid ${theme.palette.grey[400]}` : 'none',
                 '&:hover': {
                   background: theme.palette.primary.main,
                   color: theme.palette.common.white,
@@ -171,11 +182,11 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
           ))}
         </Box>
       </Box>
-      <Tooltip title="بارگذاری مجدد">
+      <CustomTooltip title="بارگذاری مجدد">
         <IconButton sx={{ ml: '4px' }} onClick={handleUpdateData}>
-          <FiRefreshCw style={{ fontSize: '20px' }} />
+          <FiRefreshCw style={{ fontSize: '20px', color: theme.palette.grey[200] }} />
         </IconButton>
-      </Tooltip>
+      </CustomTooltip>
     </Box>
   );
 };

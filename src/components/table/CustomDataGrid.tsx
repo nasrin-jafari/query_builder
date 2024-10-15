@@ -426,7 +426,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
         sx={{
           mt: linkOverview ? 0 : 2,
           background: theme.palette.grey[100],
-          border: '1px solid rgba(81, 81, 81,0.51)',
+          border: `1px solid ${theme.palette.grey[400]}`,
         }}
       >
         {linkOverview ? (
@@ -504,7 +504,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
             <TableBody
               sx={{
                 '& td': {
-                  borderBottom: loading ? 'none' : '1px solid rgba(81, 81, 81,0.51)',
+                  borderBottom: loading ? 'none' : `1px solid ${theme.palette.grey[400]}`,
                 },
               }}
             >
