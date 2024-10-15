@@ -427,6 +427,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
           mt: linkOverview ? 0 : 2,
           background: theme.palette.grey[100],
           border: `1px solid ${theme.palette.grey[400]}`,
+          height: linkOverview ? '100%' : '',
         }}
       >
         {linkOverview ? (
