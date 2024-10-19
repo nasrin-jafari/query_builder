@@ -45,16 +45,17 @@ export default function Home() {
             <Status data={data} isLoading={isLoading} />
           </>
           <>
-            <Events data={data} isLoading={isLoading} />
-          </>
-          <>
             <Mitre data={data} isLoading={isLoading} />
           </>
+          <>
+            <Events data={data} isLoading={isLoading} />
+          </>
+
           <>
             <SpeedTest data={data?.speed_test} isLoading={isLoading} />
           </>
           <>
-            <ResourceConsumption data={data?.progress_bars} />
+            <ResourceConsumption data={data?.progress_bars} isLoading={isLoading} />
           </>
         </>
       ),
@@ -91,7 +92,7 @@ export default function Home() {
       content: (
         <>
           <CustomDivider textAlign="left">سرعت سرور </CustomDivider>
-          <SpeedTest data={data?.speed_test} isLoading={isLoading} />,
+          <SpeedTest data={data?.speed_test} isLoading={isLoading} />
         </>
       ),
     },
@@ -100,7 +101,7 @@ export default function Home() {
       content: (
         <>
           <CustomDivider textAlign="left">منابع مورد استفاده </CustomDivider>
-          <ResourceConsumption data={data?.progress_bars} />,
+          <ResourceConsumption data={data?.progress_bars} isLoading={isLoading} />,
         </>
       ),
     },

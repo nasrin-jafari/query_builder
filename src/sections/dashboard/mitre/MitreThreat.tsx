@@ -1,13 +1,14 @@
 import { ChartDataItem } from '@/components/chart/type';
 import { Box, Grid, Typography, useTheme } from '@mui/material';
 import { FC } from 'react';
+import NoData from '@/utils/NoData';
 
 interface MitreThreatProps {
   data: ChartDataItem[];
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
-const MitreThreat: FC<MitreThreatProps> = ({ data }) => {
+const MitreThreat: FC<MitreThreatProps> = ({ data, isLoading }) => {
   const theme = useTheme();
   const colors = [
     theme.palette.primary.main,
@@ -22,6 +23,19 @@ const MitreThreat: FC<MitreThreatProps> = ({ data }) => {
       .filter((value): value is number => value !== undefined) // فیلتر کردن مقادیر undefined
       .reduce((max, value) => Math.max(max, value), 0) * 2;
 
+  if (
+    !data ||
+    (Array.isArray(data) && data.length === 0) ||
+    (typeof data === 'object' && !Array.isArray(data) && Object.keys(data).length === 0)
+  ) {
+    return (
+      <Grid item lg={4} sm={12} xs={12}>
+        <Box sx={{ background: '#ffffff1c', p: 3, borderRadius: '20px', height: '300px' }}>
+          <NoData type="bar" isLoading={isLoading} />
+        </Box>
+      </Grid>
+    );
+  }
   return (
     <Grid item lg={4} sm={6} xs={12}>
       <Box sx={{ background: '#ffffff1c', p: 3, borderRadius: '20px', height: '300px' }}>

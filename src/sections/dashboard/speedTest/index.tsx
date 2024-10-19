@@ -24,7 +24,7 @@ const SpeedTest: FC<SpeedTestProps> = ({ data, isLoading }) => {
               {label}
             </Typography>
             <Typography variant="h5" fontWeight="bold">
-              {value} mb
+              {value ? `${value}mb` : ''}
             </Typography>
           </Grid>
           <Grid item md={6}>

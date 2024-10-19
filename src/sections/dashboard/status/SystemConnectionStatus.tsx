@@ -4,15 +4,30 @@ import { Box, Grid, Typography, useTheme } from '@mui/material';
 import { FC } from 'react';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
 import { LuNetwork } from 'react-icons/lu';
+import NoData from '@/utils/NoData';
 
 interface ResourceStatusProps {
   data: {
     status: ChartDataItem[];
   };
+  isLoading?: boolean;
 }
 
-const SystemConnectionStatus: FC<ResourceStatusProps> = ({ data }) => {
+const SystemConnectionStatus: FC<ResourceStatusProps> = ({ data, isLoading }) => {
   const theme = useTheme();
+  if (
+    !data ||
+    (Array.isArray(data) && data.length === 0) ||
+    (typeof data === 'object' && !Array.isArray(data) && Object.keys(data).length === 0)
+  ) {
+    return (
+      <Grid item sm={6} lg={3} xs={12}>
+        <CardBox title="وضعیت اتصال سامانه‌های کمکی">
+          <NoData type="list-vertical" isLoading={isLoading} />{' '}
+        </CardBox>
+      </Grid>
+    );
+  }
   return (
     <>
       <Grid item sm={6} lg={3} xs={12}>

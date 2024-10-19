@@ -2,6 +2,7 @@ import CardBox from '@/layout/CardBox';
 import { Grid, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
 import { FC } from 'react';
+import NoData from '@/utils/NoData';
 
 interface ServerStatusCardProps {
   titleCard: string;
@@ -19,6 +20,7 @@ interface ResourceStatusProps {
     uptime: string;
     status_last_fetch_time: string;
   };
+  isLoading?: boolean;
 }
 
 const ServerStatusCard: FC<ServerStatusCardProps> = ({ titleCard, Icon, title, description }) => {
@@ -61,7 +63,20 @@ const ServerStatusCard: FC<ServerStatusCardProps> = ({ titleCard, Icon, title, d
   );
 };
 
-const ResourceStatus: FC<ResourceStatusProps> = ({ data }) => {
+const ResourceStatus: FC<ResourceStatusProps> = ({ data, isLoading }) => {
+  if (
+    !data ||
+    (Array.isArray(data) && data.length === 0) ||
+    (typeof data === 'object' && !Array.isArray(data) && Object.keys(data).length === 0)
+  ) {
+    return (
+      <Grid item sm={12} xs={12} lg={6}>
+        <CardBox title="وضعیت اتصال سامانه‌های کمکی">
+          <NoData type="list-horizontal" isLoading={isLoading} />
+        </CardBox>
+      </Grid>
+    );
+  }
   return (
     <Grid item sm={12} xs={12} lg={6}>
       <CardBox title="وضعیت منابع سرور">

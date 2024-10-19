@@ -1,6 +1,7 @@
 import { ChartDataItem } from '@/components/chart/type';
 import { Box, Grid, Typography, useTheme } from '@mui/material';
 import { FC } from 'react';
+import NoData from '@/utils/NoData';
 
 interface HostileTacticsProps {
   data: ChartDataItem[];
@@ -11,6 +12,19 @@ const HostileTactics: FC<HostileTacticsProps> = ({ data, isLoading }) => {
   const theme = useTheme();
   const colors = [theme.palette.primary.main, theme.palette.error.main, theme.palette.warning.main];
 
+  if (
+    !data ||
+    (Array.isArray(data) && data.length === 0) ||
+    (typeof data === 'object' && !Array.isArray(data) && Object.keys(data).length === 0)
+  ) {
+    return (
+      <Grid item lg={4} sm={12} xs={12}>
+        <Box sx={{ background: '#ffffff1c', p: 3, borderRadius: '20px', height: '300px' }}>
+          <NoData type="list" isLoading={isLoading} />
+        </Box>
+      </Grid>
+    );
+  }
   return (
     <Grid item lg={4} sm={12} xs={12}>
       <Box sx={{ background: '#ffffff1c', p: 3, borderRadius: '20px', height: '300px' }}>
