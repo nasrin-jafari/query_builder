@@ -47,7 +47,7 @@ export const darkPalette: ExtendedPaletteOptions = {
     400: '#51515382',
     500: '#9BB5BE',
     600: '#000',
-    700: '#9BB5BE',
+    700: '#313a43',
     800: '#F6F8F9',
     900: '#F4F4FA',
     1000: '#E1E9EB',

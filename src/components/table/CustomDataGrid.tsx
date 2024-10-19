@@ -675,101 +675,102 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                         })}
 
                         {buttons && (
-                          <TableCell
-                            align="center"
-                            sx={{
-                              display: 'flex',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              gap: 1,
-                            }}
-                          >
-                            {buttons?.map((button, index) => {
-                              const showButton = (_: string, condition: boolean) =>
-                                condition ? (
-                                  <CustomIconButton
-                                    key={index}
-                                    icon={button.icon && button.icon.type}
-                                    label={button.label}
-                                    type={button.type}
-                                    onClick={() => {
-                                      handleButtonClick(button, row);
-                                    }}
-                                  />
-                                ) : null;
-
-                              switch (button.type) {
-                                case 'delete':
-                                  return showButton('delete', showBtnDelete ?? false);
-                                case 'edit':
-                                  return showButton('edit', showBtnUpdate ?? false);
-                                case 'allowAccess':
-                                  return showButton('allowAccess', true);
-                                case 'content_type':
-                                  const componentMap: {
-                                    [key in RowData['content_type']]: JSX.Element;
-                                  } = {
-                                    OU: (
-                                      <CustomIconButton
-                                        key={index}
-                                        icon={button.icon && button.icon.type}
-                                        label={button.label}
-                                        type={button.type}
-                                        onClick={() => handleButtonClick(button, row)}
-                                      />
-                                    ),
-                                    Computer: (
-                                      <RiComputerLine
-                                        key={index}
-                                        style={{
-                                          fontSize: '19px',
-                                        }}
-                                      />
-                                    ),
-                                    User: (
-                                      <FaUser
-                                        key={index}
-                                        style={{
-                                          fontSize: '16px',
-                                        }}
-                                      />
-                                    ),
-                                  };
-
-                                  return componentMap[row.component_type] || null;
-
-                                default:
-                                  return null;
-                              }
-                            })}
-                            {extraButtons && extraButtons.length > 0 && (
-                              <IconButton onClick={(event) => handleMoreClick(event, rowIndex)}>
-                                <IoIosMore />
-                              </IconButton>
-                            )}
-                            <Popover
-                              id={id(rowIndex)}
-                              open={open(rowIndex)}
-                              anchorEl={anchorEls[rowIndex]}
-                              onClose={() => handleClose(rowIndex)}
-                              anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
+                          <TableCell>
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                gap: 1,
                               }}
                             >
-                              {extraButtons?.map((button, index) => (
-                                <MenuItem
-                                  key={index}
-                                  onClick={() => {
-                                    handleButtonClick(button, row);
-                                    handleClose(rowIndex);
-                                  }}
-                                  sx={{ fontSize: '16px', direction: 'ltr' }}
-                                >
-                                  {button.label}
-                                </MenuItem>
-                              ))}
-                            </Popover>
+                              {buttons?.map((button, index) => {
+                                const showButton = (_: string, condition: boolean) =>
+                                  condition ? (
+                                    <CustomIconButton
+                                      key={index}
+                                      icon={button.icon && button.icon.type}
+                                      label={button.label}
+                                      type={button.type}
+                                      onClick={() => {
+                                        handleButtonClick(button, row);
+                                      }}
+                                    />
+                                  ) : null;
+
+                                switch (button.type) {
+                                  case 'delete':
+                                    return showButton('delete', showBtnDelete ?? false);
+                                  case 'edit':
+                                    return showButton('edit', showBtnUpdate ?? false);
+                                  case 'allowAccess':
+                                    return showButton('allowAccess', true);
+                                  case 'content_type':
+                                    const componentMap: {
+                                      [key in RowData['content_type']]: JSX.Element;
+                                    } = {
+                                      OU: (
+                                        <CustomIconButton
+                                          key={index}
+                                          icon={button.icon && button.icon.type}
+                                          label={button.label}
+                                          type={button.type}
+                                          onClick={() => handleButtonClick(button, row)}
+                                        />
+                                      ),
+                                      Computer: (
+                                        <RiComputerLine
+                                          key={index}
+                                          style={{
+                                            fontSize: '19px',
+                                          }}
+                                        />
+                                      ),
+                                      User: (
+                                        <FaUser
+                                          key={index}
+                                          style={{
+                                            fontSize: '16px',
+                                          }}
+                                        />
+                                      ),
+                                    };
+
+                                    return componentMap[row.component_type] || null;
+
+                                  default:
+                                    return null;
+                                }
+                              })}
+                              {extraButtons && extraButtons.length > 0 && (
+                                <IconButton onClick={(event) => handleMoreClick(event, rowIndex)}>
+                                  <IoIosMore />
+                                </IconButton>
+                              )}
+                              <Popover
+                                id={id(rowIndex)}
+                                open={open(rowIndex)}
+                                anchorEl={anchorEls[rowIndex]}
+                                onClose={() => handleClose(rowIndex)}
+                                anchorOrigin={{
+                                  vertical: 'bottom',
+                                  horizontal: 'left',
+                                }}
+                              >
+                                {extraButtons?.map((button, index) => (
+                                  <MenuItem
+                                    key={index}
+                                    onClick={() => {
+                                      handleButtonClick(button, row);
+                                      handleClose(rowIndex);
+                                    }}
+                                    sx={{ fontSize: '16px', direction: 'ltr' }}
+                                  >
+                                    {button.label}
+                                  </MenuItem>
+                                ))}
+                              </Popover>
+                            </Box>
                           </TableCell>
                         )}
                         {!notExtra && (

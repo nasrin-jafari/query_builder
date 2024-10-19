@@ -76,7 +76,7 @@ const CustomIconButton: React.FC<ReusableIconButtonProps> = ({
         }
       })()}
     >
-      <Typography sx={{ fontSize: '12px' }}>{label}</Typography>
+      <Typography sx={{ fontSize: '14px' }}>{label}</Typography>
     </Button>
   );
 };
