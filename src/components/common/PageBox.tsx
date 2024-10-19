@@ -45,7 +45,7 @@ const PageBox: React.FC<PageBoxProps> = ({
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box>
               <Typography variant="h4">{title}</Typography>
-              <Typography color={theme.palette.grey[700]} sx={{ mt: '10px' }}>
+              <Typography color={theme.palette.grey[200]} sx={{ mt: '10px' }}>
                 {description}
               </Typography>
             </Box>

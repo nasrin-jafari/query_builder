@@ -4,7 +4,6 @@ import { LicenseData } from '@/sections/settings/licence';
 import { ConvertRemainingDays } from '@/utils/ConvertRemainingDays';
 import { Box, Button, Typography } from '@mui/material';
 import { SxProps, Theme, useTheme } from '@mui/material/styles';
-import Image from 'next/image';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
@@ -71,14 +70,6 @@ const CustomAppBar: React.FC<CustomAppBarProps> = ({ SearchFields, title, sx }) 
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Image
-            alt="Image"
-            width={40}
-            height={42}
-            src="/images/logo.png"
-            priority
-            style={{ marginLeft: 15 }}
-          />
           <Link href="/settings/licence">
             <Typography fontWeight={'bold'} fontSize={14}>
               وضعیت لایسنس :{' '}
