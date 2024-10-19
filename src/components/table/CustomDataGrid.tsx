@@ -43,7 +43,6 @@ import {
 import { MdOutlineAdd } from 'react-icons/md';
 import { PiDownloadSimpleFill } from 'react-icons/pi';
 import { RiComputerLine } from 'react-icons/ri';
-import { TbExternalLink } from 'react-icons/tb';
 import { TiTick } from 'react-icons/ti';
 import * as yup from 'yup';
 import CopyValue from '../common/CopyValue';
@@ -424,21 +423,11 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
       )}
       <Card
         sx={{
-          mt: linkOverview ? 0 : 2,
+          mt: 2,
           background: theme.palette.grey[100],
           border: `1px solid ${theme.palette.grey[400]}`,
-          height: linkOverview ? '100%' : '',
         }}
       >
-        {linkOverview ? (
-          <Box sx={{ direction: 'rtl' }}>
-            <CustomTooltip title="نمایش همه">
-              <IconButton onClick={() => router.push(linkOverview)}>
-                <TbExternalLink />
-              </IconButton>
-            </CustomTooltip>
-          </Box>
-        ) : null}
         <TableContainer sx={{ pb: pageTotal <= 10 ? '0' : 2 }}>
           <Table>
             <TableHead
@@ -876,6 +865,25 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
           />
         )}
       </Card>
+      {linkOverview ? (
+        <Box
+          sx={{
+            direction: 'rtl',
+            height: '80px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Button
+            onClick={() => router.push(linkOverview)}
+            variant="contained"
+            style={{ background: theme.palette.grey[700], fontSize: '14px' }}
+          >
+            نمایش کامل
+          </Button>
+        </Box>
+      ) : null}
     </>
   );
 };
