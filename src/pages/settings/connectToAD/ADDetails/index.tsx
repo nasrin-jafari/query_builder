@@ -24,7 +24,7 @@ const ADDetails = () => {
   const { domain_url } = router.query;
 
   const { data, total, loading, handleApiRequest } = useApi<DataADDetails>(
-    `/active_directory/active_directory-manage/${domain_url}/`
+    `/active_directory/manage/${domain_url}/`
   );
   const handleClickSelectedItem = async (actionType: string, selectedRows: RowData[]) => {
     const activeDirectory_ou = selectedRows
@@ -46,7 +46,7 @@ const ADDetails = () => {
         payload
       );
       if (res) {
-        handleApiRequest(`/active_directory/active_directory-manage/${domain_url}/`, 'get');
+        handleApiRequest(`/active_directory/manage/${domain_url}/`, 'get');
       }
     } catch (error) {
       console.log(error);

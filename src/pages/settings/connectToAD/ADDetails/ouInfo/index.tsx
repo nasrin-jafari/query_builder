@@ -23,7 +23,7 @@ const OuInfo = () => {
   const router = useRouter();
   const { ouInfo, domain_url } = router.query;
   const { data, total, loading, handleApiRequest } = useApi<DataOuInfo>(
-    `/active_directory/active_directory-manage/${domain_url}/?OU=${ouInfo}`
+    `/active_directory/manage/${domain_url}/?OU=${ouInfo}`
   );
   const handleClickSelectedItem = async (actionType: string, selectedRows: RowData[]) => {
     const organizationsList = selectedRows.map((entry) => entry.name);
@@ -41,10 +41,7 @@ const OuInfo = () => {
         payload
       );
       if (res) {
-        handleApiRequest(
-          `/active_directory/active_directory-manage/${domain_url}/?OU=${ouInfo}`,
-          'get'
-        );
+        handleApiRequest(`/active_directory/manage/${domain_url}/?OU=${ouInfo}`, 'get');
       }
     } catch (error) {
       console.log(error);

@@ -16,7 +16,7 @@ interface HandleApiRequestResponse {
 }
 
 const UnsuccessfulAttempts = () => {
-  const { data, total, loading } = UseApi<HandleApiRequestResponse>('/user/unsuccessful-logins/');
+  const { data, total, loading } = UseApi<HandleApiRequestResponse>('/user/unsuccessful_logins/');
 
   return (
     <PageBox
