@@ -115,6 +115,16 @@ const ConnectToAD = () => {
             notExtra
             buttons={[
               {
+                label: 'حذف ',
+                type: 'delete',
+                onClick: handleDelete,
+              },
+              {
+                label: 'ویرایش ',
+                type: 'edit',
+                onClick: handleEdit,
+              },
+              {
                 label: 'AD جزییات',
                 type: 'allowAccess',
                 icon: <IoDocumentTextOutline />,
@@ -126,16 +136,6 @@ const ConnectToAD = () => {
                     },
                   });
                 },
-              },
-              {
-                label: 'حذف کاربر',
-                type: 'delete',
-                onClick: handleDelete,
-              },
-              {
-                label: 'ویرایش کاربر',
-                type: 'edit',
-                onClick: handleEdit,
               },
             ]}
           />
