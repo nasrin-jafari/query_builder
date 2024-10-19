@@ -46,8 +46,8 @@ interface EventsResponse {
 }
 
 const AiResults = () => {
-  const { data: all_detected_Data, loading } = useApi<EventsResponse>('/ai/detected/?per_page=5');
-  const { data: events } = useApi<MultiavData>('/ai/analysis/');
+  const { data: all_detected_Data, loading } = useApi<EventsResponse>('/ai/results/?per_page=5');
+  const { data: events } = useApi<MultiavData>('/ai/');
   const headersCol = multiav?.slice(0, 3);
   const theme = useTheme();
   const router = useRouter();

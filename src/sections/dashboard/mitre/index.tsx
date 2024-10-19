@@ -16,7 +16,7 @@ interface MitreProps {
 const Mitre: FC<MitreProps> = ({ data, isLoading }) => {
   return (
     <CardBox sx={{ mt: 2 }}>
-      <Typography variant="h4" fontWeight="bold">
+      <Typography variant="h5" fontWeight="bold">
         حملات MITRE
       </Typography>
       <Grid container spacing={3} sx={{ mt: 0.25 }}>
