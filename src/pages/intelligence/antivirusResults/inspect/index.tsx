@@ -21,7 +21,7 @@ const InspectAntivirusResults = () => {
   const { contentType, computer_name } = router.query;
 
   const url = contentType
-    ? `/multiav/malware-benign/${contentType}/`
+    ? `/multiav/detection/${contentType}/`
     : `/multiav/specific_computer/${computer_name}/`;
 
   const { data, total, loading } = UseApi<HandleApiRequestResponse>(url);
@@ -34,8 +34,8 @@ const InspectAntivirusResults = () => {
     ? contentType === 'BENIGN'
       ? 'جزییات فایل های سالم نتایج ضد ویروس مرکب'
       : contentType !== 'null'
-      ? 'جزییات فایل های آلوده نتایج ضد ویروس مرکب'
-      : 'جزییات فایل های ناشناخته نتایج ضد ویروس مرکب'
+        ? 'جزییات فایل های آلوده نتایج ضد ویروس مرکب'
+        : 'جزییات فایل های ناشناخته نتایج ضد ویروس مرکب'
     : ` بررسی عامل ${computer_name}`;
   return (
     <PageBox title={title} searchQuery={tableHeaders}>

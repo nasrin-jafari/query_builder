@@ -1,9 +1,8 @@
-import { Grid } from '@mui/material';
-import { useRouter } from 'next/router';
-import UseApi from '@/hooks/UseApi';
+import { CustomDataGrid } from '@/components';
 import PageBox from '@/components/common/PageBox';
 import { multiav_details } from '@/constants/tableHeaders';
-import { CustomDataGrid } from '@/components';
+import UseApi from '@/hooks/UseApi';
+import { useRouter } from 'next/router';
 
 interface ExtraInfoData {
   [key: string]: any;
@@ -17,7 +16,7 @@ const ExtraInfo = () => {
   const router = useRouter();
 
   const { extraInfo } = router.query;
-  const { data, total, loading } = UseApi<FetchDataResponse>(`/multiav/detected/${extraInfo}/`);
+  const { data, total, loading } = UseApi<FetchDataResponse>(`/multiav/results/${extraInfo}/`);
 
   return (
     <PageBox
@@ -25,17 +24,13 @@ const ExtraInfo = () => {
       description="توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا"
       searchQuery={multiav_details}
     >
-      <Grid container>
-        <Grid item sm={12}>
-          <CustomDataGrid
-            rows={data?.Data ?? []}
-            columns={multiav_details}
-            loading={loading}
-            pageTotal={total}
-            notExtra
-          />
-        </Grid>
-      </Grid>
+      <CustomDataGrid
+        rows={data?.Data ?? []}
+        columns={multiav_details}
+        loading={loading}
+        pageTotal={total}
+        notExtra
+      />
     </PageBox>
   );
 };

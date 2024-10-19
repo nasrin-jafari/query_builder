@@ -47,9 +47,9 @@ interface EventsResponse {
 
 const AntivirusResults = () => {
   const { data: all_detected_Data, loading } = useApi<EventsResponse>(
-    '/multiav/detected/?per_page=5'
+    '/multiav/results/?per_page=5'
   );
-  const { data: events } = useApi<MultiavData>('/multiav/analysis/');
+  const { data: events } = useApi<MultiavData>('/multiav/');
   const headersCol = multiav?.slice(0, 3);
   const theme = useTheme();
   const router = useRouter();
