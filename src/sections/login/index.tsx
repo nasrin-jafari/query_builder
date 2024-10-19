@@ -168,7 +168,7 @@ const Login = () => {
       <Box
         sx={{
           direction: 'ltr',
-          bgcolor: theme.palette.grey[500],
+          bgcolor: theme.palette.grey[50],
           minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',
@@ -218,7 +218,7 @@ const Login = () => {
 
             <Button
               sx={{ mt: 3, color: 'red' }}
-              style={{ color: theme.palette.grey[700] }}
+              style={{ color: theme.palette.grey[200] }}
               onClick={handleForgotPasswordToggle}
               variant="text"
               color="inherit"
@@ -226,7 +226,7 @@ const Login = () => {
               {isForgotPassword ? 'بازگشت به صفحه ورود' : 'فراموشی رمز عبور'}
             </Button>
 
-            <Typography sx={{ color: theme.palette.grey[50], mt: 5 }}>نسخه : 1.0.0</Typography>
+            <Typography sx={{ color: theme.palette.grey[200], mt: 5 }}>نسخه : 1.0.0</Typography>
           </Container>
         </Container>
       </Box>
