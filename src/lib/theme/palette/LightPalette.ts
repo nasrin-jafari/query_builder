@@ -49,7 +49,7 @@ export const lightPalette: ExtendedPaletteOptions = {
     400: '#51515382',
     500: '#5A6B87',
     600: '#ffff',
-    700: '#5A6B87',
+    700: '#9BB5BE',
     800: '#313A43',
     900: '#39393D',
     1000: '#1A242E',

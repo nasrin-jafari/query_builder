@@ -31,19 +31,19 @@ const CustomIconButton: React.FC<ReusableIconButtonProps> = ({
         };
       case 'edit':
         return {
-          color: '#E1E9EB',
+          color: theme.palette.grey[700],
         };
       case 'add':
         return {
-          color: theme.palette.success.main,
+          color: theme.palette.grey[700],
         };
       case 'download':
         return {
-          color: theme.palette.primary.main,
+          color: theme.palette.grey[700],
         };
       default:
         return {
-          color: theme.palette.text.primary,
+          color: theme.palette.grey[700],
         };
     }
   };

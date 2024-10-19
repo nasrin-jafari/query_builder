@@ -444,7 +444,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
             <TableHead
               sx={{
                 '&  th': { fontWeight: 'bold', fontSize: 16 },
-                background: theme.palette.grey[100],
+                background: theme.palette.grey[50],
               }}
             >
               <TableRow>
@@ -494,7 +494,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                   </TableCell>
                 ))}
                 {buttons && (
-                  <TableCell align="center" sx={{ width: 200 }}>
+                  <TableCell align="center" sx={{ minWidth: 250 }}>
                     عملیات
                   </TableCell>
                 )}
@@ -523,8 +523,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                         sx={{
                           backgroundColor:
                             rowIndex % 2 === 0
-                              ? theme.palette.background.default
-                              : theme.palette.grey[100],
+                              ? theme.palette.grey[100]
+                              : theme.palette.background.default,
                         }}
                       >
                         {selectableRows && (
@@ -675,7 +675,15 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                         })}
 
                         {buttons && (
-                          <TableCell align="center">
+                          <TableCell
+                            align="center"
+                            sx={{
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              gap: 1,
+                            }}
+                          >
                             {buttons?.map((button, index) => {
                               const showButton = (_: string, condition: boolean) =>
                                 condition ? (
