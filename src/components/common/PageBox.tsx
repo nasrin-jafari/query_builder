@@ -36,6 +36,7 @@ const PageBox: React.FC<PageBoxProps> = ({
           padding: '28px 30px',
           borderRadius: '14px',
           mt: 1.4,
+          minHeight: '88vh',
         }}
       >
         <Head>
