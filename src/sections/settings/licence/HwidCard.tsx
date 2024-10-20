@@ -8,6 +8,8 @@ interface HwidCardProps {
   hwid: string;
   fetchHwid: () => void;
 }
+//test
+
 const HwidCard: React.FC<HwidCardProps> = ({ fetchHwid, hwid }) => {
   const theme = useTheme();
 
