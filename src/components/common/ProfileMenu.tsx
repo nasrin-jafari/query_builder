@@ -1,16 +1,9 @@
-import {
-  Avatar,
-  Box,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Avatar, Box, Divider, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import React, { useState } from 'react';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import CustomTooltip from '@/components/common/CustomToolTip';
+
 interface DecodedToken extends JwtPayload {
   exp_date?: number;
   username: string;
@@ -50,7 +43,7 @@ const ProfileMenu: React.FC = () => {
 
   return (
     <Box sx={{ position: 'relative', zIndex: '2000' }}>
-      <Tooltip title="پروفایل کاربر">
+      <CustomTooltip title="پروفایل کاربر">
         <IconButton
           onClick={handleClick}
           size="small"
@@ -70,7 +63,7 @@ const ProfileMenu: React.FC = () => {
             {usernameInitial}
           </Avatar>
         </IconButton>
-      </Tooltip>
+      </CustomTooltip>
 
       <Menu
         anchorEl={anchorEl}
@@ -81,11 +74,11 @@ const ProfileMenu: React.FC = () => {
         PaperProps={{
           elevation: 0,
           sx: {
-            bgcolor: theme.palette.grey[300],
+            bgcolor: theme.palette.grey[100],
             overflow: 'visible',
             filter: 'drop-shadow(0px 4px 8px rgba(0,0,0,0.32))',
-            mt: 2,
-            mr: '9px',
+            mt: 6.2,
+            mr: '14px',
             zIndex: '2100', // Ensure this is higher than the surrounding components
             '& .MuiAvatar-root': {
               width: 32,
@@ -101,7 +94,7 @@ const ProfileMenu: React.FC = () => {
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: theme.palette.grey[300],
+              bgcolor: theme.palette.grey[100],
               transform: 'translateY(-50%) rotate(45deg)',
               zIndex: 0,
             },
@@ -124,14 +117,14 @@ const ProfileMenu: React.FC = () => {
                 p: 1,
                 borderRadius: '6px',
                 fontWeight: 'bold',
-                color: theme.palette.grey[900],
+                color: theme.palette.grey[300],
               }}
             >
               {username}
             </Typography>
             <Typography
               sx={{
-                color: theme.palette.grey[900],
+                color: theme.palette.grey[200],
                 // p: 1,
                 borderRadius: '6px',
               }}

@@ -1,4 +1,4 @@
-import { IconButton, Popover, Typography, useTheme } from '@mui/material';
+import { Button, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { IconType } from 'react-icons';
 import { AiOutlineDelete } from 'react-icons/ai';
@@ -21,92 +21,63 @@ const CustomIconButton: React.FC<ReusableIconButtonProps> = ({
   onClick,
 }) => {
   const theme = useTheme();
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-
-  // Determine colors based on type
-  const getColor = () => {
+  // Determine button styles based on type
+  const getButtonStyles = () => {
     switch (type) {
       case 'delete':
         return {
-          default: 'red',
-          hover: theme.palette.error.main,
+          color: theme.palette.error.main,
         };
       case 'edit':
         return {
-          default: 'green',
-          hover: theme.palette.info.main,
+          color: theme.palette.grey[700],
         };
-
+      case 'add':
+        return {
+          color: theme.palette.grey[700],
+        };
+      case 'download':
+        return {
+          color: theme.palette.grey[700],
+        };
       default:
         return {
-          default: theme.palette.text.primary,
-          hover: theme.palette.primary.main,
+          color: theme.palette.grey[700],
         };
     }
   };
 
-  const { default: _, hover: hoverColor } = getColor();
+  const { color: buttonColor } = getButtonStyles();
 
   return (
-    <>
-      <IconButton
-        aria-owns={open ? 'mouse-over-popover' : undefined}
-        aria-haspopup="true"
-        onMouseEnter={handlePopoverOpen}
-        onMouseLeave={handlePopoverClose}
-        onClick={onClick}
-        sx={{
-          '&:hover': {
-            color: hoverColor, // Change color on hover based on type
-          },
-        }}
-      >
-        {(() => {
-          switch (type) {
-            case 'delete':
-              return <AiOutlineDelete />;
-            case 'edit':
-              return <CiEdit />;
-            case 'add':
-              return <FaPlus />;
-            case 'download':
-              return <RxDownload />;
-            default:
-              return Icon ? <Icon /> : <CiFileOn />;
-          }
-        })()}
-      </IconButton>
-      <Popover
-        id="mouse-over-popover"
-        sx={{
-          pointerEvents: 'none',
-        }}
-        open={open}
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        onClose={handlePopoverClose}
-        disableRestoreFocus
-      >
-        <Typography sx={{ p: 0.75 }}>{label}</Typography>
-      </Popover>
-    </>
+    <Button
+      variant="contained"
+      onClick={onClick}
+      sx={{
+        backgroundColor: buttonColor,
+        padding: '6px 8px !important',
+        '&:hover': {
+          backgroundColor: buttonColor,
+        },
+      }}
+      startIcon={(() => {
+        switch (type) {
+          case 'delete':
+            return <AiOutlineDelete style={{ fontSize: '16px' }} />;
+          case 'edit':
+            return <CiEdit />;
+          case 'add':
+            return <FaPlus />;
+          case 'download':
+            return <RxDownload />;
+          default:
+            return Icon ? <Icon /> : <CiFileOn />;
+        }
+      })()}
+    >
+      <Typography sx={{ fontSize: '14px' }}>{label}</Typography>
+    </Button>
   );
 };
 

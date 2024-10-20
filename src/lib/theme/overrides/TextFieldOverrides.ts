@@ -17,7 +17,7 @@ const TextFieldOverrides = {
         boxShadow:
           theme.palette.mode === 'light'
             ? `0 0 0 100px ${theme.palette.grey[100]} inset`
-            : `0 0 0 100px ${theme.palette.grey[300]} inset`,
+            : `0 0 0 100px ${theme.palette.grey[100]} inset`,
       },
       '&.Mui-focused fieldset': {
         borderColor: theme.palette.primary.main,

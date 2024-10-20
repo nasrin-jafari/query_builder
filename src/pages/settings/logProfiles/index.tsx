@@ -15,7 +15,7 @@ interface HandleResponse {
 }
 
 const LogProfiles = () => {
-  const { data, total, loading, handleApiRequest } = UseApi<HandleResponse>('/log_profiles/get/');
+  const { data, total, loading, handleApiRequest } = UseApi<HandleResponse>('/log_management/get/');
 
   const fields = [
     {
@@ -50,9 +50,9 @@ const LogProfiles = () => {
 
   const handleDelete = async (_: UserData, row: UserData) => {
     try {
-      const res = await handleApiRequest(`/log_profiles/delete/${row?.profile_id}/`, 'delete');
+      const res = await handleApiRequest(`/log_management/delete/${row?.profile_id}/`, 'delete');
       if (res) {
-        await handleApiRequest('/log_profiles/get/', 'get');
+        await handleApiRequest('/log_management/get/', 'get');
       }
     } catch (error) {
       console.log(error);
@@ -61,13 +61,13 @@ const LogProfiles = () => {
 
   const handleEdit = async (editeData: UserData, row: UserData) => {
     try {
-      const res = await handleApiRequest(`/log_profiles/update/${row.profile_id}/`, 'put', {
+      const res = await handleApiRequest(`/log_management/update/${row.profile_id}/`, 'put', {
         host: editeData?.host,
         port: editeData?.port,
         protocol: editeData?.protocol,
       });
       if (res) {
-        await handleApiRequest('/log_profiles/get/', 'get');
+        await handleApiRequest('/log_management/get/', 'get');
       }
     } catch (error) {
       console.log(error);
@@ -87,7 +87,7 @@ const LogProfiles = () => {
         editForm={fields}
         fields={fields}
         // editState={setIsEdit}
-        handleAdd={{ urlApi: '/log_profiles/create/', fields: fields }}
+        handleAdd={{ urlApi: '/log_management/create/', fields: fields }}
         notExtra
         buttons={[
           {

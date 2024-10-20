@@ -20,7 +20,7 @@ const InspectAiResults = () => {
   const router = useRouter();
   const { typeDetect, agent_id } = router.query;
 
-  const url = agent_id ? `/ai/specific-ai/${agent_id}/` : `/ai/detection-type/${typeDetect}/`;
+  const url = agent_id ? `/ai/${agent_id}/` : `/ai/detection/${typeDetect}/`;
 
   const { data, total, loading } = UseApi<HandleApiRequestResponse>(url);
   const filterInspectAi = inspectAi.filter(

@@ -1,6 +1,7 @@
 import { Control, Controller } from 'react-hook-form';
 import { Field } from './SearchQueryBuilder';
 import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
+import React from 'react';
 
 interface SubFieldSelectorProps {
   control: Control<any>;

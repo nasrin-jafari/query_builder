@@ -1,7 +1,7 @@
-import PieChart from '@/components/chart/PieChart';
+import NightingaleChart from '@/components/chart/NightingaleChart';
 import { ChartDataItem } from '@/components/chart/type';
 import CardBox from '@/layout/CardBox';
-import { Divider, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { FC } from 'react';
 
 interface ResourceStatusProps {
@@ -27,12 +27,12 @@ const OpratingSystemClient: FC<ResourceStatusProps> = ({ data, isLoading }) => {
       redirectTo,
     };
   });
-
   return (
-    <Grid item sm={6} xs={12} lg={4}>
-      <CardBox minHeight={'270px'}>
-        <Divider sx={{ fontSize: '17px' }}>سرویس گیرنده‌های سیستم عامل</Divider>
-        <PieChart data={analysis_data} isLoading={isLoading} />
+    <Grid item sm={6} xs={12} lg={3}>
+      <CardBox title="سرویس گیرنده‌های سیستم عامل">
+        <Box>
+          <NightingaleChart data={analysis_data} isLoading={isLoading} />
+        </Box>
       </CardBox>
     </Grid>
   );

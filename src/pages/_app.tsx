@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import { Provider as ReduxProvider } from 'react-redux';
 import store from '@/redux/store';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTheme } from '@mui/material/styles';
 
 interface CustomComponent {
   getLayout?: (page: JSX.Element) => JSX.Element;
@@ -16,6 +17,7 @@ interface CustomComponent {
 
 function MyApp({ Component, pageProps }: AppProps) {
   const getLayout = (Component as CustomComponent).getLayout ?? ((page) => <Layout>{page}</Layout>);
+  const theme = useTheme();
   return (
     <ReduxProvider store={store}>
       <ThemeRtlLayout>
@@ -23,6 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Box
             sx={{
               direction: 'ltr',
+              backgroundColor: theme.palette.grey[50],
               '& .Toastify__toast-body': {
                 fontFamily: 'vazir',
                 fontSize: '14px',

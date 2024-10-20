@@ -3,7 +3,7 @@ import { Field, Rule } from './SearchQueryBuilder';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import SearchRule from './SearchRule';
 import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import CardBox from '@/layout/CardBox';
+import CornerBoxCustom from '@/components/common/CornerBoxCustom';
 
 interface SearchGroupProps {
   name: string;
@@ -251,7 +251,7 @@ const SearchGroup: React.FC<SearchGroupProps> = ({
       )}
     </Box>
   );
-  return !isMainGroup ? <CardBox>{content}</CardBox> : content;
+  return !isMainGroup ? <CornerBoxCustom>{content}</CornerBoxCustom> : content;
 };
 
 export default SearchGroup;

@@ -4,12 +4,12 @@ import PictorialBar from '@/components/chart/PictorialBar';
 import PieChart from '@/components/chart/PieChart';
 import PageBox from '@/components/common/PageBox';
 import useApi from '@/hooks/UseApi';
-import CardBox from '@/layout/CardBox';
 import Logs from '@/sections/hosts/hostManagement/logs';
 import { Grid, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { fieldsQueries } from '@/constants/tableHeaders';
+import CardCharts from '@/components/common/CardCharts';
 
 interface DataOfTotal {
   en: string;
@@ -98,26 +98,28 @@ const LogsAgent = () => {
     <PageBox title={`مدیریت رخدادهای ${query.name}`} searchQuery={fieldsQueries}>
       <Grid container spacing={2} sx={{ mt: 1 }}>
         <Grid item md={8} xs={12}>
-          <CardBox minHeight={'250px'}>
+          <CardCharts sx={{ minHeight: '250px' }}>
             <Typography variant="h5">نمودار رویدادها</Typography>
             <PictorialBar data={normalizedData.events_chart} />
-          </CardBox>
+          </CardCharts>
         </Grid>
         <Grid item md={4} xs={12}>
-          <CardBox minHeight={'315px'}>
-            <Typography variant="h5">نمودار رویدادها</Typography>
+          <CardCharts sx={{ minHeight: '315px', height: '100%' }}>
+            <Typography variant="h5" sx={{ mb: '40px' }}>
+              نمودار رویدادها
+            </Typography>
             <PieChart data={eventDataChart} />
-          </CardBox>
+          </CardCharts>
         </Grid>
         <Grid item md={8} xs={12}>
-          <CardBox minHeight={'315px'}>
+          <CardCharts sx={{ minHeight: '315px' }}>
             <BarChart data={normalizedData.quarantined_chart} isLoading={loading} />
-          </CardBox>
+          </CardCharts>
         </Grid>
         <Grid item md={4} xs={12}>
-          <CardBox minHeight={'315px'}>
+          <CardCharts sx={{ minHeight: '315px' }}>
             <BarChartHorizontal data={newData} isLoading={loading} />
-          </CardBox>
+          </CardCharts>
         </Grid>
         <Logs data={normalizedData} />
       </Grid>

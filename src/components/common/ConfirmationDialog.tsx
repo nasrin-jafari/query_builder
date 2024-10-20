@@ -39,7 +39,7 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
         sx: {
           borderRadius: '20px',
           padding: '20px',
-          background: theme.palette.grey[300],
+          background: theme.palette.grey[100],
           textAlign: 'justify',
           boxShadow: 4,
           width: '100%',

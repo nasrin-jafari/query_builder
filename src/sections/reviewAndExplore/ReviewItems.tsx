@@ -1,8 +1,8 @@
 import PieChart from '@/components/chart/PieChart';
 import { ChartDataItem } from '@/components/chart/type';
-import CardBox from '@/layout/CardBox';
 import { Box, Grid, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
+import CardCharts from '@/components/common/CardCharts';
 
 interface ItemsProps {
   data: ChartDataItem[];
@@ -20,7 +20,7 @@ interface ReviewItemsProps {
 const Items = ({ title, data }: ItemsProps) => {
   return (
     <Grid item md={12} lg={4}>
-      <CardBox>
+      <CardCharts>
         <Box
           sx={{
             p: 3,
@@ -29,7 +29,7 @@ const Items = ({ title, data }: ItemsProps) => {
           <Typography variant="h5">{title}</Typography>
           <PieChart data={data} />
         </Box>
-      </CardBox>
+      </CardCharts>
     </Grid>
   );
 };

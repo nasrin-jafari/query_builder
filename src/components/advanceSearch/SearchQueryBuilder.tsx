@@ -5,7 +5,7 @@ import React, { useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import SearchGroup from './SearchGroup';
-import CardBox from '@/layout/CardBox';
+import CornerBoxCustom from '@/components/common/CornerBoxCustom';
 
 export interface Field {
   label: string;
@@ -260,7 +260,7 @@ const SearchQueryBuilder: React.FC<SearchQueryBuilderProps> = ({
 
   return (
     <FormProvider {...methods}>
-      <CardBox>
+      <CornerBoxCustom>
         <form
           onSubmit={methods.handleSubmit(exportQuery)}
           style={{
@@ -319,7 +319,7 @@ const SearchQueryBuilder: React.FC<SearchQueryBuilderProps> = ({
             )}
           </Box>
         </form>
-      </CardBox>
+      </CornerBoxCustom>
     </FormProvider>
   );
 };

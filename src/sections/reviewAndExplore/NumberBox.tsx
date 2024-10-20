@@ -1,5 +1,6 @@
-import CardBox from '@/layout/CardBox';
 import { Box, Grid, Typography, useTheme } from '@mui/material';
+import CardCharts from '@/components/common/CardCharts';
+
 interface NumberBoxTimeItemProps {
   title: string;
   number: number;
@@ -10,7 +11,7 @@ const NumberBoxTimeItem = ({ title, number, color }: NumberBoxTimeItemProps) => 
   const theme = useTheme();
   return (
     <Grid item md={6} lg={3}>
-      <CardBox>
+      <CardCharts>
         <Box
           sx={{
             backgroundImage: 'url(/images/bg-review.png)',
@@ -50,7 +51,7 @@ const NumberBoxTimeItem = ({ title, number, color }: NumberBoxTimeItemProps) => 
             </Box>
           </Box>
         </Box>
-      </CardBox>
+      </CardCharts>
     </Grid>
   );
 };

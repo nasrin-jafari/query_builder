@@ -2,72 +2,74 @@ import { FetchTimer, ProfileMenu, ThemeToggleButton } from '@/components';
 import UseApi from '@/hooks/UseApi';
 import { LicenseData } from '@/sections/settings/licence';
 import { ConvertRemainingDays } from '@/utils/ConvertRemainingDays';
-import { Box, IconButton, AppBar as MuiAppBar, Toolbar, Typography } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
-import Image from 'next/image';
+import { Box, Button, Typography } from '@mui/material';
+import { SxProps, Theme, useTheme } from '@mui/material/styles';
 import Link from 'next/link';
-import { CiMenuBurger } from 'react-icons/ci';
+import React, { useRef, useState } from 'react';
+import { IoSearch } from 'react-icons/io5';
+import { FaTimes } from 'react-icons/fa';
+import SearchQueryBuilder, { Field } from '@/components/advanceSearch/SearchQueryBuilder';
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<{ open?: boolean }>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  backgroundColor: 'transparent',
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: 240,
-    width: `calc(100% - 240px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
+export interface Fields {
+  selectOptions?: Fields[];
+  dataType: 'number' | 'text' | 'date' | 'checkbox';
+  headerName?: string;
+  field: string;
+  isHeader: boolean;
+}
 interface CustomAppBarProps {
-  open: boolean;
-  handleDrawerOpen: () => void;
+  title: string | string[] | undefined;
+  SearchFields?: Fields[];
+  sx?: SxProps<Theme>;
 }
 
-const CustomAppBar: React.FC<CustomAppBarProps> = ({ open, handleDrawerOpen }) => {
+const CustomAppBar: React.FC<CustomAppBarProps> = ({ SearchFields, title, sx }) => {
   const theme = useTheme();
+  const [open, setOpen] = useState<boolean>(false);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
   const { data } = UseApi<LicenseData[]>('/licence/info/');
+  const handleClicked = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setTimeout(() => setOpen(false), 300);
+  };
+  function updateTitlesToLabels(fieldsWithoutId: Fields[]): Field[] {
+    return fieldsWithoutId.map((item) => {
+      const { headerName, field, ...rest } = item;
+      return {
+        ...rest,
+        label: headerName ?? 'Default Label',
+        value: field ?? 'Default value',
+        selectOptions: item.selectOptions ? updateTitlesToLabels(item.selectOptions) : undefined,
+      };
+    });
+  }
+
+  const outPutFields = (SearchFields && updateTitlesToLabels(SearchFields)) || [];
+  const isFieldArray = (data: any): data is Fields[] => {
+    return Array.isArray(data) && data.every((item) => 'label' in item && 'value' in item);
+  };
+  const fields = isFieldArray(outPutFields) ? outPutFields : [];
+  const isSearch = fields.length == 1;
   return (
-    <AppBar
-      position="fixed"
-      open={open}
-      sx={{ background: theme.palette.grey[300], boxShadow: open ? 'none' : 4 }}
+    <Box
+      sx={{
+        background: theme.palette.grey[50],
+        width: '100%',
+        ...sx,
+      }}
     >
-      <Toolbar
+      <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
-          >
-            <CiMenuBurger />
-          </IconButton>
-          <Image
-            alt="Image"
-            width={40}
-            height={42}
-            src="/images/logo.png"
-            priority
-            style={{ marginLeft: 15 }}
-          />
           <Link href="/settings/licence">
             <Typography fontWeight={'bold'} fontSize={14}>
               وضعیت لایسنس :{' '}
@@ -81,12 +83,104 @@ const CustomAppBar: React.FC<CustomAppBarProps> = ({ open, handleDrawerOpen }) =
           </Link>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          {fields?.length > 0 && (
+            <Button
+              onClick={handleClicked}
+              variant="contained"
+              style={{
+                color: theme.palette.grey[200],
+                background: theme.palette.grey[100],
+                borderRadius: '14px',
+                paddingLeft: '80px',
+              }}
+              startIcon={
+                <IoSearch
+                  style={{
+                    color: theme.palette.grey[200],
+                    fontSize: '20px',
+                  }}
+                />
+              }
+            >
+              جستجو...
+            </Button>
+          )}
           <FetchTimer />
           <ThemeToggleButton />
           <ProfileMenu />
         </Box>
-      </Toolbar>
-    </AppBar>
+      </Box>
+      <Box
+        onClick={handleClose}
+        sx={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: open ? 'rgba(0, 0, 0, 0.5)' : 'transparent',
+          zIndex: 1300,
+          display: open ? 'flex' : 'none',
+          alignItems: 'center',
+          justifyContent: 'center',
+          visibility: open ? 'visible' : 'hidden',
+          opacity: open ? 1 : 0,
+          transition: 'visibility 0s linear 0.3s, opacity 0.3s linear',
+        }}
+      >
+        <Box
+          ref={modalRef}
+          onClick={(e) => e.stopPropagation()}
+          sx={{
+            backgroundColor: theme.palette.grey[100],
+            borderRadius: '20px',
+            padding: '40px',
+            boxShadow: 4,
+            width: isSearch ? '50% ' : '70%',
+            position: 'relative',
+          }}
+        >
+          <Button
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              padding: '5px',
+              fontSize: '24px',
+              color: theme.palette.primary.main,
+            }}
+          >
+            <FaTimes color={theme.palette.primary.main} />
+          </Button>
+          <Typography variant="h6" sx={{ marginBottom: '10px', textAlign: 'center' }}>
+            جستجو در {title}
+          </Typography>
+          <Box
+            sx={{
+              position: 'relative',
+              height: isSearch ? '200px' : '500px',
+              maxHeight: '650px',
+              overflowY: 'auto',
+              overflowX: 'hidden',
+              paddingRight: '20px',
+              '&::-webkit-scrollbar': {
+                width: '7px',
+              },
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: theme.palette.grey[200],
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: theme.palette.primary.main,
+                borderRadius: '6px',
+              },
+            }}
+          >
+            <SearchQueryBuilder fields={fields} setOpen={setOpen} />
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

@@ -8,6 +8,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -15,11 +16,11 @@ import { CSSObject, styled, Theme, useTheme } from '@mui/material/styles';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { Fragment, useEffect, useState } from 'react';
-import { CiMenuBurger } from 'react-icons/ci';
 import { FaHome } from 'react-icons/fa';
 import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
-import CustomAppBar from './CustomAppBar';
 import { ItemsTab } from './Tabs';
+import Image from 'next/image';
+import { LuArrowRightToLine } from 'react-icons/lu';
 
 interface SideBarProps {
   content: React.ReactNode;
@@ -41,7 +42,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
     '&::-webkit-scrollbar': {
       display: 'none',
     },
-    backgroundColor: theme.palette.grey[300],
+    backgroundColor: theme.palette.grey[100],
     borderRight: 'none',
   });
 
@@ -55,18 +56,9 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
     [theme.breakpoints.up('sm')]: {
       width: `calc(${theme.spacing(8)} + 1px)`,
     },
-    backgroundColor: theme.palette.grey[300],
+    backgroundColor: theme.palette.grey[100],
     borderRight: isLightMode ? '1px solid #0000001f' : '1px solid #ffffff1f',
   });
-
-  const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    backgroundColor: theme.palette.grey[300],
-  }));
 
   const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
@@ -185,28 +177,51 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
       }}
     >
       <CssBaseline />
-      <CustomAppBar open={open} handleDrawerOpen={handleDrawerOpen} />
 
       <Drawer variant="permanent" open={open} onMouseLeave={handleDrawerClose}>
-        <DrawerHeader
-          sx={{
-            display: open ? 'flex' : 'none',
-            justifyContent: 'flex-start',
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            background: theme.palette.grey[300],
-            width: '100%',
-            zIndex: 1000,
-            boxShadow: 5,
-          }}
-        >
-          <IconButton onClick={handleDrawerClose}>
-            <CiMenuBurger />
-          </IconButton>
-        </DrawerHeader>
+        {open ? (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              pl: '8px',
+              pt: '8px',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Image alt="Image" width={40} height={42} src="/images/logo.png" priority />
+              <Typography>EDR</Typography>
+            </Box>
 
-        <List sx={{ marginTop: '55px' }}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={() => setOpen(false)}
+              edge="start"
+              sx={{
+                mr: '2px',
+              }}
+            >
+              <LuArrowRightToLine style={{ fontSize: '22px' }} />
+            </IconButton>
+          </Box>
+        ) : (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{
+              ml: '2px',
+              mt: '4px',
+            }}
+          >
+            <Image alt="Image" width={38} height={38} src="/images/logo.png" priority />
+          </IconButton>
+        )}
+
+        <List>
           <Divider />
           <ListItem
             sx={{

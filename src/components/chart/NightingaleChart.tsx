@@ -5,47 +5,47 @@ import { useRouter } from 'next/router';
 import { ChartDataItem } from './type';
 import NoData from '@/utils/NoData';
 
-interface PieChartProps {
-  data: ChartDataItem[];
+interface NightingaleChartProps {
+  data: ChartDataItem[]; // داده‌های ورودی از همان ساختار قبلی
   startIndex?: number;
   renderBottomText?: boolean;
   isLoading?: boolean;
-  colors?: string[];
+  colors?: string[]; // استفاده از رنگ‌ها در صورت نیاز
 }
 
-const PieChart: FC<PieChartProps> = ({
+const NightingaleChart: FC<NightingaleChartProps> = ({
   data = [],
   startIndex,
   renderBottomText = false,
   isLoading,
-  colors = [], // Default to an empty array
+  colors = [], // استفاده از آرایه‌ی رنگ‌ها
 }) => {
   const theme = useTheme();
   const router = useRouter();
-  const chartContainerRef = useRef<HTMLDivElement>(null);
-  const totalValue = data.reduce((acc, item) => acc + (item.value ?? 0), 0);
+  const nightingaleChartRef = useRef<HTMLDivElement>(null);
 
+  // داده‌های نمودار به همراه درصد محاسبه شده
   const chartDataWithPercentage = data.map((item) => ({
     ...item,
-    name: item.fa ? item.fa : item.en,
-    value: item.value !== undefined ? ((item.value / totalValue) * 100).toFixed(2) : '0.00',
+    name: item.fa ? item.fa : item.en, // استفاده از fa یا en به عنوان نام
+    value: item.value !== undefined ? item.value : 0, // استفاده از value
   }));
 
+  // داده‌های legend
   const legendData =
     startIndex !== undefined
       ? data.slice(startIndex, startIndex + 4).map((item) => ({
-          ...item,
           name: item.fa ? item.fa : item.en,
           value: item.value,
         }))
       : data.map((item) => ({
-          ...item,
           name: item.fa ? item.fa : item.en,
           value: item.value,
         }));
 
+  // تابع برای مقداردهی اولیه نمودار
   const initializeChart = () => {
-    const chartDom = chartContainerRef.current;
+    const chartDom = nightingaleChartRef.current;
     if (chartDom) {
       const chartInstance = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
 
@@ -67,12 +67,8 @@ const PieChart: FC<PieChartProps> = ({
           orient: renderBottomText ? 'horizontal' : 'vertical',
           icon: 'circle',
           left: renderBottomText ? 'center' : 'right',
-          right: renderBottomText ? 'auto' : 10,
           top: renderBottomText ? 'bottom' : 'middle',
-          data: legendData.map((item) => ({
-            name: item.name,
-            value: item.value,
-          })),
+          data: legendData.map((item) => item.name),
           formatter: (name: string) => {
             const item = legendData.find((i) => i.name === name);
             return item ? `${item.name} (${item.value})` : name;
@@ -81,39 +77,29 @@ const PieChart: FC<PieChartProps> = ({
             fontFamily: 'vazir',
             color: theme.palette.grey[900],
             fontSize: 16,
-            lineHeight: 20,
+            lineHeight: 15,
           },
         },
         series: [
           {
-            name: `اطلاعات :`,
+            name: 'Radius Mode',
             type: 'pie',
-            radius: renderBottomText ? ['40%', '55%'] : ['40%', '65%'],
-            center: renderBottomText ? ['50%', '40%'] : ['20%', '50%'],
-            padAngle: 0,
-            avoidLabelOverlap: true,
+            radius: ['50%', '85%'],
+            center: ['20%', '55%'],
+            roseType: 'radius',
             itemStyle: {
               borderRadius: 0,
             },
             label: {
               show: false,
-              position: 'center',
             },
-            labelLine: {
-              show: false,
-              length: 10,
-              length2: 10,
+            emphasis: {
+              label: {
+                show: false,
+              },
             },
             data: chartDataWithPercentage,
-            color: colors.length
-              ? colors
-              : [
-                  theme.palette.info.dark,
-                  theme.palette.warning.light,
-                  theme.palette.error.main,
-                  theme.palette.info.main,
-                  theme.palette.grey[700],
-                ], // Set colors if provided
+            color: colors.length ? colors : undefined,
             animation: true,
             animationDuration: 500,
             animationEasing: 'quadraticIn',
@@ -121,16 +107,15 @@ const PieChart: FC<PieChartProps> = ({
         ],
       };
 
-      chartInstance.setOption(option);
-
+      // افزودن قابلیت کلیک برای مسیریابی
       chartInstance.on('click', (params: any) => {
-        const checkOnClick = data.find(
-          (item) => item.en === params.name || item.fa === params.name
-        );
-        if (checkOnClick?.redirectTo) {
-          router.push({ pathname: checkOnClick.redirectTo, query: checkOnClick.query });
+        const clickedItem = data.find((item) => (item.fa ? item.fa : item.en) === params.name);
+        if (clickedItem?.redirectTo) {
+          router.push(clickedItem.redirectTo); // مسیریابی به URL مشخص شده
         }
       });
+
+      chartInstance.setOption(option);
 
       const resizeChart = () => {
         chartInstance.resize();
@@ -151,18 +136,14 @@ const PieChart: FC<PieChartProps> = ({
   }, [data, theme.palette.grey, colors]);
 
   return (
-    <div style={{ width: '100%', height: renderBottomText ? '340px' : '181px', direction: 'rtl' }}>
+    <div style={{ width: '100%', height: '181px', direction: 'rtl' }}>
       {!data || data?.length === 0 ? (
         <NoData type="pie" isLoading={isLoading} />
       ) : (
-        <div
-          ref={chartContainerRef}
-          className="mainPieChart"
-          style={{ width: '100%', height: renderBottomText ? '350px' : '230px', direction: 'rtl' }}
-        ></div>
+        <div ref={nightingaleChartRef} style={{ width: '100%', height: '100%' }}></div>
       )}
     </div>
   );
 };
 
-export default PieChart;
+export default NightingaleChart;

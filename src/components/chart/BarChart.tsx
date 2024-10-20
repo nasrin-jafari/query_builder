@@ -35,15 +35,15 @@ const BarChart: FC<BarChartProps> = ({ data = [], isLoading }) => {
         echarts.getInstanceByDom(chartRef.current) || echarts.init(chartRef.current);
 
       const option = {
-        toolbox: {
-          feature: {
-            saveAsImage: {
-              iconStyle: {
-                borderColor: theme.palette.grey[900],
-              },
-            },
-          },
-        },
+        // toolbox: {
+        //   feature: {
+        //     saveAsImage: {
+        //       iconStyle: {
+        //         borderColor: theme.palette.grey[900],
+        //       },
+        //     },
+        //   },
+        // },
         tooltip: {
           trigger: 'axis',
           axisPointer: {

@@ -7,6 +7,9 @@ interface ExtendedPaletteOptions extends PaletteOptions {
     1200?: string;
     1300?: string;
   };
+  background: PaletteOptions['background'] & {
+    card: '#fff';
+  };
 }
 
 export const lightPalette: ExtendedPaletteOptions = {
@@ -21,6 +24,7 @@ export const lightPalette: ExtendedPaletteOptions = {
   info: {
     light: '#14c8d4',
     main: '#0093EF',
+    dark: '#514fa6',
   },
   success: {
     light: 'rgba(55, 211, 171, 0.20)',
@@ -30,20 +34,22 @@ export const lightPalette: ExtendedPaletteOptions = {
   warning: {
     light: 'rgba(248, 167, 30, 0.20)',
     main: '#F8A71E',
+    dark: '#f58634',
   },
   error: {
     light: 'rgba(235, 87, 87, 0.30)',
     main: '#EB5757',
   },
+
   grey: {
-    50: '#9BB5BE',
-    100: '#F6F8F9',
-    200: '#F4F4FA',
-    300: '#F6F8F9',
-    400: '#EEEEEE',
-    500: '#E9E9EA',
+    50: '#F6F8F9',
+    100: '#fff',
+    200: '#9BB5BE',
+    300: '#39393D',
+    400: '#51515382',
+    500: '#5A6B87',
     600: '#ffff',
-    700: '#5A6B87',
+    700: '#8b9da3',
     800: '#313A43',
     900: '#39393D',
     1000: '#1A242E',
@@ -55,6 +61,7 @@ export const lightPalette: ExtendedPaletteOptions = {
     white: '#ffffff',
   },
   background: {
-    default: '#EEEEEE',
+    default: '#F6F8F9',
+    card: '#fff',
   },
 };

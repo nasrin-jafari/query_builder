@@ -1,9 +1,9 @@
 import SearchQueryBuilder, { Field } from '@/components/advanceSearch/SearchQueryBuilder';
 import UseApi from '@/hooks/UseApi';
-import { Box } from '@mui/material';
+import PageBox from '@/components/common/PageBox';
 
 const Search = () => {
-  const { data } = UseApi('/advanced_search/advanced_search_info/');
+  const { data } = UseApi('/advanced_search/info/');
 
   //Type Assertion
   // const fields = data as Field[];
@@ -14,7 +14,11 @@ const Search = () => {
   };
   const fields: Field[] = isFieldArray(data) ? data : [];
 
-  return <Box>{fields?.length > 0 && <SearchQueryBuilder fields={fields} advancedSearch />}</Box>;
+  return (
+    <PageBox title={'جستجو'}>
+      {fields?.length > 0 && <SearchQueryBuilder fields={fields} advancedSearch />}
+    </PageBox>
+  );
 };
 
 export default Search;

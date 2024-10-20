@@ -110,7 +110,7 @@ const Mitre: React.FC<SidebarProps> = () => {
           width="20%"
           bgcolor="lightgray"
           p={2}
-          sx={{ background: theme.palette.grey[300], borderRadius: '18px' }}
+          sx={{ background: theme.palette.grey[100], borderRadius: '18px' }}
         >
           <Typography variant="h5">دسته بندی</Typography>
           <List sx={{ background: 'transparent' }}>
@@ -159,7 +159,7 @@ const Mitre: React.FC<SidebarProps> = () => {
                   alignContent: 'flex-start',
                   gap: 1,
                   height: '700px',
-                  overflow : 'auto'
+                  overflow: 'auto',
                 }}
               >
                 {filteredData?.body?.map((technique: Technique) => {

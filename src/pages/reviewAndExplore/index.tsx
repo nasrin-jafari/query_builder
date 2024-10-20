@@ -2,12 +2,12 @@ import PictorialBar from '@/components/chart/PictorialBar';
 import { ChartDataItem } from '@/components/chart/type';
 import PageBox from '@/components/common/PageBox';
 import UseApi from '@/hooks/UseApi';
-import CardBox from '@/layout/CardBox';
 import NumberBox from '@/sections/reviewAndExplore/NumberBox';
 import ReviewItems from '@/sections/reviewAndExplore/ReviewItems';
 import { Box, Grid, Typography, useTheme } from '@mui/material';
 import { fieldsQueries } from '@/constants/tableHeaders';
 import React from 'react';
+import CardCharts from '@/components/common/CardCharts';
 
 interface Overview {
   logs_last_7_days: number;
@@ -47,7 +47,7 @@ const ReviewAndExplore: React.FC = () => {
       </Box>
       <Grid container spacing={4}>
         <Grid item md={6}>
-          <CardBox>
+          <CardCharts>
             <Typography variant="h5">نمودار رخدادها</Typography>
             {data && (
               <PictorialBar
@@ -55,10 +55,10 @@ const ReviewAndExplore: React.FC = () => {
                 colors={[theme.palette.info.main, theme.palette.info.main]}
               />
             )}
-          </CardBox>
+          </CardCharts>
         </Grid>
         <Grid item md={6}>
-          <CardBox>
+          <CardCharts>
             <Typography variant="h5">نمودار قرنطینه‌شده‌ها</Typography>
             {data && (
               <PictorialBar
@@ -66,7 +66,7 @@ const ReviewAndExplore: React.FC = () => {
                 colors={[theme.palette.error.main, theme.palette.error.main]}
               />
             )}
-          </CardBox>
+          </CardCharts>
         </Grid>
       </Grid>
     </PageBox>

@@ -30,7 +30,7 @@ const MultiServices = () => {
   const [showOutput, setShowOutput] = useState(false);
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const { data: listModels } = useApi<string[]>('/dashboard/third-party/analysis/');
+  const { data: listModels } = useApi<string[]>('/dashboard/services/');
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const {
@@ -51,7 +51,7 @@ const MultiServices = () => {
     try {
       const response = await axiosMethod({
         method: 'POST',
-        url: `/dashboard/third-party/analysis/`,
+        url: `/dashboard/services/`,
         params: {},
         data: formData,
         headers: {

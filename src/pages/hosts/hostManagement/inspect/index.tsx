@@ -21,7 +21,7 @@ const InspectHostManagement = () => {
   const { statusFa, status } = router.query;
 
   const { data, total, loading } = UseApi<HandleApiRequestResponse>(
-    `/dashboard/agent_activity_status/${status}/`
+    `/dashboard/activity/${status}/`
   );
 
   return (

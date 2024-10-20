@@ -17,7 +17,7 @@ const ProgressBar: FC<ProgressBarProps> = ({ usage, total }) => {
     if (percentage <= 25) {
       return theme.palette.success.main;
     } else if (percentage <= 50) {
-      return theme.palette.warning.main;
+      return theme.palette.warning.light;
     } else if (percentage <= 75) {
       return theme.palette.primary.main;
     } else {

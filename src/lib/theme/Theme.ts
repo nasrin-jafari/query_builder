@@ -8,7 +8,7 @@ import ButtonOverrides from './overrides/ButtonOverrides';
 
 const typography: TypographyVariantsOptions = {
   fontFamily: 'vazir',
-  fontSize: 14,
+  fontSize: 16,
 };
 
 const breakpoints = {

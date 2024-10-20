@@ -2,7 +2,6 @@ import axiosMethod from '@/api';
 import { ConfirmationDialog, CustomForm, CustomIconButton } from '@/components';
 import CustomTooltip from '@/components/common/CustomToolTip';
 // import { UseAceessBtn } from '@/hooks/UseAceessBtn';
-import CardBox from '@/layout/CardBox';
 import { ConvertDates } from '@/utils/ConvertDates';
 import { exportFiles } from '@/utils/DownloadFiles';
 import {
@@ -44,7 +43,6 @@ import {
 import { MdOutlineAdd } from 'react-icons/md';
 import { PiDownloadSimpleFill } from 'react-icons/pi';
 import { RiComputerLine } from 'react-icons/ri';
-import { TbExternalLink } from 'react-icons/tb';
 import { TiTick } from 'react-icons/ti';
 import * as yup from 'yup';
 import CopyValue from '../common/CopyValue';
@@ -340,7 +338,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
         <Box sx={{ mb: 2 }}>
           <Card
             sx={{
-              backgroundColor: theme.palette.grey[300],
+              backgroundColor: theme.palette.grey[100],
               borderRadius: 2,
               boxShadow: 2,
             }}
@@ -423,22 +421,19 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
           ) : null}
         </Box>
       )}
-      <CardBox sx={{ mt: linkOverview ? 0 : 2 }}>
-        {linkOverview ? (
-          <Box sx={{ direction: 'rtl' }}>
-            <CustomTooltip title="نمایش همه">
-              <IconButton onClick={() => router.push(linkOverview)}>
-                <TbExternalLink />
-              </IconButton>
-            </CustomTooltip>
-          </Box>
-        ) : null}
-        <TableContainer sx={{ pb: pageTotal <= 10 ? '14px' : 2 }}>
+      <Card
+        sx={{
+          mt: 2,
+          background: theme.palette.grey[100],
+          border: `1px solid ${theme.palette.grey[400]}`,
+        }}
+      >
+        <TableContainer sx={{ pb: pageTotal <= 10 ? '0' : 2 }}>
           <Table>
             <TableHead
               sx={{
                 '&  th': { fontWeight: 'bold', fontSize: 16 },
-                background: theme.palette.grey[300],
+                background: theme.palette.grey[50],
               }}
             >
               <TableRow>
@@ -488,18 +483,28 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                   </TableCell>
                 ))}
                 {buttons && (
-                  <TableCell align="center" sx={{ width: 150 }}>
+                  <TableCell
+                    align="center"
+                    sx={{
+                      width: 250,
+                      justifySelf: 'flex-end',
+                    }}
+                  >
                     عملیات
                   </TableCell>
                 )}
-                {!notExtra && <TableCell align="right">جزئیات</TableCell>}
+                {!notExtra && (
+                  <TableCell align="right" sx={{ width: 50 }}>
+                    جزئیات
+                  </TableCell>
+                )}
               </TableRow>
             </TableHead>
 
             <TableBody
               sx={{
                 '& td': {
-                  borderBottom: loading ? 'none' : '1px solid rgba(81, 81, 81,0.51)',
+                  borderBottom: loading ? 'none' : `1px solid ${theme.palette.grey[400]}`,
                 },
               }}
             >
@@ -509,7 +514,14 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                 <>
                   {rows?.map((row, rowIndex) => (
                     <React.Fragment key={row.id}>
-                      <TableRow>
+                      <TableRow
+                        sx={{
+                          backgroundColor:
+                            rowIndex % 2 === 0
+                              ? theme.palette.grey[100]
+                              : theme.palette.background.default,
+                        }}
+                      >
                         {selectableRows && (
                           <TableCell align="center">
                             <Checkbox
@@ -536,8 +548,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                     value >= 8
                                       ? theme.palette.error.main
                                       : value >= 6
-                                      ? theme.palette.primary.main
-                                      : theme.palette.warning.main,
+                                        ? theme.palette.primary.main
+                                        : theme.palette.warning.main,
                                 }}
                               >
                                 {value}
@@ -658,93 +670,102 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                         })}
 
                         {buttons && (
-                          <TableCell align="center">
-                            {buttons?.map((button, index) => {
-                              const showButton = (_: string, condition: boolean) =>
-                                condition ? (
-                                  <CustomIconButton
-                                    key={index}
-                                    icon={button.icon && button.icon.type}
-                                    label={button.label}
-                                    type={button.type}
-                                    onClick={() => {
-                                      handleButtonClick(button, row);
-                                    }}
-                                  />
-                                ) : null;
-
-                              switch (button.type) {
-                                case 'delete':
-                                  return showButton('delete', showBtnDelete ?? false);
-                                case 'edit':
-                                  return showButton('edit', showBtnUpdate ?? false);
-                                case 'allowAccess':
-                                  return showButton('allowAccess', true);
-                                case 'content_type':
-                                  const componentMap: {
-                                    [key in RowData['content_type']]: JSX.Element;
-                                  } = {
-                                    OU: (
-                                      <CustomIconButton
-                                        key={index}
-                                        icon={button.icon && button.icon.type}
-                                        label={button.label}
-                                        type={button.type}
-                                        onClick={() => handleButtonClick(button, row)}
-                                      />
-                                    ),
-                                    Computer: (
-                                      <RiComputerLine
-                                        key={index}
-                                        style={{
-                                          fontSize: '19px',
-                                        }}
-                                      />
-                                    ),
-                                    User: (
-                                      <FaUser
-                                        key={index}
-                                        style={{
-                                          fontSize: '16px',
-                                        }}
-                                      />
-                                    ),
-                                  };
-
-                                  return componentMap[row.component_type] || null;
-
-                                default:
-                                  return null;
-                              }
-                            })}
-                            {extraButtons && extraButtons.length > 0 && (
-                              <IconButton onClick={(event) => handleMoreClick(event, rowIndex)}>
-                                <IoIosMore />
-                              </IconButton>
-                            )}
-                            <Popover
-                              id={id(rowIndex)}
-                              open={open(rowIndex)}
-                              anchorEl={anchorEls[rowIndex]}
-                              onClose={() => handleClose(rowIndex)}
-                              anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
+                          <TableCell>
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                gap: 1,
                               }}
                             >
-                              {extraButtons?.map((button, index) => (
-                                <MenuItem
-                                  key={index}
-                                  onClick={() => {
-                                    handleButtonClick(button, row);
-                                    handleClose(rowIndex);
-                                  }}
-                                  sx={{ fontSize: '16px', direction: 'ltr' }}
-                                >
-                                  {button.label}
-                                </MenuItem>
-                              ))}
-                            </Popover>
+                              {buttons?.map((button, index) => {
+                                const showButton = (_: string, condition: boolean) =>
+                                  condition ? (
+                                    <CustomIconButton
+                                      key={index}
+                                      icon={button.icon && button.icon.type}
+                                      label={button.label}
+                                      type={button.type}
+                                      onClick={() => {
+                                        handleButtonClick(button, row);
+                                      }}
+                                    />
+                                  ) : null;
+
+                                switch (button.type) {
+                                  case 'delete':
+                                    return showButton('delete', showBtnDelete ?? false);
+                                  case 'edit':
+                                    return showButton('edit', showBtnUpdate ?? false);
+                                  case 'allowAccess':
+                                    return showButton('allowAccess', true);
+                                  case 'content_type':
+                                    const componentMap: {
+                                      [key in RowData['content_type']]: JSX.Element;
+                                    } = {
+                                      OU: (
+                                        <CustomIconButton
+                                          key={index}
+                                          icon={button.icon && button.icon.type}
+                                          label={button.label}
+                                          type={button.type}
+                                          onClick={() => handleButtonClick(button, row)}
+                                        />
+                                      ),
+                                      Computer: (
+                                        <RiComputerLine
+                                          key={index}
+                                          style={{
+                                            fontSize: '19px',
+                                          }}
+                                        />
+                                      ),
+                                      User: (
+                                        <FaUser
+                                          key={index}
+                                          style={{
+                                            fontSize: '16px',
+                                          }}
+                                        />
+                                      ),
+                                    };
+
+                                    return componentMap[row.component_type] || null;
+
+                                  default:
+                                    return null;
+                                }
+                              })}
+                              {extraButtons && extraButtons.length > 0 && (
+                                <IconButton onClick={(event) => handleMoreClick(event, rowIndex)}>
+                                  <IoIosMore />
+                                </IconButton>
+                              )}
+                              <Popover
+                                id={id(rowIndex)}
+                                open={open(rowIndex)}
+                                anchorEl={anchorEls[rowIndex]}
+                                onClose={() => handleClose(rowIndex)}
+                                anchorOrigin={{
+                                  vertical: 'bottom',
+                                  horizontal: 'left',
+                                }}
+                              >
+                                {extraButtons?.map((button, index) => (
+                                  <MenuItem
+                                    key={index}
+                                    onClick={() => {
+                                      handleButtonClick(button, row);
+                                      handleClose(rowIndex);
+                                    }}
+                                    sx={{ fontSize: '16px', direction: 'ltr' }}
+                                  >
+                                    {button.label}
+                                  </MenuItem>
+                                ))}
+                              </Popover>
+                            </Box>
                           </TableCell>
                         )}
                         {!notExtra && (
@@ -760,14 +781,18 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                         )}
                       </TableRow>
                       {collapsedRows[rowIndex] && (
-                        <TableRow>
+                        <TableRow
+                          sx={{
+                            backgroundColor: rowIndex % 2 === 0 ? '' : theme.palette.grey[100],
+                          }}
+                        >
                           <TableCell colSpan={columns.length + 3}>
                             <Collapse in={collapsedRows[rowIndex]} timeout="auto" unmountOnExit>
                               <pre
                                 style={{
                                   textAlign: 'left',
                                   direction: 'ltr',
-                                  justifySelf: 'flex-start',
+                                  justifySelf: 'flex-end',
                                   fontFamily: 'vazir',
                                   padding: '25px',
                                   fontSize: 16,
@@ -787,7 +812,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
           </Table>
         </TableContainer>
         {pageTotal <= 10 ? null : (
-          <Stack spacing={2} sx={{ mt: 2, '& ul': { justifyContent: 'center' } }}>
+          <Stack spacing={2} sx={{ mt: 2, '& ul': { justifyContent: 'center' }, mb: 2 }}>
             <Pagination
               count={Math.ceil(pageTotal / 10)}
               page={router.query.page ? parseInt(router.query.page as string) : 1}
@@ -812,8 +837,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               dialogState.type === 'delete'
                 ? 'آیا مطمئن هستید که میخواهید این مورد را حذف کنید؟'
                 : dialogState.type === 'edit'
-                ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
-                : 'افزودن آیتم جدید'
+                  ? 'آیا می‌خواهید این مورد را ویرایش کنید؟'
+                  : 'افزودن آیتم جدید'
             }
             content={
               dialogState.type === 'delete' ? (
@@ -825,8 +850,8 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                     dialogState.type === 'edit'
                       ? editForm || []
                       : handleAdd
-                      ? handleAdd?.fields
-                      : fields || []
+                        ? handleAdd?.fields
+                        : fields || []
                   }
                   validationSchema={dialogState.button?.validation}
                   onSubmit={(data) => handleConfirmation(true, data)}
@@ -839,7 +864,26 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
             type={dialogState.type}
           />
         )}
-      </CardBox>
+      </Card>
+      {linkOverview ? (
+        <Box
+          sx={{
+            direction: 'rtl',
+            height: '80px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Button
+            onClick={() => router.push(linkOverview)}
+            variant="contained"
+            style={{ background: theme.palette.grey[700], fontSize: '14px' }}
+          >
+            نمایش کامل
+          </Button>
+        </Box>
+      ) : null}
     </>
   );
 };

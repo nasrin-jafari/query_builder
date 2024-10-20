@@ -1,10 +1,11 @@
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-// import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { AiOutlineRadarChart } from 'react-icons/ai';
 import { BsClipboardData } from 'react-icons/bs';
-// import { FaClock, FaHdd, FaMemory, FaTachometerAlt } from 'react-icons/fa';
+
 import { LuNetwork } from 'react-icons/lu';
+import { FaClock, FaHdd, FaMemory, FaTachometerAlt } from 'react-icons/fa';
 
 const PieChartIcon = () => (
   <svg width="60" height="60" viewBox="0 0 24 24">
@@ -45,26 +46,26 @@ const CustomLayoutGridIcon = () => (
   </svg>
 );
 
-// const CustomLayoutGridHorzontalIcon = ({ backgroundColorCard }) => (
-//   <svg width="300" height="75" viewBox="0 0 300 75">
-//     <rect x="0" y="0" width="65" height="65" fill={backgroundColorCard} rx="5" ry="5" />
-//     <foreignObject x="15" y="15" width="35" height="35">
-//       <FaClock size="100%" color="#FF6384" />
-//     </foreignObject>
-//     <rect x="75" y="0" width="65" height="65" fill={backgroundColorCard} rx="5" ry="5" />
-//     <foreignObject x="90" y="15" width="35" height="35">
-//       <FaHdd size="100%" color="#36A2EB" />
-//     </foreignObject>
-//     <rect x="150" y="0" width="65" height="65" fill={backgroundColorCard} rx="5" ry="5" />
-//     <foreignObject x="165" y="15" width="35" height="35">
-//       <FaTachometerAlt size="100%" color="#FFA726" />
-//     </foreignObject>
-//     <rect x="225" y="0" width="65" height="65" fill={backgroundColorCard} rx="5" ry="5" />
-//     <foreignObject x="240" y="15" width="35" height="35">
-//       <FaMemory size="100%" color="#4BC0C0" />
-//     </foreignObject>
-//   </svg>
-// );
+const CustomLayoutGridHorzontalIcon = ({ backgroundColorCard }: any) => (
+  <svg width="300" height="75" viewBox="0 0 300 75">
+    <rect x="0" y="0" width="65" height="65" fill={backgroundColorCard} rx="5" ry="5" />
+    <foreignObject x="15" y="15" width="35" height="35">
+      <FaClock size="100%" color="#FF6384" />
+    </foreignObject>
+    <rect x="75" y="0" width="65" height="65" fill={backgroundColorCard} rx="5" ry="5" />
+    <foreignObject x="90" y="15" width="35" height="35">
+      <FaHdd size="100%" color="#36A2EB" />
+    </foreignObject>
+    <rect x="150" y="0" width="65" height="65" fill={backgroundColorCard} rx="5" ry="5" />
+    <foreignObject x="165" y="15" width="35" height="35">
+      <FaTachometerAlt size="100%" color="#FFA726" />
+    </foreignObject>
+    <rect x="225" y="0" width="65" height="65" fill={backgroundColorCard} rx="5" ry="5" />
+    <foreignObject x="240" y="15" width="35" height="35">
+      <FaMemory size="100%" color="#4BC0C0" />
+    </foreignObject>
+  </svg>
+);
 const CustomLayoutGridVerticalIcon = () => (
   <svg width="75" height="95" viewBox="0 0 75 95">
     <rect x="0" y="0" width="65" height="25" fill="#FF6384" rx="5" ry="5" />
@@ -106,8 +107,7 @@ const SpeedChartIcon = () => (
     <path fill="#CFD8DC" d="M12 6l-1 5h2l-1-8z" />
   </svg>
 );
-// const renderIcon = (type, backgroundColorCard) => {
-const renderIcon = (type: string) => {
+const renderIcon = (type: string, backgroundColorCard: string) => {
   switch (type) {
     case 'pie':
       return <PieChartIcon />;
@@ -117,8 +117,8 @@ const renderIcon = (type: string) => {
       return <CustomBarChartHorizontalIcon />;
     case 'list':
       return <CustomLayoutGridIcon />;
-    // case 'list-horizontal':
-    //   return <CustomLayoutGridHorzontalIcon backgroundColorCard={backgroundColorCard} />;
+    case 'list-horizontal':
+      return <CustomLayoutGridHorzontalIcon backgroundColorCard={backgroundColorCard} />;
     case 'list-vertical':
       return <CustomLayoutGridVerticalIcon />;
     case 'progress':
@@ -135,9 +135,8 @@ const renderIcon = (type: string) => {
 };
 
 const NoData = ({ type, isLoading }: { type: string; isLoading?: boolean | undefined }) => {
-  // const theme = useTheme();
-  // const isLight = theme.palette.mode === 'light';
-  // const backgroundColorCard = theme.palette.grey[isLight ? 50 : 500_12];
+  const theme = useTheme();
+  const backgroundColorCard = theme.palette.grey[50];
 
   return (
     <Box
@@ -153,8 +152,7 @@ const NoData = ({ type, isLoading }: { type: string; isLoading?: boolean | undef
         direction: 'rtl',
       }}
     >
-      {/* {renderIcon(type, backgroundColorCard)} */}
-      {renderIcon(type)}
+      {renderIcon(type, backgroundColorCard)}
       <Typography variant="h6" sx={{ mt: 1 }}>
         {isLoading ? ' ... در حال پردازش اطلاعات  ' : 'اطلاعاتی وجود ندارد'}
       </Typography>

@@ -31,7 +31,7 @@ const ADInstaller = () => {
   const [selectedRows, setSelectedRows] = useState<ListData | null>(null);
 
   const { data, total, loading, handleApiRequest } = UseApi<HandleApiRequestResponse>(
-    `/active_directory/silent-installer/${ADInstaller}/`
+    `/active_directory/silent_installer/${ADInstaller}/`
   );
 
   const fields = [
@@ -107,13 +107,13 @@ const ADInstaller = () => {
               if (selectedRows) {
                 const params = { ...selectedRows, ...formData };
                 const res = await handleApiRequest(
-                  `/active_directory/silent-installer/${ADInstaller}/`,
+                  `/active_directory/silent_installer/${ADInstaller}/`,
                   'post',
                   params
                 );
 
                 if (res) {
-                  handleApiRequest(`/active_directory/silent-installer/${ADInstaller}/`, 'get');
+                  handleApiRequest(`/active_directory/silent_installer/${ADInstaller}/`, 'get');
                 }
                 setOpen(false);
               }

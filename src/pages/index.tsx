@@ -6,10 +6,11 @@ import Mitre from '@/sections/dashboard/mitre';
 import ResourceConsumption from '@/sections/dashboard/resourceConsumption';
 import SpeedTest from '@/sections/dashboard/speedTest';
 import Status from '@/sections/dashboard/status';
-import { Divider, styled } from '@mui/material';
+import { Box, Divider, styled } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import CustomAppBar from '@/layout/CustomAppBar';
 
 export default function Home() {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,24 +42,20 @@ export default function Home() {
       content: (
         <>
           <>
-            <CustomDivider textAlign="left">وضعیت منابع</CustomDivider>
             <Status data={data} isLoading={isLoading} />
           </>
           <>
-            <CustomDivider textAlign="left">وضعیت رویدادها </CustomDivider>
-            <Events data={data} isLoading={isLoading} />
-          </>
-          <>
-            <CustomDivider textAlign="left">تهدیدات MITRE </CustomDivider>
             <Mitre data={data} isLoading={isLoading} />
           </>
           <>
-            <CustomDivider textAlign="left">سرعت سرور </CustomDivider>
+            <Events data={data} isLoading={isLoading} />
+          </>
+
+          <>
             <SpeedTest data={data?.speed_test} isLoading={isLoading} />
           </>
           <>
-            <CustomDivider textAlign="left">منابع مورد استفاده </CustomDivider>
-            <ResourceConsumption data={data?.progress_bars} />
+            <ResourceConsumption data={data?.progress_bars} isLoading={isLoading} />
           </>
         </>
       ),
@@ -95,7 +92,7 @@ export default function Home() {
       content: (
         <>
           <CustomDivider textAlign="left">سرعت سرور </CustomDivider>
-          <SpeedTest data={data?.speed_test} isLoading={isLoading} />,
+          <SpeedTest data={data?.speed_test} isLoading={isLoading} />
         </>
       ),
     },
@@ -104,15 +101,16 @@ export default function Home() {
       content: (
         <>
           <CustomDivider textAlign="left">منابع مورد استفاده </CustomDivider>
-          <ResourceConsumption data={data?.progress_bars} />,
+          <ResourceConsumption data={data?.progress_bars} isLoading={isLoading} />,
         </>
       ),
     },
   ];
 
   return (
-    <>
+    <Box>
+      <CustomAppBar title={'داشبورد'} sx={{ px: 3, mb: '-10px' }} />
       <CustomTabs tabs={tabs} orientation="vertical" />
-    </>
+    </Box>
   );
 }

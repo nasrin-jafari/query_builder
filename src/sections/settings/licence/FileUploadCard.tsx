@@ -83,15 +83,16 @@ const FileUploader: React.FC<FileUploaderProps> = ({ onUpload, multipleUpload })
         border: dragActive
           ? `2px dashed ${theme.palette.primary.main}`
           : errors.file
-          ? `2px dashed red`
-          : `2px dashed ${theme.palette.grey[700]}`,
+            ? `2px dashed red`
+            : `2px dashed ${theme.palette.grey[700]}`,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%',
         minHeight: '300px',
-        background: theme.palette.grey[300],
+        background: theme.palette.grey[100],
+        mt: 2,
       }}
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}

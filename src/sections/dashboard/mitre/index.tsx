@@ -3,7 +3,8 @@ import HostileTactics from './HostileTactics';
 import MitreTactics from './MitreTactics';
 import MitreThreat from './MitreThreat';
 import { ChartDataItem } from '@/components/chart/type';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
+import CardBox from '@/layout/CardBox';
 
 interface MitreProps {
   data: {
@@ -14,11 +15,16 @@ interface MitreProps {
 
 const Mitre: FC<MitreProps> = ({ data, isLoading }) => {
   return (
-    <Grid container spacing={2} sx={{ mt: 1 }}>
-      <MitreThreat data={data?.techniques_status} isLoading={isLoading} />
-      <MitreTactics data={data?.techniques_status} isLoading={isLoading} />
-      <HostileTactics data={data?.techniques_status} isLoading={isLoading} />
-    </Grid>
+    <CardBox sx={{ mt: 2 }}>
+      <Typography variant="h5" fontWeight="bold">
+        حملات MITRE
+      </Typography>
+      <Grid container spacing={3} sx={{ mt: 0.25 }}>
+        <HostileTactics data={data?.techniques_status} isLoading={isLoading} />
+        <MitreThreat data={data?.techniques_status} isLoading={isLoading} />
+        <MitreTactics data={data?.techniques_status} isLoading={isLoading} />
+      </Grid>
+    </CardBox>
   );
 };
 

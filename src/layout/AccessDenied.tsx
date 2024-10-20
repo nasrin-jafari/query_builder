@@ -104,7 +104,7 @@ export default function AccessDenied({
         sx={{
           padding: 3,
           borderRadius: 2,
-          backgroundColor: theme.palette.grey[300],
+          backgroundColor: theme.palette.grey[100],
           boxShadow: 3,
           width: '100%',
         }}

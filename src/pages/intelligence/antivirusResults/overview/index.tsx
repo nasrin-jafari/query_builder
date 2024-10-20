@@ -14,7 +14,7 @@ interface FetchDataResponse {
   Total: number;
 }
 const ExtraInfo = () => {
-  const { data, total, loading } = useApi<FetchDataResponse>('/multiav/detected/');
+  const { data, total, loading } = useApi<FetchDataResponse>('/multiav/results/');
   const router = useRouter();
 
   return (

@@ -17,7 +17,7 @@ const ParentComponent = () => {
     try {
       const response = await axiosMethod({
         method: 'POST',
-        url: `/background-engine/yara/detection/`,
+        url: `/background_engine/yara/detection/`,
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',

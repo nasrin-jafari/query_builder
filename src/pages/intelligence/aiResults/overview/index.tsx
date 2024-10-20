@@ -11,7 +11,7 @@ interface FetchDataResponse {
   Total: number;
 }
 const ExtraInfoAi = () => {
-  const { data, total, loading } = useApi<FetchDataResponse>('/ai/detected/');
+  const { data, total, loading } = useApi<FetchDataResponse>('/ai/results/');
 
   return (
     <PageBox

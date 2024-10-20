@@ -43,15 +43,15 @@ const PictorialBar: FC<PictorialBarProps> = ({ data = [], colors }) => {
             `;
           },
         },
-        toolbox: {
-          feature: {
-            saveAsImage: {
-              iconStyle: {
-                borderColor: theme.palette.grey[900],
-              },
-            },
-          },
-        },
+        // toolbox: {
+        //   feature: {
+        //     saveAsImage: {
+        //       iconStyle: {
+        //         borderColor: theme.palette.grey[900],
+        //       },
+        //     },
+        //   },
+        // },
         grid: {
           left: '3%',
           right: '4%',
@@ -132,7 +132,7 @@ const PictorialBar: FC<PictorialBarProps> = ({ data = [], colors }) => {
     }
   }, [data, theme, colors]);
   return (
-    <div style={{ width: '100%', height: '250px' }}>
+    <div style={{ width: '100%', height: '310px' }}>
       {!data || data?.length === 0 ? (
         <NoData type="bar" />
       ) : (

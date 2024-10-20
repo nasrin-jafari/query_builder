@@ -17,7 +17,7 @@ interface QuarantinedResponse {
 
 const ActivityQuarantined = () => {
   const { data: all_events_Data, loading } = useApi<QuarantinedResponse>(
-    '/agents/quarantined-files/?per_page=5'
+    '/agents/quarantined_files/?per_page=5'
   );
   const { data: events } = useApi<QuarantinedResponse>('/agents/quarantined/');
   const headersCol = quarantined_files?.slice(1, 6);
@@ -25,16 +25,12 @@ const ActivityQuarantined = () => {
 
   const components = [
     {
-      component: CustomDataGrid,
-      props: {
-        rows: all_events_Data?.Data,
-        columns: headersCol,
-        linkOverview: '/activity/quarantined/overview',
-        notExtra: true,
-      },
-      gridProps: { xs: 12, xl: 6 },
+      component: RadarChart,
+      props: { data: events?.top_tags, width: '100%', height: '100%' },
+      title: 'تکنیک ها',
+      gridProps: { xs: 6, xl: 4 },
       skeletonHeight: 400,
-      withCard: false,
+      withCard: true,
     },
     {
       component: PieChart,
@@ -52,24 +48,40 @@ const ActivityQuarantined = () => {
         renderBottomText: true,
       },
       title: 'پر مخاطره ترین ها',
-      gridProps: { xs: 6, xl: 3 },
-      skeletonHeight: 400,
-      withCard: true,
-    },
-    {
-      component: RadarChart,
-      props: { data: events?.top_tags, width: '100%', height: '100%' },
-      title: 'تکنیک ها',
-      gridProps: { xs: 6, xl: 3 },
+      gridProps: { xs: 6, xl: 4 },
       skeletonHeight: 400,
       withCard: true,
     },
     {
       component: PictorialBar,
-      props: { data: events?.events_time_chart },
-      gridProps: { xs: 12 },
+      props: {
+        data: events?.events_time_chart,
+        height: '100%',
+        width: '100%',
+        sx: {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+        },
+      },
+      title: 'پر مخاطره ترین ها',
+
+      gridProps: { xs: 6, xl: 4 },
       skeletonHeight: 400,
       withCard: true,
+    },
+    {
+      component: CustomDataGrid,
+      props: {
+        rows: all_events_Data?.Data,
+        columns: headersCol,
+        linkOverview: '/activity/quarantined/overview',
+        notExtra: true,
+      },
+      gridProps: { xs: 12 },
+      skeletonHeight: 400,
+      withCard: false,
     },
   ];
 

@@ -18,7 +18,7 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ px: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -41,7 +41,7 @@ const useStyles = (theme: Theme) => ({
   },
   innerBoxVertical: {
     flexGrow: 1,
-    bgcolor: theme.palette.grey[300],
+    bgcolor: theme.palette.grey[100],
     height: 'auto',
     position: 'fixed',
     right: 0,
@@ -57,7 +57,7 @@ const useStyles = (theme: Theme) => ({
   },
   paperHorizontal: {
     maxWidth: { xs: 320, sm: 650 },
-    bgcolor: theme.palette.grey[500],
+    bgcolor: theme.palette.grey[100],
     borderRadius: '8px',
   },
   paperVertical: {

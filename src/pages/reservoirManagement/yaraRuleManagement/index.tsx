@@ -20,7 +20,7 @@ interface ApiResponse {
 
 const YaraRuleManagement: React.FC = () => {
   const { data, total, loading, handleApiRequest } = UseApi<ApiResponse>(
-    '/background-engine/yara/get/'
+    '/background_engine/yara/'
   );
   const [dataInit, setDataInit] = useState(data?.Data);
   useEffect(() => {
@@ -73,7 +73,7 @@ const YaraRuleManagement: React.FC = () => {
         const fileData = new FormData();
         fileData.append('file', formData.file[0]);
 
-        response = await axiosMethod.post('/background-engine/yara/file/', fileData, {
+        response = await axiosMethod.post('/background_engine/yara/file/', fileData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -83,10 +83,10 @@ const YaraRuleManagement: React.FC = () => {
           name: formData.name,
           content: formData.content,
         };
-        response = await handleApiRequest('/background-engine/yara/content/', 'post', content);
+        response = await handleApiRequest('/background_engine/yara/content/', 'post', content);
       }
       if (response) {
-        await handleApiRequest('/background-engine/yara/get/', 'get');
+        await handleApiRequest('/background_engine/yara/', 'get');
       }
     } catch (error) {
       console.log(`Error: ${error}`);
@@ -101,13 +101,13 @@ const YaraRuleManagement: React.FC = () => {
       };
 
       const response = await handleApiRequest(
-        `/background-engine/yara/edit/${row.id}/`,
+        `/background_engine/yara/edit/${row.id}/`,
         'patch',
         content
       );
 
       if (response) {
-        await handleApiRequest('/background-engine/yara/get/', 'get');
+        await handleApiRequest('/background_engine/yara/', 'get');
       }
     } catch (error) {
       console.log(`Error: ${error}`);
@@ -117,12 +117,12 @@ const YaraRuleManagement: React.FC = () => {
   const handleDelete = async (_: any, row: any) => {
     try {
       const response = await handleApiRequest(
-        `/background-engine/yara/delete/${row.id}/`,
+        `/background_engine/yara/delete/${row.id}/`,
         'delete'
       );
 
       if (response) {
-        await handleApiRequest('/background-engine/yara/get/', 'get');
+        await handleApiRequest('/background_engine/yara/', 'get');
       }
     } catch (error) {
       console.log(`Error: ${error}`);
@@ -130,10 +130,10 @@ const YaraRuleManagement: React.FC = () => {
   };
   const handleSwitch = async (fieldValue: boolean, rowId: number) => {
     const response = await axiosMethod.post(
-      `/background-engine/yara/status/${fieldValue == true ? 'disable' : 'enable'}/${rowId}/`
+      `/background_engine/yara/status/${fieldValue == true ? 'disable' : 'enable'}/${rowId}/`
     );
     if (response) {
-      const res = await axiosMethod.get('/background-engine/yara/get/');
+      const res = await axiosMethod.get('/background_engine/yara/');
       setDataInit(res.data.data?.Data);
     }
   };

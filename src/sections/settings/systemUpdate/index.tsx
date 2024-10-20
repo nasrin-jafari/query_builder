@@ -6,10 +6,10 @@ import UseApi from '@/hooks/UseApi';
 import { Box, Button, Grid, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import axiosMethod from '@/api';
-import CardBox from '@/layout/CardBox';
 import CustomStepper from '@/sections/settings/systemUpdate/CustomStepper';
 import LastUpdate from '@/sections/settings/systemUpdate/LastUpdate';
 import { MdVisibility } from 'react-icons/md';
+import CardCharts from '@/components/common/CardCharts';
 
 interface SystemUpdateData {
   host: string;
@@ -221,10 +221,10 @@ const SystemUpdate = () => {
           setSelectedItem={setSelectedItem}
           openConfirmationDialog={openConfirmationDialog}
         />
-        <CardBox
+        <CardCharts
           sx={{
             display: 'flex',
-            background: theme.palette.grey[300],
+            background: theme.palette.grey[50],
             padding: '28px 10px',
             alignItems: 'center',
           }}
@@ -238,7 +238,7 @@ const SystemUpdate = () => {
             </Button>
           </Box>
           <CustomStepper stepperData={stepper} />
-        </CardBox>
+        </CardCharts>
 
         <CustomDataGrid
           pageTotal={total}

@@ -23,13 +23,14 @@ interface StatusProps {
   };
   isLoading: boolean;
 }
-
 const Status: FC<StatusProps> = ({ data, isLoading }) => {
+  console.log(data?.server_status);
+
   return (
     <Grid container spacing={2} sx={{ mt: 1 }}>
-      <ResourceStatus data={data?.server_status} />
+      <ResourceStatus data={data?.server_status} isLoading={isLoading} />
       <OpratingSystemClient data={data?.third_party_services} isLoading={isLoading} />
-      <SystemConnectionStatus data={data?.third_party_services} />
+      <SystemConnectionStatus data={data?.third_party_services} isLoading={isLoading} />
     </Grid>
   );
 };
