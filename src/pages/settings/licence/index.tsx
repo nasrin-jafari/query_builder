@@ -1,6 +1,5 @@
 import CardCharts from '@/components/common/CardCharts';
 import CustomTabs from '@/components/common/CustomTabs';
-import CardBox from '@/layout/CardBox';
 import Licence from '@/sections/settings/licence';
 import { Box, Typography } from '@mui/material';
 import React from 'react';
