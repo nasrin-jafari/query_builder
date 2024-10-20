@@ -80,7 +80,7 @@ test_development:
 depscan:
   stage: security_scan
   rules:
-    - if: '$INCLUDE_SCAN == "true"'
+    - if: '$CI_COMMIT_REF_NAME == "developer" && $INCLUDE_SCAN == "true"'
       when: always
   tags:
     - edr-frontendts
