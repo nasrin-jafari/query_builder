@@ -33,6 +33,7 @@ const LicenseDetailsCard: React.FC<LicenseDetailsCardProps> = ({
         height: '100%',
         minHeight: '300px',
         background: theme.palette.grey[100],
+        mt: 2,
       }}
     >
       <Box

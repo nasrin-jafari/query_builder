@@ -1,3 +1,4 @@
+import CardCharts from '@/components/common/CardCharts';
 import CustomTabs from '@/components/common/CustomTabs';
 import CardBox from '@/layout/CardBox';
 import Licence from '@/sections/settings/licence';
@@ -20,9 +21,9 @@ const License: React.FC = () => {
     <Box
       sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '40px' }}
     >
-      <CardBox minWidth="900px">
+      <CardCharts sx={{ minWidth: '900px' }}>
         <CustomTabs tabs={tabs} />
-      </CardBox>
+      </CardCharts>
     </Box>
   );
 };

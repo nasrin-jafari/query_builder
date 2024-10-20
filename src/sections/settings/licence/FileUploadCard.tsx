@@ -92,6 +92,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ onUpload, multipleUpload })
         height: '100%',
         minHeight: '300px',
         background: theme.palette.grey[100],
+        mt: 2,
       }}
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}
