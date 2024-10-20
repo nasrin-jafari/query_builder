@@ -57,7 +57,7 @@ const useStyles = (theme: Theme) => ({
   },
   paperHorizontal: {
     maxWidth: { xs: 320, sm: 650 },
-    bgcolor: theme.palette.grey[500],
+    bgcolor: theme.palette.grey[100],
     borderRadius: '8px',
   },
   paperVertical: {

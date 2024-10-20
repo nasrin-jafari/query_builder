@@ -30,7 +30,7 @@ const AiUpload = () => {
   const [loading, setLoading] = useState(false);
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
   const theme = useTheme();
-  const { data: listModels } = useApi<Model[]>('/ai/models-list/');
+  const { data: listModels } = useApi<Model[]>('/ai/models_list/');
   useEffect(() => {
     if (listModels) {
       setSelectedModel(listModels[0]?.endpoint);
@@ -80,7 +80,7 @@ const AiUpload = () => {
               background:
                 selectedModel === model.endpoint
                   ? theme.palette.primary.light
-                  : theme.palette.grey[500],
+                  : theme.palette.grey[50],
               boxShadow: 5,
               display: 'flex',
               alignItems: 'center',

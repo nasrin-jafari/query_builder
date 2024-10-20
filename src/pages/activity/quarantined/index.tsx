@@ -17,7 +17,7 @@ interface QuarantinedResponse {
 
 const ActivityQuarantined = () => {
   const { data: all_events_Data, loading } = useApi<QuarantinedResponse>(
-    '/agents/quarantined-files/?per_page=5'
+    '/agents/quarantined_files/?per_page=5'
   );
   const { data: events } = useApi<QuarantinedResponse>('/agents/quarantined/');
   const headersCol = quarantined_files?.slice(1, 6);

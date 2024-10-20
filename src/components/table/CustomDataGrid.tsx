@@ -792,7 +792,7 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
                                 style={{
                                   textAlign: 'left',
                                   direction: 'ltr',
-                                  justifySelf: 'flex-start',
+                                  justifySelf: 'flex-end',
                                   fontFamily: 'vazir',
                                   padding: '25px',
                                   fontSize: 16,

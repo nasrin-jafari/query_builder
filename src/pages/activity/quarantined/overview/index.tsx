@@ -13,7 +13,7 @@ interface FetchDataResponse {
   Total: number;
 }
 const QuarantinedOverview = () => {
-  const { data, total, loading } = useApi<FetchDataResponse>('/agents/quarantined-files/');
+  const { data, total, loading } = useApi<FetchDataResponse>('/agents/quarantined_files/');
   const router = useRouter();
 
   return (
@@ -38,7 +38,7 @@ const QuarantinedOverview = () => {
             type: 'extra',
             onClick: (_, data) => {
               exportFiles({
-                path: `/agents/quarantined-files/${data?.extra_information?.hash_sha256}/`,
+                path: `/agents/quarantined_files/${data?.extra_information?.hash_sha256}/`,
                 fileName: `${data?.hash_md5}.q`,
                 type: 'file',
               });

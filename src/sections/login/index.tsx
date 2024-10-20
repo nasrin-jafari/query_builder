@@ -123,7 +123,7 @@ const Login = () => {
   const onSubmitForgotPassword = async (data: any) => {
     if (securityQuestion?.securityQuestion) {
       try {
-        await axiosMethod.post('/user/new-password/', {
+        await axiosMethod.post('/user/new_password/', {
           ...data,
           username: securityQuestion.username,
         });
@@ -133,7 +133,7 @@ const Login = () => {
       }
     } else {
       try {
-        const response = await axiosMethod.post('/user/forgot-password/', data);
+        const response = await axiosMethod.post('/user/forgot_password/', data);
         if (response.data.success) {
           setSecurityQuestion({
             securityQuestion: response.data.data,

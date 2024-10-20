@@ -3,7 +3,7 @@ import UseApi from '@/hooks/UseApi';
 import PageBox from '@/components/common/PageBox';
 
 const Search = () => {
-  const { data } = UseApi('/advanced_search/advanced_search_info/');
+  const { data } = UseApi('/advanced_search/info/');
 
   //Type Assertion
   // const fields = data as Field[];

@@ -26,7 +26,6 @@ const CustomStepperLine = styled(Stepper)(({ theme }) => ({
 const CustomStepper: React.FC<CustomStepperProps> = ({ stepperData }) => {
   const failedStep = stepperData?.findIndex((item) => item.status === 'failed');
   const pendingStep = stepperData?.findIndex((item) => item.status === 'pending');
-
   const activeStep =
     failedStep !== -1 ? failedStep : pendingStep !== -1 ? pendingStep : stepperData.length;
 

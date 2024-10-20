@@ -63,7 +63,7 @@ const ConnectToAD = () => {
       status: agent.status ? 'فعال' : 'غیرفعال',
     })) ?? [];
   const handleForm = async (data: FormData) => {
-    const res = await handleApiRequest('/active_directory/', 'post', data);
+    const res = await handleApiRequest('/active_directory/create/', 'post', data);
 
     if (res) {
       await handleApiRequest('/active_directory/', 'get');

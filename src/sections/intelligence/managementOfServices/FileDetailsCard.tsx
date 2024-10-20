@@ -19,7 +19,7 @@ const FileDetailsCard: React.FC<FileDetailsCardProps> = ({ details }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            background: theme.palette.grey[500],
+            background: theme.palette.grey[50],
             paddingX: 2,
             paddingY: 1,
             direction: 'rtl',

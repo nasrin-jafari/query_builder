@@ -29,7 +29,7 @@ const FileProgress: React.FC<FileProgressProps> = ({ details }) => {
         value={details.Benign ? details.Benign * 100 : 0}
         sx={{
           height: '20px',
-          backgroundColor: theme.palette.grey[100],
+          backgroundColor: theme.palette.grey[50],
           '& .MuiLinearProgress-bar': {
             backgroundColor: theme.palette.success.main,
           },
@@ -52,7 +52,7 @@ const FileProgress: React.FC<FileProgressProps> = ({ details }) => {
         value={details.Malware ? details.Malware * 100 : 0}
         sx={{
           height: '20px',
-          backgroundColor: theme.palette.grey[100],
+          backgroundColor: theme.palette.grey[50],
           '& .MuiLinearProgress-bar': {
             backgroundColor: theme.palette.error.main,
           },

@@ -23,8 +23,9 @@ interface StatusProps {
   };
   isLoading: boolean;
 }
-
 const Status: FC<StatusProps> = ({ data, isLoading }) => {
+  console.log(data?.server_status);
+
   return (
     <Grid container spacing={2} sx={{ mt: 1 }}>
       <ResourceStatus data={data?.server_status} isLoading={isLoading} />

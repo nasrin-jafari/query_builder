@@ -28,7 +28,7 @@ const ServerStatusCard: FC<ServerStatusCardProps> = ({ titleCard, Icon, title, d
 
   return (
     <Grid item md={3} sm={6} xs={12}>
-      <CardBox sx={{ background: '#ffffff1c' }}>
+      <CardBox sx={{ backgroundColor: theme.palette.grey[50] }}>
         <Typography sx={{ mb: 1, textAlign: 'center', fontWeight: 'bold', fontSize: '16px' }}>
           {titleCard}
         </Typography>
@@ -44,7 +44,7 @@ const ServerStatusCard: FC<ServerStatusCardProps> = ({ titleCard, Icon, title, d
           sx={{
             fontSize: 11,
             fontWeight: 'bold',
-            color: theme.palette.grey[700],
+            color: theme.palette.grey[300],
           }}
         >
           {description}
@@ -52,7 +52,7 @@ const ServerStatusCard: FC<ServerStatusCardProps> = ({ titleCard, Icon, title, d
         <Typography
           sx={{
             fontSize: 12,
-            color: theme.palette.grey[700],
+            color: theme.palette.grey[300],
             fontWeight: 'bold',
           }}
         >
@@ -77,6 +77,7 @@ const ResourceStatus: FC<ResourceStatusProps> = ({ data, isLoading }) => {
       </Grid>
     );
   }
+  console.log(data?.memory_usage_total, 'data?.memory_usage_total');
   return (
     <Grid item sm={12} xs={12} lg={6}>
       <CardBox title="وضعیت منابع سرور">

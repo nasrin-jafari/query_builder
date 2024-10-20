@@ -27,7 +27,6 @@ const OuInfo = () => {
   );
   const handleClickSelectedItem = async (actionType: string, selectedRows: RowData[]) => {
     const organizationsList = selectedRows.map((entry) => entry.name);
-
     const payload = {
       computers_list: organizationsList,
       organizations_list: [],

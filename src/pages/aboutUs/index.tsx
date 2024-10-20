@@ -17,7 +17,7 @@ import { useState } from 'react';
 import { BASE_URL } from '@/api';
 
 const AboutUs = () => {
-  const { data } = UseApi('/dashboard/videos-list/');
+  const { data } = UseApi('/dashboard/video/');
   const [selectedVideo, setSelectedVideo] = useState(''); // ذخیره ویدئوی انتخاب شده
   const theme = useTheme();
   // هندل تغییر ویدیو از dropdown
@@ -38,7 +38,7 @@ const AboutUs = () => {
               sx={{
                 padding: '20px',
                 borderRadius: '15px',
-                backgroundColor: theme.palette.grey[500],
+                backgroundColor: theme.palette.grey[100],
                 textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'column',
@@ -82,7 +82,7 @@ const AboutUs = () => {
               sx={{
                 padding: '20px',
                 borderRadius: '15px',
-                backgroundColor: theme.palette.grey[500],
+                backgroundColor: theme.palette.grey[100],
 
                 textAlign: 'center',
                 display: 'flex',
@@ -107,10 +107,7 @@ const AboutUs = () => {
                 }}
               >
                 {selectedVideo && (
-                  <source
-                    src={`${BASE_URL}/dashboard/video/${selectedVideo}/`}
-                    type="video/mp4"
-                  />
+                  <source src={`${BASE_URL}/dashboard/video/${selectedVideo}/`} type="video/mp4" />
                 )}
                 مرورگر شما از پخش ویدئو پشتیبانی نمی‌کند.
               </video>
