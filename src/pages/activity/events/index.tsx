@@ -37,6 +37,7 @@ const ActivityEvents = () => {
       component: PictorialBar,
       props: {
         data: events?.events_time_chart,
+        colors: ['#6ab4e8', '#4f76ff'],
         width: '100%',
         height: '100%',
         sx: {

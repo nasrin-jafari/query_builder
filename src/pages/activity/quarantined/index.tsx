@@ -27,6 +27,7 @@ const ActivityQuarantined = () => {
     {
       component: PictorialBar,
       props: {
+        colors: ['#fcb8b8', '#f28e8e'],
         data: events?.events_time_chart,
         height: '100%',
         width: '100%',
