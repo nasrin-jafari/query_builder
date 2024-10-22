@@ -80,8 +80,8 @@ const PieChart: FC<PieChartProps> = ({
           textStyle: {
             fontFamily: 'vazir',
             color: theme.palette.grey[900],
-            fontSize: 16,
-            lineHeight: 20,
+            fontSize: renderBottomText ? 14 : 16,
+            lineHeight: renderBottomText ? 15 : 20,
           },
         },
         series: [

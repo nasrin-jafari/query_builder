@@ -37,7 +37,15 @@ const MitreTactics: FC<MitreTacticsProps> = ({ data, isLoading }) => {
   }
   return (
     <Grid item lg={4} sm={6} xs={12}>
-      <Box sx={{ background: '#ffffff1c', p: 3, borderRadius: '20px', height: '300px' }}>
+      <Box
+        sx={{
+          background: '#ffffff1c',
+          border: `1px solid ${theme.palette.grey[50]}`,
+          p: 3,
+          borderRadius: '20px',
+          height: '300px',
+        }}
+      >
         <Typography variant="h6" fontWeight="bold">
           تاکتیک های حمله
         </Typography>
@@ -57,7 +65,7 @@ const MitreTactics: FC<MitreTacticsProps> = ({ data, isLoading }) => {
                 sx={{
                   height: 40, // ارتفاع نوار
                   width: '100%', // استفاده از کل عرض برای نوار
-                  backgroundColor: 'black',
+                  backgroundColor: theme.palette.grey[50],
                   borderRadius: '8px',
                   overflow: 'hidden',
                   position: 'relative',
@@ -80,7 +88,7 @@ const MitreTactics: FC<MitreTacticsProps> = ({ data, isLoading }) => {
               <Typography
                 textAlign="center"
                 variant="body1"
-                color={theme.palette.grey[700]}
+                color={theme.palette.grey[900]}
                 sx={{
                   ml: 2, // فاصله بین نوار و متن
                   whiteSpace: 'nowrap', // جلوگیری از شکستن خط

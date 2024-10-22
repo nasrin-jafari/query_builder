@@ -91,14 +91,14 @@ const PictorialBar: FC<PictorialBarProps> = ({ data = [], colors }) => {
             },
             showSymbol: false,
             areaStyle: {
-              opacity: 0.8,
+              opacity: 0.9,
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
                   color: colors?.[0] || theme.palette.info.light,
                 },
                 {
-                  offset: 0.1,
+                  offset: 0.5,
                   color: colors?.[1] || theme.palette.success.main,
                 },
               ]),
