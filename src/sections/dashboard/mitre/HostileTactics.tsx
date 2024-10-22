@@ -27,7 +27,15 @@ const HostileTactics: FC<HostileTacticsProps> = ({ data, isLoading }) => {
   }
   return (
     <Grid item lg={4} sm={12} xs={12}>
-      <Box sx={{ background: '#ffffff1c', p: 3, borderRadius: '20px', height: '300px' }}>
+      <Box
+        sx={{
+          background: '#ffffff1c',
+          border: `1px solid ${theme.palette.grey[50]}`,
+          p: 3,
+          borderRadius: '20px',
+          height: '300px',
+        }}
+      >
         <Typography variant="h6" fontWeight="bold">
           تکنیک های خصمانه
         </Typography>
@@ -51,7 +59,7 @@ const HostileTactics: FC<HostileTacticsProps> = ({ data, isLoading }) => {
                   {item?.value}
                 </Typography>
               </Box>
-              <Typography textAlign="center" variant="body1" color={theme.palette.grey[700]} mt={3}>
+              <Typography textAlign="center" variant="body1" color={theme.palette.grey[900]} mt={3}>
                 {item?.en}
               </Typography>
             </Grid>

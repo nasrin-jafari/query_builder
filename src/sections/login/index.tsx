@@ -2,6 +2,7 @@ import axiosMethod from '@/api';
 import Captcha from '@/components/common/Captcha';
 import CustomForm from '@/components/form/CustomForm';
 import { Box, Button, Container, Typography, useTheme } from '@mui/material';
+import Head from 'next/head';
 import Image from 'next/image';
 import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -152,94 +153,100 @@ const Login = () => {
   };
 
   return (
-    <Box
-      sx={{
-        '& .Toastify__toast-body': {
-          fontFamily: 'vazir',
-          fontSize: '14px',
-          textAlign: 'justify',
-          direction: 'ltr',
-        },
-        '& .Toastify__toast': {
-          flexDirection: 'row-reverse',
-        },
-      }}
-    >
+    <>
+      <Head>
+        <title>سامانه EDR / ورود</title>
+      </Head>
+
       <Box
         sx={{
-          direction: 'ltr',
-          bgcolor: theme.palette.grey[50],
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
+          '& .Toastify__toast-body': {
+            fontFamily: 'vazir',
+            fontSize: '14px',
+            textAlign: 'justify',
+            direction: 'ltr',
+          },
+          '& .Toastify__toast': {
+            flexDirection: 'row-reverse',
+          },
         }}
       >
-        <Container
-          maxWidth="lg"
+        <Box
           sx={{
-            bgcolor: theme.palette.grey[100],
-            borderRadius: `${theme.shape.borderRadius}px`,
-            padding: 5,
+            direction: 'ltr',
+            bgcolor: theme.palette.grey[50],
+            minHeight: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             textAlign: 'center',
-            backgroundImage: 'url(/images/bg-login.png)',
-            backgroundPosition: '50px top',
-            backgroundRepeat: 'no-repeat',
           }}
         >
-          <Image alt="Image" width={158} height={172} src="/images/logo.png" priority />
+          <Container
+            maxWidth="lg"
+            sx={{
+              bgcolor: theme.palette.grey[100],
+              borderRadius: `${theme.shape.borderRadius}px`,
+              padding: 5,
+              textAlign: 'center',
+              backgroundImage: 'url(/images/bg-login.png)',
+              backgroundPosition: '50px top',
+              backgroundRepeat: 'no-repeat',
+            }}
+          >
+            <Image alt="Image" width={158} height={172} src="/images/logo.png" priority />
 
-          <Box sx={{ mt: 5, mb: 3 }}>
-            <Typography variant="h3">
-              {' '}
-              {isForgotPassword ? 'بازیابی رمز عبور' : 'ورود به سامانه EDR ققنوس'}{' '}
-            </Typography>
-            <Typography sx={{ mt: '10px' }}>
-              {isForgotPassword
-                ? 'نام کاربری خود را وارد کنید'
-                : 'توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا'}
-            </Typography>
-          </Box>
+            <Box sx={{ mt: 5, mb: 3 }}>
+              <Typography variant="h3">
+                {' '}
+                {isForgotPassword ? 'بازیابی رمز عبور' : 'ورود به سامانه EDR ققنوس'}{' '}
+              </Typography>
+              <Typography sx={{ mt: '10px' }}>
+                {isForgotPassword
+                  ? 'نام کاربری خود را وارد کنید'
+                  : 'توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا'}
+              </Typography>
+            </Box>
 
-          <Container maxWidth="sm">
-            <CustomForm
-              allowAccess
-              fields={isForgotPassword ? forgotPasswordFields : loginFields}
-              onSubmit={isForgotPassword ? onSubmitForgotPassword : onSubmitLogin}
-              txtButton={isForgotPassword ? ' بازیابی رمز عبور' : 'ورود'}
-              validationSchema={
-                isForgotPassword ? forgotPasswordValidationSchema : loginValidationSchema
-              }
-              widthButton="25%"
-            >
-              {!isForgotPassword ? <Captcha onCaptchaChange={setCaptcha} /> : null}
-            </CustomForm>
+            <Container maxWidth="sm">
+              <CustomForm
+                allowAccess
+                fields={isForgotPassword ? forgotPasswordFields : loginFields}
+                onSubmit={isForgotPassword ? onSubmitForgotPassword : onSubmitLogin}
+                txtButton={isForgotPassword ? ' بازیابی رمز عبور' : 'ورود'}
+                validationSchema={
+                  isForgotPassword ? forgotPasswordValidationSchema : loginValidationSchema
+                }
+                widthButton="25%"
+              >
+                {!isForgotPassword ? <Captcha onCaptchaChange={setCaptcha} /> : null}
+              </CustomForm>
 
-            <Button
-              sx={{ mt: 3, color: 'red' }}
-              style={{ color: theme.palette.grey[200] }}
-              onClick={handleForgotPasswordToggle}
-              variant="text"
-              color="inherit"
-            >
-              {isForgotPassword ? 'بازگشت به صفحه ورود' : 'فراموشی رمز عبور'}
-            </Button>
+              <Button
+                sx={{ mt: 3, color: 'red' }}
+                style={{ color: theme.palette.grey[200] }}
+                onClick={handleForgotPasswordToggle}
+                variant="text"
+                color="inherit"
+              >
+                {isForgotPassword ? 'بازگشت به صفحه ورود' : 'فراموشی رمز عبور'}
+              </Button>
 
-            <Typography sx={{ color: theme.palette.grey[200], mt: 5 }}>نسخه : 1.0.0</Typography>
+              <Typography sx={{ color: theme.palette.grey[200], mt: 5 }}>نسخه : 1.0.0</Typography>
+            </Container>
           </Container>
-        </Container>
+        </Box>
+        <ToastContainer
+          position="top-left"
+          autoClose={1500}
+          hideProgressBar={false}
+          closeOnClick
+          pauseOnHover
+          draggable
+          theme="light"
+        />
       </Box>
-      <ToastContainer
-        position="top-left"
-        autoClose={1500}
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover
-        draggable
-        theme="light"
-      />
-    </Box>
+    </>
   );
 };
 
