@@ -1,10 +1,10 @@
-import axiosMethod from '@/api';
-import Captcha from '@/components/common/Captcha';
+import axiosMethod, { BASE_URL } from '@/api';
 import CustomForm from '@/components/form/CustomForm';
+import UseApi from '@/hooks/UseApi';
 import { Box, Button, Container, Typography, useTheme } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import * as yup from 'yup';
 
@@ -17,6 +17,10 @@ interface SecurityQuestionWrapper {
   securityQuestion?: SecurityQuestion;
 }
 
+interface CaptchaDataProps {
+  captcha_key: string;
+}
+
 const Login = () => {
   const theme = useTheme();
   const [isForgotPassword, setIsForgotPassword] = useState<boolean>(false); // برای تعویض فرم
@@ -27,12 +31,20 @@ const Login = () => {
   const [captcha, setCaptcha] = useState('');
   const [userCaptchaInput, setUserCaptchaInput] = useState('');
 
+  const { data: captchaData } = UseApi<CaptchaDataProps>('/user/captcha/');
+  useEffect(() => {
+    if (captchaData) {
+      const imageUrl = `${BASE_URL}/captcha/image/${captchaData?.captcha_key}/`;
+      setCaptcha(imageUrl);
+    }
+  }, [captchaData]);
+
   const loginFields = [
     { label: 'نام کاربری', name: 'username', type: 'text' },
     { label: 'رمز عبور', name: 'password', type: 'password' },
     {
       label: 'کد امنیتی',
-      name: 'captcha',
+      name: 'captcha_response',
       type: 'text',
       value: userCaptchaInput,
       onChange: (e: any) => setUserCaptchaInput(e.target.value),
@@ -74,12 +86,7 @@ const Login = () => {
   const loginValidationSchema = yup.object().shape({
     username: yup.string().required('*اجباری'),
     password: yup.string().required('*اجباری'),
-    captcha: yup
-      .string()
-      .required('*اجباری')
-      .test('captcha-match', ' کد امنیتی نادرست است', function (value) {
-        return value === captcha;
-      }),
+    captcha_response: yup.string().required('*اجباری'),
   });
 
   const getValidationSchema = (
@@ -112,8 +119,12 @@ const Login = () => {
   const forgotPasswordValidationSchema = yup.lazy(() => getValidationSchema(securityQuestion));
 
   const onSubmitLogin = async (data: any) => {
+    const newData = {
+      ...data,
+      captcha_key: `${captchaData?.captcha_key}`,
+    };
     try {
-      const response = await axiosMethod.post('/user/login/', data);
+      const response = await axiosMethod.post('/user/login/', newData);
       localStorage.setItem('auth_token_typeScript', response.data.data.token);
       window.location.reload();
     } catch (error) {
@@ -157,7 +168,6 @@ const Login = () => {
       <Head>
         <title>سامانه EDR / ورود</title>
       </Head>
-
       <Box
         sx={{
           '& .Toastify__toast-body': {
@@ -219,7 +229,7 @@ const Login = () => {
                 }
                 widthButton="25%"
               >
-                {!isForgotPassword ? <Captcha onCaptchaChange={setCaptcha} /> : null}
+                {!isForgotPassword ? <img src={`${captcha}`} alt="Captcha" /> : null}
               </CustomForm>
 
               <Button
