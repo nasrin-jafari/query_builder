@@ -34,10 +34,28 @@ const ActivityEvents = () => {
 
   const components = [
     {
+      component: PictorialBar,
+      props: {
+        data: events?.events_time_chart,
+        width: '100%',
+        height: '100%',
+        sx: {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+        },
+      },
+      title: 'تاپ ها',
+      gridProps: { xs: 12, xl: 6 },
+      skeletonHeight: 400,
+      withCard: true,
+    },
+    {
       component: RadarChart,
       props: { data: events?.top_agents, width: '100%', height: '100%' },
       title: 'تکنیک ها',
-      gridProps: { xs: 6, xl: 4 },
+      gridProps: { xs: 6, xl: 3 },
       skeletonHeight: 400,
       withCard: true,
     },
@@ -58,28 +76,11 @@ const ActivityEvents = () => {
         renderBottomText: true,
       },
       title: 'تاپ ها',
-      gridProps: { xs: 6, xl: 4 },
+      gridProps: { xs: 6, xl: 3 },
       skeletonHeight: 400,
       withCard: true,
     },
-    {
-      component: PictorialBar,
-      props: {
-        data: events?.events_time_chart,
-        width: '100%',
-        height: '100%',
-        sx: {
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-        },
-      },
-      title: 'تاپ ها',
-      gridProps: { xs: 12, xl: 4 },
-      skeletonHeight: 400,
-      withCard: true,
-    },
+
     {
       component: CustomDataGrid,
       props: {
