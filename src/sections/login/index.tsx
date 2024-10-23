@@ -5,6 +5,7 @@ import { Box, Button, Container, Typography, useTheme } from '@mui/material';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { FiRefreshCw } from 'react-icons/fi';
 import { ToastContainer } from 'react-toastify';
 import * as yup from 'yup';
 
@@ -28,16 +29,20 @@ const Login = () => {
     securityQuestion?: any;
     username?: any;
   }>({});
-  const [captcha, setCaptcha] = useState('');
-  const [userCaptchaInput, setUserCaptchaInput] = useState('');
+  const [captcha, setCaptcha] = useState<string>('');
+  const [userCaptchaInput, setUserCaptchaInput] = useState<string>('');
 
-  const { data: captchaData } = UseApi<CaptchaDataProps>('/user/captcha/');
+  const { data: captchaData, refetch } = UseApi<CaptchaDataProps>('/user/captcha/');
   useEffect(() => {
     if (captchaData) {
       const imageUrl = `${BASE_URL}/captcha/image/${captchaData?.captcha_key}/`;
       setCaptcha(imageUrl);
     }
   }, [captchaData]);
+
+  const handleRefreshCaptcha = () => {
+    refetch();
+  };
 
   const loginFields = [
     { label: 'نام کاربری', name: 'username', type: 'text' },
@@ -229,7 +234,18 @@ const Login = () => {
                 }
                 widthButton="25%"
               >
-                {!isForgotPassword ? <img src={`${captcha}`} alt="Captcha" /> : null}
+                {!isForgotPassword ? (
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <img src={`${captcha}`} alt="Captcha" height="50px" />
+                    <Button
+                      sx={{ ml: 2 }}
+                      variant="text"
+                      onClick={handleRefreshCaptcha} // فراخوانی تابع ریفرش
+                    >
+                      <FiRefreshCw style={{ fontSize: '20px' }} />
+                    </Button>
+                  </div>
+                ) : null}
               </CustomForm>
 
               <Button
