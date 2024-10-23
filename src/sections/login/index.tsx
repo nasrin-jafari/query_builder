@@ -242,7 +242,7 @@ const Login = () => {
                       variant="text"
                       onClick={handleRefreshCaptcha} // فراخوانی تابع ریفرش
                     >
-                      <FiRefreshCw style={{ fontSize: '20px' }} />
+                      <FiRefreshCw style={{ fontSize: '20px' }} color={theme.palette.grey[200]} />
                     </Button>
                   </div>
                 ) : null}
