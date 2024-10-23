@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import Image from 'next/image';
 import { FC } from 'react';
 
@@ -6,13 +6,15 @@ type ChatBotIconProps = {
   onOpenchat: () => void;
 };
 const ChatBotIcon: FC<ChatBotIconProps> = ({ onOpenchat }) => {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
-        background: '#ffffff1c',
+        background: theme.palette.primary.main,
         borderRadius: '50%',
         position: 'absolute',
-        left: '96px',
+        left: '36px',
         bottom: '10px',
         zIndex: '2000',
         width: '60px',

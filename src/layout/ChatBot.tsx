@@ -7,7 +7,7 @@ import { FC, useState, useEffect } from 'react';
 interface ChatBotProps {}
 
 const ChatBot: FC<ChatBotProps> = () => {
-  const [openChat, setOpenchat] = useState<boolean>(true);
+  const [openChat, setOpenchat] = useState<boolean>(false);
   const [translateY, setTranslateY] = useState<string>('100px');
 
   const handleOpenchat = () => {
@@ -30,6 +30,7 @@ const ChatBot: FC<ChatBotProps> = () => {
         // left: '96px',
         transition: 'transform 0.25s ease',
         transform: `translateY(${translateY})`,
+        zIndex : 99999,
       }}
     >
       {openChat ? (
