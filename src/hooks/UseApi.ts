@@ -1,6 +1,6 @@
 import axiosMethod from '@/api';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 interface ApiRequestHook<T> {
   data: T | null;
@@ -12,6 +12,7 @@ interface ApiRequestHook<T> {
     params?: Record<string, any>,
     headers?: Record<string, string>
   ) => Promise<T | boolean>;
+  refetch: () => void; // تابع جدید برای درخواست مجدد
   loading: boolean;
   error: any;
 }
@@ -30,7 +31,6 @@ const UseApi = <T>(url: string, initialParams: Record<string, any> = {}): ApiReq
     params: Record<string, any> = {},
     headers: Record<string, string> = {}
   ): Promise<T | boolean> => {
-    // Only set loading if there is no existing data
     if (!data) {
       setLoading(true);
     }
@@ -58,19 +58,22 @@ const UseApi = <T>(url: string, initialParams: Record<string, any> = {}): ApiReq
       console.log(err);
       return false;
     } finally {
-      // Only set loading to false if there's no existing data
       if (!data) {
         setLoading(false);
       }
     }
   };
 
+  const refetch = useCallback(() => {
+    handleApiRequest(url, 'get');
+  }, [url]);
+
   useEffect(() => {
     const { page, sort, filters } = router.query;
     handleApiRequest(url, 'get', null, { page, sort, filters });
   }, [router.query]);
 
-  return { data, total, handleApiRequest, loading, error };
+  return { data, total, handleApiRequest, refetch, loading, error };
 };
 
 export default UseApi;
