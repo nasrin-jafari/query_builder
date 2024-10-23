@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { FC, useEffect, useRef, useState } from 'react';
 import ChatInput from './chatBotInput';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import axios from 'axios';
 interface DecodedToken extends JwtPayload {
   exp_date?: number;
   username: string;
@@ -21,22 +22,16 @@ type ChatBotBoxProps = {
 const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
   const [message, setMessage] = useState<string>('');
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
   const theme = useTheme();
-
-  function capitalizeFirstLetter(str: string) {
-    if (!str) return '';
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
 
   const token = localStorage.getItem('auth_token_typeScript');
   const decoded = token
     ? (jwt.decode(token) as DecodedToken)
     : { username: 'Unknown', role: 'Unknown' };
   const usernameInitial = decoded.username[0].toUpperCase();
-  const username = capitalizeFirstLetter(decoded.username);
-  const role = capitalizeFirstLetter(decoded.role);
- 
+
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
@@ -52,29 +47,46 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
     setMessage(event.target.value);
   };
 
+const fetchMessage = async (message: string) => {
+    setIsLoading(true);
+    try {
+      // افزودن پیام لودینگ به لیست پیام‌ها
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: 'bot', text: '...' }, // پیام لودینگ
+      ]);
+  
+      const response = await axios.post('http://172.16.50.192:8080/chat', {
+        user_input: message,
+      });
+  
+      setMessages((prevMessages) => {
+        const messagesWithoutLoading = prevMessages.slice(0, -1);
+        return [
+          ...messagesWithoutLoading,
+          { sender: 'bot', text: response.data.response },
+        ];
+      });
+    } catch (error) {
+      // در صورت خطا پیام مناسب نشان دهید
+      setMessages((prevMessages) => [
+        ...prevMessages.slice(0, -1), // حذف پیام لودینگ
+        { sender: 'bot', text: 'Sorry, something went wrong.' },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   const handleSendMessage = () => {
     if (message.trim()) {
       const userMessage: Message = { sender: 'user', text: message };
       setMessages((prevMessages) => [...prevMessages, userMessage]);
-      setMessage('');
-
-      setTimeout(() => {
-        const botResponse = generateBotResponse(message);
-        setMessages((prevMessages) => [...prevMessages, { sender: 'bot', text: botResponse }]);
-      }, 1000);
+      setMessage(''); // پاک کردن فیلد ورودی
+      fetchMessage(message); // دریافت پاسخ بات
     }
   };
-
-  const generateBotResponse = (userMessage: string): string => {
-    if (userMessage.includes('سلام')) {
-      return 'سلام! چطور می‌توانم به شما کمک کنم؟';
-    } else if (userMessage.includes('خداحافظ')) {
-      return 'خداحافظ! روز خوبی داشته باشید.';
-    } else {
-      return 'من متوجه نشدم. لطفاً بیشتر توضیح دهید.';
-    }
-  };
-
+  
   return (
     <Box
       sx={{
@@ -92,18 +104,22 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
       <Box
         sx={{
           position: 'relative',
-          background: '#e57b2d',
+          background: 'rgb(62,64,149)',
           width: '100%',
-          height: '80px',
+          height: '50px',
           padding: '10px',
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '6px',
+          boxShadow: '0 4px 6px rgba(255, 220, 205, 0.3)', 
         }}
       >
         <Avatar
           sx={{
             width: 32,
             height: 32,
-             bgcolor: theme.palette.primary.main,
-             color: theme.palette.common.white,
+            bgcolor: theme.palette.primary.main,
+            color: theme.palette.common.white,
           }}
         >
           {usernameInitial}
@@ -114,8 +130,8 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
             position: 'absolute',
             right: '10px',
             top: '10px',
-            width: '28px',
-            height: '28px',
+            width: '20px',
+            height: '20px',
             background: '#ffffff1c',
             borderRadius: '50%',
           }}
@@ -134,7 +150,7 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
         ref={chatContainerRef}
         sx={{
           width: '100%',
-          height: '420px',
+          height: '456px',
           backgroundImage: 'url("/images/bgchat.png")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -152,18 +168,20 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
             }}
           >
             <Typography
-              variant="body1"
+              variant="caption"
               sx={{
                 wordWrap: 'break-word',
                 maxWidth: '100%',
-                background: msg.sender === 'user' ? '#fff' : '#e57b2d',
+                background: msg.sender === 'user' ? '#fff' : 'rgb(62,64,149)',
                 padding: '8px',
                 borderRadius: '8px',
                 display: 'inline-block',
                 color: msg.sender === 'user' ? '#000' : '#fff',
               }}
             >
-              {msg.text}
+              {msg.sender === 'bot' && isLoading && index === messages.length - 1
+                ? '...' 
+                : msg.text}
             </Typography>
           </Box>
         ))}
