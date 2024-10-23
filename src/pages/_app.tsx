@@ -10,6 +10,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import store from '@/redux/store';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTheme } from '@mui/material/styles';
+import ChatBot from '@/layout/ChatBot';
 
 interface CustomComponent {
   getLayout?: (page: JSX.Element) => JSX.Element;
@@ -38,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             }}
           >
             {getLayout(<Component {...pageProps} />)}
-
+            <ChatBot/>
             <ToastContainer
               position="top-left"
               autoClose={1500}
