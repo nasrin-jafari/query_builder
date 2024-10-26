@@ -1,6 +1,5 @@
-
-import ChatBotBox from '@/components/chatBot/chatBotBox';
-import ChatBotIcon from '@/components/chatBot/chatBotIcon';
+import ChatBotBox from '@/components/chatBot/ChatBox';
+import ChatBotIcon from '@/components/chatBot/ChatIcon';
 import { Box } from '@mui/material';
 import { FC, useState, useEffect } from 'react';
 
