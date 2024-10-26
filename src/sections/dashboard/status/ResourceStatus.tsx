@@ -77,7 +77,6 @@ const ResourceStatus: FC<ResourceStatusProps> = ({ data, isLoading }) => {
       </Grid>
     );
   }
-  console.log(data?.memory_usage_total, 'data?.memory_usage_total');
   return (
     <Grid item sm={12} xs={12} lg={6}>
       <CardBox title="وضعیت منابع سرور">
