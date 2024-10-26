@@ -114,7 +114,7 @@ export default function Home() {
         <title>سامانه EDR</title>
       </Head>
       <Box>
-        <CustomAppBar title={'داشبورد'} sx={{ px: 3, mb: '-10px' }} />
+        <CustomAppBar title={'داشبورد'} sx={{ px: 3, mb: '10px' }} />
         <CustomTabs tabs={tabs} orientation="vertical" />
       </Box>
     </>

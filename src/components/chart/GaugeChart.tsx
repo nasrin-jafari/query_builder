@@ -129,7 +129,7 @@ const GaugeChart: React.FC<GaugeChartProps> = ({ data, name, isLoading, color })
     <div
       style={{
         width: '100%',
-        height: isXs ? '100px' : '100px',
+        height: isXs ? '150px' : '200px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -139,15 +139,15 @@ const GaugeChart: React.FC<GaugeChartProps> = ({ data, name, isLoading, color })
         <div
           ref={chartContainerRef}
           style={{
-            width: '100%', // عرض کامل کانتینر
-            height: isXs ? '20vh' : '40vh', // ارتفاع با مقیاس اصلی
-            maxWidth: '400px', // حداکثر عرض
-            maxHeight: '300px', // حداکثر ارتفاع
+            width: '100%',
+            height: isXs ? '20vh' : '40vh',
+            maxWidth: '400px',
+            // maxHeight: '300px', // حداکثر ارتفاع
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            transform: 'scale(0.7)', // کوچک کردن با حفظ اسکیل
-            transformOrigin: 'center', // مرکز مقیاس‌بندی
+            transform: 'scale(1)',
+            transformOrigin: 'center',
           }}
         />
       ) : (

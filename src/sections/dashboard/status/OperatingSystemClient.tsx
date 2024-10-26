@@ -28,7 +28,20 @@ const OpratingSystemClient: FC<ResourceStatusProps> = ({ data, isLoading }) => {
     };
   });
   return (
-    <Grid item sm={6} xs={12} lg={3}>
+    <Grid
+      item
+      sx={{
+        width: {
+          xs: '100%',
+          lg: '50%',
+          xl: '25%',
+        },
+        '@media (min-width: 1000px) and (max-width: 1300px)': { width: '50%' },
+        '@media (min-width: 1700px)': {
+          width: '25%',
+        },
+      }}
+    >
       <CardBox title="سرویس گیرنده‌های سیستم عامل">
         <Box>
           <NightingaleChart data={analysis_data} isLoading={isLoading} />

@@ -31,12 +31,12 @@ const ProgressBar: FC<ProgressBarProps> = ({ usage, total }) => {
     height: 30,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor: theme.palette.grey[800],
+      backgroundColor: theme.palette.grey[400],
     },
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 5,
       backgroundColor: barColor,
-      transformOrigin: 'right !important', // Changed to right
+      transformOrigin: 'right !important',
     },
   }));
 
@@ -50,9 +50,9 @@ const ProgressBar: FC<ProgressBarProps> = ({ usage, total }) => {
           variant="determinate"
           value={percentage}
           sx={{
-            direction: 'rtl', // Changed direction to rtl
+            direction: 'rtl',
             '& .MuiLinearProgress-bar': {
-              transformOrigin: 'right !important', // Changed to right
+              transformOrigin: 'right !important',
             },
           }}
         />

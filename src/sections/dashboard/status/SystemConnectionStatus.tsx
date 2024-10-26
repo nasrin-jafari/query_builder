@@ -30,7 +30,24 @@ const SystemConnectionStatus: FC<ResourceStatusProps> = ({ data, isLoading }) =>
   }
   return (
     <>
-      <Grid item sm={6} lg={3} xs={12}>
+      <Grid
+        item
+        // sm={12}
+        // xs={12}
+        // lg={6}
+        // xl={3}
+        sx={{
+          width: {
+            xs: '100%',
+            lg: '50%',
+            xl: '25%',
+          },
+          '@media (min-width: 1000px) and (max-width: 1300px)': { width: '50%' },
+          '@media (min-width: 1700px)': {
+            width: '25%',
+          },
+        }}
+      >
         <CardBox title="وضعیت اتصال سامانه‌های کمکی">
           <Box sx={{ pt: 2, pb: 0 }}>
             {data &&

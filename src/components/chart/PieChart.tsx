@@ -18,13 +18,14 @@ const PieChart: FC<PieChartProps> = ({
   startIndex,
   renderBottomText = false,
   isLoading,
-  colors = [], // Default to an empty array
+  colors = [],
 }) => {
   const theme = useTheme();
   const router = useRouter();
   const chartContainerRef = useRef<HTMLDivElement>(null);
-  const totalValue = data.reduce((acc, item) => acc + (item.value ?? 0), 0);
+  const chartInstanceRef = useRef<echarts.EChartsType | null>(null);
 
+  const totalValue = data.reduce((acc, item) => acc + (item.value ?? 0), 0);
   const chartDataWithPercentage = data.map((item) => ({
     ...item,
     name: item.fa ? item.fa : item.en,
@@ -48,6 +49,7 @@ const PieChart: FC<PieChartProps> = ({
     const chartDom = chartContainerRef.current;
     if (chartDom) {
       const chartInstance = echarts.getInstanceByDom(chartDom) || echarts.init(chartDom);
+      chartInstanceRef.current = chartInstance;
 
       const option = {
         tooltip: {
@@ -113,7 +115,7 @@ const PieChart: FC<PieChartProps> = ({
                   theme.palette.error.main,
                   theme.palette.info.main,
                   theme.palette.grey[700],
-                ], // Set colors if provided
+                ],
             animation: true,
             animationDuration: 500,
             animationEasing: 'quadraticIn',
@@ -131,33 +133,39 @@ const PieChart: FC<PieChartProps> = ({
           router.push({ pathname: checkOnClick.redirectTo, query: checkOnClick.query });
         }
       });
-
-      const resizeChart = () => {
-        chartInstance.resize();
-      };
-
-      window.addEventListener('resize', resizeChart);
-
-      return () => {
-        chartInstance.dispose();
-        window.removeEventListener('resize', resizeChart);
-      };
     }
-    return undefined;
   };
 
   useEffect(() => {
     initializeChart();
-  }, [data, theme.palette.grey, colors]);
+
+    const resizeObserver = new ResizeObserver(() => {
+      if (chartInstanceRef.current) {
+        chartInstanceRef.current.resize();
+      }
+    });
+
+    if (chartContainerRef.current) {
+      resizeObserver.observe(chartContainerRef.current);
+    }
+
+    return () => {
+      if (chartContainerRef.current) {
+        resizeObserver.unobserve(chartContainerRef.current);
+      }
+      if (chartInstanceRef.current) {
+        chartInstanceRef.current.dispose();
+      }
+    };
+  }, [data, theme.palette.grey, colors, renderBottomText]);
 
   return (
     <div style={{ width: '100%', height: renderBottomText ? '340px' : '181px', direction: 'rtl' }}>
-      {!data || data?.length === 0 ? (
+      {!data || data.length === 0 ? (
         <NoData type="pie" isLoading={isLoading} />
       ) : (
         <div
           ref={chartContainerRef}
-          className="mainPieChart"
           style={{ width: '100%', height: renderBottomText ? '350px' : '230px', direction: 'rtl' }}
         ></div>
       )}

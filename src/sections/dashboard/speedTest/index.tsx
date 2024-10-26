@@ -27,7 +27,7 @@ const SpeedTest: FC<SpeedTestProps> = ({ data, isLoading }) => {
               {value ? `${value}mb` : ''}
             </Typography>
           </Grid>
-          <Grid item md={6}>
+          <Grid item sm={12} md={6}>
             <GaugeChart data={value} name={label} isLoading={isLoading} color={color} />
           </Grid>
         </Grid>

@@ -40,15 +40,15 @@ export const UsageItem: FC<UsageItemProps> = ({ title, total, usage, isLoading }
     <Grid item md={6} xs={12}>
       <CardBox sx={{ mt: 2, pb: 0 }}>
         <Grid container>
-          <Grid item md={6}>
-            <Typography fontWeight="bold" variant="h6">
+          <Grid item md={4}>
+            <Typography fontWeight="bold" sx={{ fontSize: '20px' }}>
               {title}
             </Typography>
-            <Typography fontWeight="bold" variant="h5">
+            <Typography fontWeight="bold">
               {total ? `${percentage.toFixed(2)}%` : 'اطلاعات موجود نیست'}
             </Typography>
           </Grid>
-          <Grid item md={6}>
+          <Grid item sm={12} md={12} lg={8}>
             <Box sx={{ width: '100%' }}>
               <ProgressBar total={total ?? 0} usage={usage ?? 0} />
             </Box>
