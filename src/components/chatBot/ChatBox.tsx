@@ -2,7 +2,8 @@ import { Avatar, Box, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
 import { FC, useEffect, useRef, useState } from 'react';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import ChatBotInput from './chatBotInput';
+import ChatInput from './ChatInput';
+
 interface DecodedToken extends JwtPayload {
   // add type folder
   exp_date?: number;
@@ -15,11 +16,11 @@ type Message = {
   text: string;
 };
 
-type ChatBotBoxProps = {
+type ChatBoxProps = {
   onOpenchat: () => void;
 };
 
-const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
+const ChatBox: FC<ChatBoxProps> = ({ onOpenchat }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [rooms, setRooms] = useState<string[]>([]);
   // const [currentRoom, setCurrentRoom] = useState<string | null>(null);
@@ -220,7 +221,7 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
         ))}
       </Box>
       {/* chatinput */}
-      <ChatBotInput
+      <ChatInput
         message={messageInput}
         onChange={handleChangeTextField}
         onSendMessage={handleSendMessage}
@@ -229,4 +230,4 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
   );
 };
 
-export default ChatBotBox;
+export default ChatBox;

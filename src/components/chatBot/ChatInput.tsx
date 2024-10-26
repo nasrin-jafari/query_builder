@@ -2,13 +2,13 @@ import { Box, TextField, useTheme } from '@mui/material';
 import Image from 'next/image';
 import { FC } from 'react';
 
-type ChatBotInputProps = {
+type ChatInputProps = {
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   message: string;
   onSendMessage: () => void;
 };
 
-const ChatBotInput: FC<ChatBotInputProps> = ({ onChange, message, onSendMessage }) => {
+const ChatInput: FC<ChatInputProps> = ({ onChange, message, onSendMessage }) => {
   const theme = useTheme();
 
   const handleSendMessage = () => {
@@ -98,4 +98,4 @@ const ChatBotInput: FC<ChatBotInputProps> = ({ onChange, message, onSendMessage 
   );
 };
 
-export default ChatBotInput;
+export default ChatInput;
