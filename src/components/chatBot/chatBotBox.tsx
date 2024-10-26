@@ -156,7 +156,7 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
         >
           {usernameInitial}
         </Avatar>
-        <Typography variant="body1">سامانه پشتیبانی EDR</Typography>
+        <Typography sx={{ color:theme.palette.common.white}} variant="body1">سامانه پشتیبانی EDR</Typography>
         <Box
           sx={{
             position: 'absolute',
@@ -166,6 +166,7 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
             height: '20px',
             background: '#ffffff1c',
             borderRadius: '50%',
+            cursor:'pointer'
           }}
           onClick={onOpenchat}
         >
@@ -182,7 +183,7 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
         ref={chatContainerRef}
         sx={{
           width: '100%',
-          height: '456px',
+          height: '490px',
           backgroundImage: 'url("/images/bgchat.png")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
