@@ -2,7 +2,8 @@ import { Avatar, Box, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
 import { FC, useEffect, useRef, useState } from 'react';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import ChatBotInput from './chatBotInput';
+import ChatInput from './ChatInput';
+
 interface DecodedToken extends JwtPayload {
   // add type folder
   exp_date?: number;
@@ -15,11 +16,11 @@ type Message = {
   text: string;
 };
 
-type ChatBotBoxProps = {
+type ChatBoxProps = {
   onOpenchat: () => void;
 };
 
-const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
+const ChatBox: FC<ChatBoxProps> = ({ onOpenchat }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [rooms, setRooms] = useState<string[]>([]);
   // const [currentRoom, setCurrentRoom] = useState<string | null>(null);
@@ -156,7 +157,7 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
         >
           {usernameInitial}
         </Avatar>
-        <Typography variant="body1">سامانه پشتیبانی EDR</Typography>
+        <Typography sx={{ color:theme.palette.common.white}} variant="body1">سامانه پشتیبانی EDR</Typography>
         <Box
           sx={{
             position: 'absolute',
@@ -166,6 +167,7 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
             height: '20px',
             background: '#ffffff1c',
             borderRadius: '50%',
+            cursor:'pointer'
           }}
           onClick={onOpenchat}
         >
@@ -182,7 +184,7 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
         ref={chatContainerRef}
         sx={{
           width: '100%',
-          height: '456px',
+          height: '490px',
           backgroundImage: 'url("/images/bgchat.png")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -219,7 +221,7 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
         ))}
       </Box>
       {/* chatinput */}
-      <ChatBotInput
+      <ChatInput
         message={messageInput}
         onChange={handleChangeTextField}
         onSendMessage={handleSendMessage}
@@ -228,4 +230,4 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
   );
 };
 
-export default ChatBotBox;
+export default ChatBox;
