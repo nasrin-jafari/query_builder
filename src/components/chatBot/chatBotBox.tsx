@@ -1,8 +1,8 @@
 import { Avatar, Box, Typography, useTheme } from '@mui/material';
 import Image from 'next/image';
 import { FC, useEffect, useRef, useState } from 'react';
-import ChatInput from './chatBotInput';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import ChatBotInput from './chatBotInput';
 interface DecodedToken extends JwtPayload {
   // add type folder
   exp_date?: number;
@@ -219,7 +219,7 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
         ))}
       </Box>
       {/* chatinput */}
-      <ChatInput
+      <ChatBotInput
         message={messageInput}
         onChange={handleChangeTextField}
         onSendMessage={handleSendMessage}
