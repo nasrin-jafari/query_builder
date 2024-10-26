@@ -1,4 +1,4 @@
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, useTheme } from '@mui/material';
 import Image from 'next/image';
 import { FC } from 'react';
 
@@ -8,9 +8,18 @@ type ChatInputProps = {
   onSendMessage: () => void;
 };
 
-const ChatBotInput: FC<ChatInputProps> = ({ onChange, message, onSendMessage }) => {
+const ChatInput: FC<ChatInputProps> = ({ onChange, message, onSendMessage }) => {
+  const theme = useTheme();
+
   const handleSendMessage = () => {
     onSendMessage();
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSendMessage();
+    }
   };
 
   return (
@@ -35,15 +44,15 @@ const ChatBotInput: FC<ChatInputProps> = ({ onChange, message, onSendMessage }) 
         <TextField
           fullWidth
           multiline
-          minRows={3}
-          maxRows={3}
+          minRows={2}
+          maxRows={2}
           InputProps={{
             autoComplete: 'off',
             sx: {
-              padding: '0px',
               '& .MuiInputBase-input': {
-                padding: '0px',
                 color: 'black',
+                padding:'0px',
+                backgroundColor: theme.palette.common.white
               },
             },
           }}
@@ -51,9 +60,17 @@ const ChatBotInput: FC<ChatInputProps> = ({ onChange, message, onSendMessage }) 
           variant="filled"
           value={message}
           onChange={onChange}
+          onKeyDown={handleKeyDown}
           sx={{
             '& .MuiFilledInput-root': {
-              padding: '0px',
+              padding: '8px',
+              backgroundColor: theme.palette.common.white, // سفید کردن پس‌زمینه در حالت غیر فوکوس
+              '&:hover': {
+                backgroundColor: theme.palette.action.hover,
+              },
+              '&.Mui-focused': {
+                backgroundColor: theme.palette.common.white, // در حالت فوکوس هم پس‌زمینه سفید بماند
+              },
             },
           }}
         />
@@ -81,4 +98,4 @@ const ChatBotInput: FC<ChatInputProps> = ({ onChange, message, onSendMessage }) 
   );
 };
 
-export default ChatBotInput;
+export default ChatInput;

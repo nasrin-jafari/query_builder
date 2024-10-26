@@ -11,10 +11,12 @@
   "dependencies": {
     "@mui/x-data-grid": "^7.6.2",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/socket.io-client": "^3.0.0",
     "echarts": "^5.5.1",
     "next": "14.2.3",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@codemirror/lang-javascript": "^6.2.1",

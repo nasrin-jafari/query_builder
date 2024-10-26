@@ -2,10 +2,10 @@ import { Box, useTheme } from '@mui/material';
 import Image from 'next/image';
 import { FC } from 'react';
 
-type ChatBotIconProps = {
+type ChatIconProps = {
   onOpenchat: () => void;
 };
-const ChatBotIcon: FC<ChatBotIconProps> = ({ onOpenchat }) => {
+const ChatIcon: FC<ChatIconProps> = ({ onOpenchat }) => {
   const theme = useTheme();
 
   return (
@@ -34,4 +34,4 @@ const ChatBotIcon: FC<ChatBotIconProps> = ({ onOpenchat }) => {
     </Box>
   );
 };
-export default ChatBotIcon;
+export default ChatIcon;
