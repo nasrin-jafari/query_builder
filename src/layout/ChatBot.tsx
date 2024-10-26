@@ -1,12 +1,9 @@
-
 import ChatBotBox from '@/components/chatBot/chatBotBox';
 import ChatBotIcon from '@/components/chatBot/chatBotIcon';
 import { Box } from '@mui/material';
 import { FC, useState, useEffect } from 'react';
 
-interface ChatBotProps {}
-
-const ChatBot: FC<ChatBotProps> = () => {
+const ChatBot: FC = () => {
   const [openChat, setOpenchat] = useState<boolean>(false);
   const [translateY, setTranslateY] = useState<string>('100px');
 
@@ -27,10 +24,9 @@ const ChatBot: FC<ChatBotProps> = () => {
       sx={{
         position: 'fixed',
         bottom: '30px',
-        // left: '96px',
         transition: 'transform 0.25s ease',
         transform: `translateY(${translateY})`,
-        zIndex : 99999,
+        zIndex: 99999,
       }}
     >
       {openChat ? (

@@ -2,13 +2,13 @@ import { Box, TextField } from '@mui/material';
 import Image from 'next/image';
 import { FC } from 'react';
 
-type ChatInputProps = {
+type ChatBotInputProps = {
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   message: string;
   onSendMessage: () => void;
 };
 
-const ChatBotInput: FC<ChatInputProps> = ({ onChange, message, onSendMessage }) => {
+const ChatBotInput: FC<ChatBotInputProps> = ({ onChange, message, onSendMessage }) => {
   const handleSendMessage = () => {
     onSendMessage();
   };
