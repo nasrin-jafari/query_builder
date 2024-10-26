@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { FC, useEffect, useRef, useState } from 'react';
 import ChatInput from './chatBotInput';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import axios from 'axios';
 interface DecodedToken extends JwtPayload {
+  // add type folder
   exp_date?: number;
   username: string;
   permissions: { [key: string]: any };
@@ -21,46 +21,27 @@ type ChatBotBoxProps = {
 
 const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const chatContainerRef = useRef<HTMLDivElement | null>(null);
-  const theme = useTheme();
-  const token = localStorage.getItem('auth_token_typeScript');
-  const [rooms, setRooms] = useState<string[]>([]);
-  const [currentRoom, setCurrentRoom] = useState<string | null>(null);
+  // const [rooms, setRooms] = useState<string[]>([]);
+  // const [currentRoom, setCurrentRoom] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [messageInput, setMessageInput] = useState<string>('');
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const chatMessagesRef = useRef<HTMLDivElement | null>(null);
-
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);
+  const theme = useTheme();
+  const token = localStorage.getItem('auth_token_typeScript');
   const decoded = token
     ? (jwt.decode(token) as DecodedToken)
     : { username: 'Unknown', role: 'Unknown' };
   const usernameInitial = decoded.username[0].toUpperCase();
 
-  const scrollToBottom = () => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  };
-
+  useEffect(() => {
+    // const savedRooms = JSON.parse(localStorage.getItem('chatRooms') || '[]') as string[];
+    // setRooms(savedRooms);
+    joinRoom('1');
+  }, []);
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  const handleChangeTextField = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    setMessageInput(event.target.value);
-  };
-
-  useEffect(() => {
-    console.log({ messages });
-  }, [messages]);
-
-  useEffect(() => {
-    const savedRooms = JSON.parse(localStorage.getItem('chatRooms') || '[]') as string[];
-    setRooms(savedRooms);
-    joinRoom('1');
-  }, []);
 
   const joinRoom = (roomName: string) => {
     if (socket) {
@@ -75,11 +56,10 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
 
     newSocket.onmessage = (event) => {
       const data = JSON.parse(event.data);
-
       if (data.type === 'stream' && data.response) {
         setMessages((prev) => {
           const lastMessage = prev[prev.length - 1];
-
+          setIsLoading(true);
           if (!lastMessage || lastMessage.sender !== 'bot') {
             return [...prev, { sender: 'bot', text: '...' }]; // پیام لودینگ
           }
@@ -89,13 +69,12 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
       }
 
       if (data.done) {
-        console.log({ answer });
-
         setMessages((prev) => [
           ...prev.slice(0, -1), // حذف پیام لودینگ
           { sender: 'bot', text: answer },
         ]);
         answer = '';
+        setIsLoading(false);
       }
     };
     newSocket.onerror = (error) => {
@@ -108,12 +87,17 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
     };
   };
 
-  const createRoom = (roomName: string) => {
-    if (!rooms.includes(roomName)) {
-      const updatedRooms = [...rooms, roomName];
-      setRooms(updatedRooms);
-      localStorage.setItem('chatRooms', JSON.stringify(updatedRooms));
-      joinRoom(roomName);
+  // const createRoom = (roomName: string) => {
+  //   if (!rooms.includes(roomName)) {
+  //     const updatedRooms = [...rooms, roomName];
+  //     setRooms(updatedRooms);
+  //     localStorage.setItem('chatRooms', JSON.stringify(updatedRooms));
+  //     joinRoom(roomName);
+  //   }
+  // };
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   };
 
@@ -126,37 +110,14 @@ const ChatBotBox: FC<ChatBotBoxProps> = ({ onOpenchat }) => {
     }
   };
 
-  useEffect(() => {
-    chatMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
-  const fetchMessage = async (message: string) => {
-    setIsLoading(true);
-    try {
-      // افزودن پیام لودینگ به لیست پیام‌ها
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { sender: 'bot', text: '...' }, // پیام لودینگ
-      ]);
-
-      const response = await axios.post('ws://172.16.50.38:8000/ws/chat/1/', {
-        user_input: message,
-      });
-
-      setMessages((prevMessages) => {
-        const messagesWithoutLoading = prevMessages.slice(0, -1);
-        return [...messagesWithoutLoading, { sender: 'bot', text: response.data.response }];
-      });
-    } catch (error) {
-      // در صورت خطا پیام مناسب نشان دهید
-      setMessages((prevMessages) => [
-        ...prevMessages.slice(0, -1), // حذف پیام لودینگ
-        { sender: 'bot', text: 'Sorry, something went wrong.' },
-      ]);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleChangeTextField = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    const char = event.target.value;
+    setMessageInput(char);
   };
+
+  
 
   return (
     <Box

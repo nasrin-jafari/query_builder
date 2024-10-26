@@ -13,6 +13,13 @@ const ChatBotInput: FC<ChatBotInputProps> = ({ onChange, message, onSendMessage 
     onSendMessage();
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === 'E' || event.key === '.') {
+      event.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -51,6 +58,7 @@ const ChatBotInput: FC<ChatBotInputProps> = ({ onChange, message, onSendMessage 
           variant="filled"
           value={message}
           onChange={onChange}
+          onKeyDown={handleKeyDown}
           sx={{
             '& .MuiFilledInput-root': {
               padding: '0px',
