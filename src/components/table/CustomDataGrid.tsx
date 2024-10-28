@@ -513,8 +513,9 @@ const CustomDataGrid: React.FC<ReusableDataGridProps> = ({
               ) : (
                 <>
                   {rows?.map((row, rowIndex) => (
-                    <React.Fragment key={row.id}>
+                    <React.Fragment key={rowIndex}>
                       <TableRow
+                        key={rowIndex}
                         sx={{
                           backgroundColor:
                             rowIndex % 2 === 0

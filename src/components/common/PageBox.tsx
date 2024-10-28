@@ -1,5 +1,4 @@
-import { Box, Typography, useTheme } from '@mui/material';
-import Head from 'next/head';
+import { Box, useTheme } from '@mui/material';
 import React, { ReactNode } from 'react';
 import CustomAppBar from '@/layout/CustomAppBar';
 
@@ -21,7 +20,7 @@ interface PageBoxProps {
 const PageBox: React.FC<PageBoxProps> = ({
   searchQuery,
   title,
-  description = 'توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا',
+  // description = 'توضیحات تکمیلی برای راهنمایی یا معرفی بخش بالا',
   children,
 }) => {
   const theme = useTheme();
@@ -39,19 +38,16 @@ const PageBox: React.FC<PageBoxProps> = ({
           minHeight: '88vh',
         }}
       >
-        <Head>
-          <title>EDR / {title}</title>
-        </Head>
-        <Box sx={{ mb: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Box>
-              <Typography variant="h4">{title}</Typography>
-              <Typography color={theme.palette.grey[200]} sx={{ mt: '10px' }}>
-                {description}
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
+        {/*<Box sx={{ mb: 3 }}>*/}
+        {/*  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>*/}
+        {/*    <Box>*/}
+        {/*      <Typography variant="h4">{title}</Typography>*/}
+        {/*      <Typography color={theme.palette.grey[200]} sx={{ mt: '10px' }}>*/}
+        {/*        {description}*/}
+        {/*      </Typography>*/}
+        {/*    </Box>*/}
+        {/*  </Box>*/}
+        {/*</Box>*/}
 
         <Box>{children}</Box>
       </Box>

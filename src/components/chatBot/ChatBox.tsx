@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { FC, useEffect, useRef, useState } from 'react';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import ChatInput from './ChatInput';
+import DotLoader from './DotLoader';
 
 interface DecodedToken extends JwtPayload {
   // add type folder
@@ -27,6 +28,7 @@ const ChatBox: FC<ChatBoxProps> = ({ onOpenchat }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [messageInput, setMessageInput] = useState<string>('');
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [isSocketConnected, setIsSocketConnected] = useState<boolean>(true);
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
   const theme = useTheme();
   const token = localStorage.getItem('auth_token_typeScript');
@@ -40,6 +42,7 @@ const ChatBox: FC<ChatBoxProps> = ({ onOpenchat }) => {
     // setRooms(savedRooms);
     joinRoom('1');
   }, []);
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -78,13 +81,20 @@ const ChatBox: FC<ChatBoxProps> = ({ onOpenchat }) => {
         setIsLoading(false);
       }
     };
+
     newSocket.onerror = (error) => {
+      setIsSocketConnected(false);
       console.error('WebSocket error:', error);
-      alert('Error connecting to the chat room.');
     };
 
     newSocket.onclose = () => {
+      setIsSocketConnected(false);
       console.log('WebSocket connection closed.');
+    };
+
+    newSocket.onopen = () => {
+      setIsSocketConnected(true);
+      console.log('WebSocket connection open.');
     };
   };
 
@@ -118,8 +128,6 @@ const ChatBox: FC<ChatBoxProps> = ({ onOpenchat }) => {
     setMessageInput(char);
   };
 
-  
-
   return (
     <Box
       sx={{
@@ -131,6 +139,7 @@ const ChatBox: FC<ChatBoxProps> = ({ onOpenchat }) => {
         height: '600px',
         borderRadius: '8px',
         overflow: 'hidden',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
       }}
     >
       {/* header */}
@@ -142,6 +151,7 @@ const ChatBox: FC<ChatBoxProps> = ({ onOpenchat }) => {
           height: '50px',
           padding: '10px',
           display: 'flex',
+          alignItems: 'center',
           flexDirection: 'row',
           gap: '6px',
           boxShadow: '0 4px 6px rgba(255, 220, 205, 0.3)',
@@ -157,7 +167,9 @@ const ChatBox: FC<ChatBoxProps> = ({ onOpenchat }) => {
         >
           {usernameInitial}
         </Avatar>
-        <Typography sx={{ color:theme.palette.common.white}} variant="body1">سامانه پشتیبانی EDR</Typography>
+        <Typography sx={{ color: theme.palette.common.white }} variant="body1">
+          سامانه پشتیبانی
+        </Typography>
         <Box
           sx={{
             position: 'absolute',
@@ -167,7 +179,7 @@ const ChatBox: FC<ChatBoxProps> = ({ onOpenchat }) => {
             height: '20px',
             background: '#ffffff1c',
             borderRadius: '50%',
-            cursor:'pointer'
+            cursor: 'pointer',
           }}
           onClick={onOpenchat}
         >
@@ -184,15 +196,22 @@ const ChatBox: FC<ChatBoxProps> = ({ onOpenchat }) => {
         ref={chatContainerRef}
         sx={{
           width: '100%',
-          height: '490px',
+          height: '486px',
           backgroundImage: 'url("/images/bgchat.png")',
-          backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          backgroundRepeat: 'repeat',
           overflowY: 'auto',
           padding: '10px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: !isSocketConnected ? 'center' : '',
+          alignItems: !isSocketConnected ? 'center' : '',
         }}
       >
+        <Typography variant="body2" color={'red'}>
+          {!isSocketConnected && '!not connected'}
+        </Typography>
+
         {messages.map((msg, index) => (
           <Box
             key={index}
@@ -213,9 +232,11 @@ const ChatBox: FC<ChatBoxProps> = ({ onOpenchat }) => {
                 color: msg.sender === 'user' ? '#000' : '#fff',
               }}
             >
-              {msg.sender === 'bot' && isLoading && index === messages.length - 1
-                ? '...'
-                : msg.text}
+              {msg.sender === 'bot' && isLoading && index === messages.length - 1 ? (
+                <DotLoader />
+              ) : (
+                msg.text
+              )}
             </Typography>
           </Box>
         ))}

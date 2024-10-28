@@ -191,7 +191,7 @@ const SideBar: React.FC<SideBarProps> = ({ filteredTabs }) => {
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <Image alt="Image" width={40} height={42} src="/images/logo.png" priority />
-              <Typography>EDR</Typography>
+              <Typography>سایدبار</Typography>
             </Box>
 
             <IconButton

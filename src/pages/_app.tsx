@@ -38,6 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               },
             }}
           >
+
             {getLayout(<Component {...pageProps} />)}
             <ChatBot/>
             <ToastContainer

@@ -1,6 +1,6 @@
 import { Box, TextField, useTheme } from '@mui/material';
 import Image from 'next/image';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 type ChatInputProps = {
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
@@ -12,13 +12,18 @@ const ChatInput: FC<ChatInputProps> = ({ onChange, message, onSendMessage }) => 
   const theme = useTheme();
 
   const handleSendMessage = () => {
-    onSendMessage();
+    if (message.trim()) onSendMessage();
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      event.preventDefault();
-      handleSendMessage();
+      if (event.shiftKey) {
+        event.preventDefault();
+        onChange({ target: { value: message + '\n' } } as React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>); // اضافه کردن خط جدید به متن
+      } else {
+        event.preventDefault();
+        handleSendMessage();
+      }
     }
   };
 
@@ -49,10 +54,17 @@ const ChatInput: FC<ChatInputProps> = ({ onChange, message, onSendMessage }) => 
           InputProps={{
             autoComplete: 'off',
             sx: {
+              '&.Mui-focused': {
+                backgroundColor: theme.palette.common.white,
+                border: 'none',
+              },
               '& .MuiInputBase-input': {
                 color: 'black',
-                padding:'0px',
-                backgroundColor: theme.palette.common.white
+                padding: '0px',
+                backgroundColor: theme.palette.common.white,
+                border: 'none',
+                outline: 'none',
+                fontSize:'1rem'
               },
             },
           }}
@@ -63,14 +75,11 @@ const ChatInput: FC<ChatInputProps> = ({ onChange, message, onSendMessage }) => 
           onKeyDown={handleKeyDown}
           sx={{
             '& .MuiFilledInput-root': {
-              padding: '8px',
-              backgroundColor: theme.palette.common.white, // سفید کردن پس‌زمینه در حالت غیر فوکوس
-              '&:hover': {
-                backgroundColor: theme.palette.action.hover,
-              },
-              '&.Mui-focused': {
-                backgroundColor: theme.palette.common.white, // در حالت فوکوس هم پس‌زمینه سفید بماند
-              },
+              padding: '0px',
+              backgroundColor: theme.palette.common.white,
+              outline: 'none',
+              border: 'none',
+
             },
           }}
         />

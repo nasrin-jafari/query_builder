@@ -16,8 +16,7 @@ class MyDocument extends Document {
     return (
       <Html lang="fa" data-theme={themeMode}>
         <Head>
-          <link rel="icon" href="/images/logo.ico" sizes="any" />
-          <title>سامانه EDR</title>
+          <title>کوئری بلیدر  </title>
         </Head>
         <body>
           <Main />

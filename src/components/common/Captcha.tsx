@@ -1,5 +1,5 @@
 import { Box, IconButton } from '@mui/material';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FiRefreshCw } from 'react-icons/fi';
 
 interface CaptchaProps {

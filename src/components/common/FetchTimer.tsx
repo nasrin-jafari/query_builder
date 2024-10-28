@@ -25,7 +25,7 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
   const router = useRouter();
 
   const [selectedItem, setSelectedItem] = useState<number | null>(() => {
-    const savedValue = localStorage.getItem('fetchTimerValue');
+    const savedValue = localStorage?.getItem('fetchTimerValue');
     return savedValue !== null ? JSON.parse(savedValue) : listOfItems[0]?.value;
   });
 
@@ -35,7 +35,6 @@ const FetchTimer: React.FC<FetchTimerProps> = ({ mb }) => {
     if (selectedItem !== value) {
       setSelectedItem(value);
       // Save the selected value to localStorage
-      localStorage.setItem('fetchTimerValue', JSON.stringify(value));
     }
   };
 

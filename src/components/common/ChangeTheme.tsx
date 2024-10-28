@@ -19,7 +19,6 @@ const ThemeToggleButton = () => {
         </IconButton>
       </CustomTooltip>
 
-      <Divider orientation="vertical" flexItem />
     </Box>
   );
 };

@@ -1,7 +1,4 @@
-import { FetchTimer, ProfileMenu, ThemeToggleButton } from '@/components';
-import UseApi from '@/hooks/UseApi';
-import { LicenseData } from '@/sections/settings/licence';
-import { ConvertRemainingDays } from '@/utils/ConvertRemainingDays';
+import { ThemeToggleButton } from '@/components';
 import { Box, Button, Typography } from '@mui/material';
 import { SxProps, Theme, useTheme } from '@mui/material/styles';
 import Link from 'next/link';
@@ -27,8 +24,6 @@ const CustomAppBar: React.FC<CustomAppBarProps> = ({ SearchFields, title, sx }) 
   const theme = useTheme();
   const [open, setOpen] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
-
-  const { data } = UseApi<LicenseData[]>('/licence/info/');
   const handleClicked = () => {
     setOpen(true);
   };
@@ -74,7 +69,7 @@ const CustomAppBar: React.FC<CustomAppBarProps> = ({ SearchFields, title, sx }) 
             <Typography fontWeight={'bold'} fontSize={14}>
               وضعیت لایسنس :{' '}
               <span style={{ color: theme.palette.primary.main }}>
-                {data && ConvertRemainingDays(data[0]?.days_to_expire)}
+             11 ماه و 3 روز
               </span>{' '}
               باقی مانده
             </Typography>
@@ -91,7 +86,7 @@ const CustomAppBar: React.FC<CustomAppBarProps> = ({ SearchFields, title, sx }) 
                 color: theme.palette.grey[200],
                 background: theme.palette.grey[100],
                 borderRadius: '14px',
-                paddingLeft: '80px',
+                paddingLeft: '30px',
               }}
               startIcon={
                 <IoSearch
@@ -102,12 +97,10 @@ const CustomAppBar: React.FC<CustomAppBarProps> = ({ SearchFields, title, sx }) 
                 />
               }
             >
-              جستجو...
+              جستجو پیشرفته
             </Button>
           )}
-          <FetchTimer />
           <ThemeToggleButton />
-          <ProfileMenu />
         </Box>
       </Box>
       <Box
